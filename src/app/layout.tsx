@@ -25,15 +25,31 @@ export const metadata: Metadata = {
         title: "O24 Platform | vKnight - OpenAPI & Open Banking Integration",
         description:
             "Nền tảng OpenAPI & Open Banking Integration mạnh mẽ. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud.",
-        url: "https://o24.vknight.io",
+        url: "https://vknight.io.vn",
         siteName: "O24 by vKnight",
         locale: "vi_VN",
         type: "website",
+        images: [
+            {
+                url: "https://vknight.io.vn/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "O24 Platform | vKnight",
+            },
+        ],
     },
     twitter: {
         card: "summary_large_image",
         title: "O24 Platform | vKnight",
         description: "OpenAPI & Open Banking Integration Platform",
+        images: [
+            {
+                url: "https://vknight.io.vn/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "O24 Platform | vKnight",
+            },
+        ],
     },
     robots: {
         index: true,

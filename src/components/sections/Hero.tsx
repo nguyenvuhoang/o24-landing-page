@@ -14,7 +14,7 @@ export function Hero() {
             {/* Background decoration */}
             <div className="absolute inset-0 overflow-hidden">
                 <div className="absolute -top-40 -right-40 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
-                <div className="absolute top-40 -left-40 h-80 w-80 rounded-full bg-purple-500/10 blur-3xl" />
+                <div className="absolute top-40 -left-40 h-80 w-80 rounded-full bg-amber-500/10 blur-3xl" />
             </div>
 
             <div className="container relative mx-auto px-4 py-20 lg:py-32">
@@ -28,17 +28,17 @@ export function Hero() {
                     {/* Headline */}
                     <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
                         <span className="block">Xây dựng hệ thống</span>
-                        <span className="block mt-2 bg-gradient-to-r from-primary via-purple-500 to-pink-500 bg-clip-text text-transparent">
+                        <span className="block mt-2 bg-gradient-to-r from-amber-500 via-primary to-orange-600 bg-clip-text text-transparent">
                             Banking & Fintech
                         </span>
-                        <span className="block mt-2">chỉ trong vài tuần</span>
+                        <span className="block mt-2">một cách nhanh chóng</span>
                     </h1>
 
                     {/* Subheadline */}
                     <p className="mt-6 text-lg text-muted-foreground sm:text-xl max-w-2xl mx-auto leading-relaxed">
                         <strong>O24</strong> là nền tảng OpenAPI & Open Banking Integration từ{" "}
                         <strong>vKnight</strong>. Triển khai nhanh trên on-prem hoặc cloud,
-                        với Observability toàn diện và bảo mật cấp enterprise.
+                        với khả năng quan sát toàn diện và bảo mật cấp doanh nghiệp.
                     </p>
 
                     {/* CTAs */}
@@ -70,7 +70,7 @@ export function Hero() {
                 {/* Hero image placeholder */}
                 <div className="mt-16 mx-auto max-w-5xl">
                     <div className="relative rounded-2xl border bg-gradient-to-b from-muted/50 to-muted p-2 shadow-2xl shadow-primary/10">
-                        <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-primary/5 via-purple-500/5 to-pink-500/5 flex items-center justify-center border">
+                        <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-primary/5 via-amber-500/5 to-orange-500/5 flex items-center justify-center border">
                             <div className="text-center">
                                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl gradient-primary mb-4">
                                     <Zap className="h-10 w-10 text-white" />

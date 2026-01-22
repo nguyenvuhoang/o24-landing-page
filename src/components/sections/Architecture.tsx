@@ -6,7 +6,7 @@ export function Architecture() {
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                         Kiến trúc{" "}
-                        <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
                             hiện đại & linh hoạt
                         </span>
                     </h2>

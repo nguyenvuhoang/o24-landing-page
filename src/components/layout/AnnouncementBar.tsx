@@ -9,7 +9,7 @@ export function AnnouncementBar() {
     if (!isVisible) return null;
 
     return (
-        <div className="relative bg-gradient-to-r from-primary via-purple-500 to-pink-500 text-white">
+        <div className="relative bg-gradient-to-r from-amber-500 via-primary to-orange-600 text-white">
             <div className="container mx-auto flex items-center justify-center gap-x-4 px-4 py-2.5 text-sm">
                 <span className="hidden sm:inline">🎉</span>
                 <p className="text-center font-medium">

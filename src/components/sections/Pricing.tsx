@@ -60,7 +60,7 @@ export function Pricing() {
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                         Pricing{" "}
-                        <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
                             đơn giản & minh bạch
                         </span>
                     </h2>
@@ -76,8 +76,8 @@ export function Pricing() {
                         <Card
                             key={plan.name}
                             className={`relative ${plan.popular
-                                    ? "border-primary shadow-xl shadow-primary/10 scale-105"
-                                    : ""
+                                ? "border-primary shadow-xl shadow-primary/10 scale-105"
+                                : ""
                                 }`}
                         >
                             {plan.popular && (

@@ -41,7 +41,7 @@ export function Solutions() {
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                         Giải pháp cho{" "}
-                        <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
                             mọi nhu cầu
                         </span>
                     </h2>

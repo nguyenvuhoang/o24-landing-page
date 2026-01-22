@@ -14,12 +14,12 @@ const faqs = [
     {
         question: "O24 tích hợp được với những Core Banking nào?",
         answer:
-            "O24 có sẵn adapter cho các Core Banking phổ biến như Temenos T24, Finacle, Flexcube, và nhiều hệ thống khác. Chúng tôi cũng cung cấp SDK để bạn tự xây dựng adapter cho các hệ thống đặc thù.",
+            "O24 có sẵn adapter cho các Core Banking phổ biến như Temenos T24, Finacle, Finastra, Flexcube, Optimal9, và nhiều hệ thống khác. Chúng tôi cũng cung cấp SDK để bạn tự xây dựng adapter cho các hệ thống đặc thù.",
     },
     {
         question: "Làm sao để đảm bảo bảo mật khi sử dụng O24?",
         answer:
-            "O24 tuân thủ các chuẩn bảo mật cao nhất: OAuth2/OIDC, mTLS, encryption at rest và in transit. Chúng tôi tích hợp với Azure KeyVault và HashiCorp Vault để quản lý secrets. O24 cũng hỗ trợ audit logging chi tiết.",
+            "O24 tuân thủ các chuẩn bảo mật cao nhất: OAuth2/OIDC, mTLS, encryption at rest và in transit. Chúng tôi tích hợp với O24 KeyVault, Azure KeyVault và HashiCorp Vault để quản lý secrets. O24 cũng hỗ trợ audit logging chi tiết.",
     },
     {
         question: "Thời gian triển khai O24 mất bao lâu?",
@@ -46,7 +46,7 @@ export function FAQ() {
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
                         Câu hỏi{" "}
-                        <span className="bg-gradient-to-r from-primary to-purple-500 bg-clip-text text-transparent">
+                        <span className="bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
                             thường gặp
                         </span>
                     </h2>
