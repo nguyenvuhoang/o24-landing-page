@@ -8,9 +8,9 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "O24 Platform | vKnight - OpenAPI & Core Banking Integration",
+    title: "O24 Platform | vKnight - OpenAPI & Open Banking Integration",
     description:
-        "O24 là nền tảng OpenAPI & Core Banking Integration mạnh mẽ từ vKnight. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud với Observability toàn diện.",
+        "O24 là nền tảng OpenAPI & Open Banking Integration mạnh mẽ từ vKnight. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud với Observability toàn diện.",
     keywords: [
         "O24",
         "vKnight",
@@ -22,9 +22,9 @@ export const metadata: Metadata = {
     ],
     authors: [{ name: "vKnight" }],
     openGraph: {
-        title: "O24 Platform | vKnight - OpenAPI & Core Banking Integration",
+        title: "O24 Platform | vKnight - OpenAPI & Open Banking Integration",
         description:
-            "Nền tảng OpenAPI & Core Banking Integration mạnh mẽ. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud.",
+            "Nền tảng OpenAPI & Open Banking Integration mạnh mẽ. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud.",
         url: "https://o24.vknight.io",
         siteName: "O24 by vKnight",
         locale: "vi_VN",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     twitter: {
         card: "summary_large_image",
         title: "O24 Platform | vKnight",
-        description: "OpenAPI & Core Banking Integration Platform",
+        description: "OpenAPI & Open Banking Integration Platform",
     },
     robots: {
         index: true,

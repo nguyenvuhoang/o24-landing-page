@@ -1,9 +1,10 @@
 "use client";
 
+import Image from "next/image";
 import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Menu, X, Zap } from "lucide-react";
+import { Menu, X } from "lucide-react";
 
 const navItems = [
     { label: "Product", href: "#features" },
@@ -22,10 +23,14 @@ export function Header() {
                 <div className="flex h-16 items-center justify-between">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-primary">
-                            <Zap className="h-5 w-5 text-white" />
-                        </div>
-                        <span className="text-xl font-bold tracking-tight">vKnight</span>
+                        <Image
+                            src="/images/Logo.png"
+                            alt="vKnight"
+                            width={120}
+                            height={40}
+                            className="h-9 w-auto"
+                            priority
+                        />
                     </Link>
 
                     {/* Desktop Navigation */}

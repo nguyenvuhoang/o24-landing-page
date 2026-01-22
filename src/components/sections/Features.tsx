@@ -17,7 +17,7 @@ const features = [
     },
     {
         icon: Database,
-        title: "Core Banking Integration",
+        title: "Open Banking Integration",
         description:
             "Kết nối trực tiếp với các Core Banking phổ biến: T24, Finacle, Flexcube. Chuẩn hóa dữ liệu tự động.",
     },

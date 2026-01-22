@@ -36,7 +36,7 @@ export function Hero() {
 
                     {/* Subheadline */}
                     <p className="mt-6 text-lg text-muted-foreground sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                        <strong>O24</strong> là nền tảng OpenAPI & Core Banking Integration từ{" "}
+                        <strong>O24</strong> là nền tảng OpenAPI & Open Banking Integration từ{" "}
                         <strong>vKnight</strong>. Triển khai nhanh trên on-prem hoặc cloud,
                         với Observability toàn diện và bảo mật cấp enterprise.
                     </p>

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { Zap, Github, Linkedin, Twitter, Youtube } from "lucide-react";
 
@@ -42,13 +43,16 @@ export function Footer() {
                     {/* Brand */}
                     <div className="col-span-2 md:col-span-4 lg:col-span-1">
                         <Link href="/" className="flex items-center gap-2">
-                            <div className="flex h-9 w-9 items-center justify-center rounded-xl gradient-primary">
-                                <Zap className="h-5 w-5 text-white" />
-                            </div>
-                            <span className="text-xl font-bold tracking-tight">vKnight</span>
+                            <Image
+                                src="/images/Logo.png"
+                                alt="vKnight"
+                                width={120}
+                                height={40}
+                                className="h-9 w-auto"
+                            />
                         </Link>
                         <p className="mt-4 text-sm text-muted-foreground max-w-xs">
-                            Đơn vị tiên phong trong lĩnh vực OpenAPI & Core Banking Integration
+                            Đơn vị tiên phong trong lĩnh vực OpenAPI & Open Banking Integration
                             tại Việt Nam.
                         </p>
                         <div className="mt-6 flex gap-3">
