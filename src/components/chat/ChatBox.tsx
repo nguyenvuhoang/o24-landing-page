@@ -14,7 +14,7 @@ export default function ChatBox() {
     const [mounted, setMounted] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
     const [messages, setMessages] = useState<Message[]>([
-        { role: "assistant", content: "Hi there! How can I help you today?" },
+        { role: "assistant", content: "Xin chào! Tôi có thể giúp gì cho bạn?" },
     ]);
 
     useEffect(() => {
@@ -33,12 +33,20 @@ export default function ChatBox() {
 
     if (!mounted) return null;
 
-    const handleSend = async () => {
-        if (!input.trim() || isLoading) return;
+    const SUGGESTED_QUESTIONS = [
+        "O24 hỗ trợ những Core Banking nào?",
+        "Kiến trúc của O24 là gì?",
+        "O24 có triển khai on-premise được không?",
+        "Bảo mật của hệ thống như thế nào?",
+    ];
 
-        const userMessage: Message = { role: "user", content: input };
+    const handleSend = async (overrideInput?: string) => {
+        const textToSend = overrideInput || input;
+        if (!textToSend.trim() || isLoading) return;
+
+        const userMessage: Message = { role: "user", content: textToSend };
         setMessages((prev) => [...prev, userMessage]);
-        setInput("");
+        if (!overrideInput) setInput("");
         setIsLoading(true);
 
         try {
@@ -112,6 +120,25 @@ export default function ChatBox() {
                                 </div>
                             </div>
                         ))}
+
+                        {/* Suggested Questions */}
+                        {messages.length === 1 && !isLoading && (
+                            <div className="flex flex-col gap-2 pt-2 animate-in fade-in slide-in-from-bottom-2">
+                                <p className="text-xs text-muted-foreground px-1">Gợi ý cho bạn:</p>
+                                <div className="flex flex-wrap gap-2">
+                                    {SUGGESTED_QUESTIONS.map((q, i) => (
+                                        <button
+                                            key={i}
+                                            onClick={() => handleSend(q)}
+                                            className="text-left text-xs bg-white/5 hover:bg-white/10 border border-white/10 rounded-full px-4 py-2 text-white/80 hover:text-white transition-all active:scale-95"
+                                        >
+                                            {q}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         {isLoading && (
                             <div className="flex justify-start">
                                 <div className="flex items-center gap-2 rounded-2xl bg-white/10 p-3 text-sm text-white border border-white/10">
@@ -134,7 +161,7 @@ export default function ChatBox() {
                                 className="flex-1 rounded-full bg-white/5 border border-white/10 p-2 px-4 text-sm text-white focus:outline-none focus:ring-2 focus:ring-blue-600 transition-all"
                             />
                             <Button
-                                onClick={handleSend}
+                                onClick={() => handleSend()}
                                 disabled={isLoading}
                                 size="icon"
                                 className="rounded-full bg-blue-600 hover:bg-blue-700"
