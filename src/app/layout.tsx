@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import ChatBox from "@/components/chat/ChatBox";
+
 
 const inter = Inter({
     subsets: ["latin", "vietnamese"],
@@ -31,7 +33,7 @@ export const metadata: Metadata = {
         type: "website",
         images: [
             {
-                url: "https://vknight.io.vn/og-image.png",
+                url: "https://vknight.io.vn/images/og-image.png",
                 width: 1200,
                 height: 630,
                 alt: "O24 Platform | vKnight",
@@ -44,7 +46,7 @@ export const metadata: Metadata = {
         description: "OpenAPI & Open Banking Integration Platform",
         images: [
             {
-                url: "https://vknight.io.vn/og-image.png",
+                url: "https://vknight.io.vn/images/og-image.png",
                 width: 1200,
                 height: 630,
                 alt: "O24 Platform | vKnight",
@@ -64,7 +66,11 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="vi" className={inter.variable} suppressHydrationWarning>
-            <body className="min-h-screen antialiased font-sans">{children}</body>
+            <body className="min-h-screen antialiased font-sans">
+                {children}
+                <ChatBox />
+            </body>
+
         </html>
     );
 }
