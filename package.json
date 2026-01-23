@@ -17,6 +17,7 @@
     "@radix-ui/react-slot": "^1.1.1",
     "@supabase/supabase-js": "^2.91.0",
     "@vercel/og": "^0.8.6",
+    "@vknight/o24-uikit": "^1.0.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "install": "^0.13.0",
