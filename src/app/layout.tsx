@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import ChatBox from "@/components/chat/ChatBox";
+import { Analytics } from '@vercel/analytics/next';
 
 
 const inter = Inter({
@@ -68,6 +69,7 @@ export default function RootLayout({
             <body className="min-h-screen antialiased font-sans">
                 {children}
                 <ChatBox />
+                <Analytics />
             </body>
 
         </html>

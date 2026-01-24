@@ -16,6 +16,7 @@
     "@radix-ui/react-accordion": "^1.2.2",
     "@radix-ui/react-slot": "^1.1.1",
     "@supabase/supabase-js": "^2.91.0",
+    "@vercel/analytics": "^1.6.1",
     "@vercel/og": "^0.8.6",
     "@vknight/o24-uikit": "^1.0.1",
     "class-variance-authority": "^0.7.1",

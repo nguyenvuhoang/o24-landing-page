@@ -5,14 +5,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
-
-const navItems = [
-    { label: "Product", href: "#features" },
-    { label: "Solutions", href: "#solutions" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Docs", href: "#" },
-    { label: "Contact", href: "#contact" },
-];
+import { navItems } from "@/data/navigation";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
