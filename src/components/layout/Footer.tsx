@@ -10,7 +10,7 @@ const footerLinks = {
         { label: "Roadmap", href: "#" },
     ],
     developers: [
-        { label: "Documentation", href: "#" },
+        { label: "Documentation", href: "https://docs.vknight.io.vn" },
         { label: "API Reference", href: "#" },
         { label: "SDK", href: "#" },
         { label: "Status", href: "#" },
