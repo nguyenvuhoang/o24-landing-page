@@ -1,13 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Quicksand } from "next/font/google";
 import "./globals.css";
 import ChatBox from "@/components/chat/ChatBox";
 import { Analytics } from '@vercel/analytics/next';
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 
 
-const inter = Inter({
+const quicksand = Quicksand({
     subsets: ["latin", "vietnamese"],
-    variable: "--font-inter",
+    variable: "--font-quicksand",
 });
 
 export const metadata: Metadata = {
@@ -65,9 +68,12 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="vi" className={inter.variable} suppressHydrationWarning>
-            <body className="min-h-screen antialiased font-sans">
+        <html lang="vi" className={quicksand.variable} suppressHydrationWarning>
+            <body className="min-h-screen antialiased font-sans" suppressHydrationWarning>
+                <AnnouncementBar />
+                <Header />
                 {children}
+                <Footer />
                 <ChatBox />
                 <Analytics />
             </body>

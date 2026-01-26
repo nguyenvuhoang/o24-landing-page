@@ -1,11 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, Play, Shield, Zap, Globe } from "lucide-react";
+import { ArrowRight, BookOpen, Github, Code2, Blocks, Server, Shield } from "lucide-react";
 
 const trustBadges = [
-    { icon: Shield, label: "Enterprise Security" },
-    { icon: Zap, label: "99.99% Uptime" },
-    { icon: Globe, label: "Global CDN" },
+    { icon: Github, label: "Open Source" },
+    { icon: Blocks, label: "Plugin-first" },
+    { icon: BookOpen, label: "Docs-first" },
+    { icon: Server, label: "Self-host Ready" },
+    { icon: Shield, label: "Enterprise Grade" },
 ];
 
 export function Hero() {
@@ -21,35 +23,41 @@ export function Hero() {
                 <div className="mx-auto max-w-4xl text-center">
                     {/* Badge */}
                     <Badge variant="secondary" className="mb-6 px-4 py-1.5">
-                        <span className="mr-2">🚀</span>
-                        Phiên bản 3.0 — Multi-tenant & Auto-scaling
+                        <Github className="mr-2 h-4 w-4" />
+                        Open Source • Community-driven
                     </Badge>
 
                     {/* Headline */}
                     <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl lg:text-6xl xl:text-7xl">
-                        <span className="block">Xây dựng hệ thống</span>
+                        <span className="block">API Management</span>
                         <span className="block mt-2 bg-gradient-to-r from-amber-500 via-primary to-orange-600 bg-clip-text text-transparent">
-                            Banking & Fintech
+                            cho Enterprise
                         </span>
-                        <span className="block mt-2">một cách nhanh chóng</span>
+                        <span className="block mt-2 text-3xl sm:text-4xl lg:text-5xl font-bold text-muted-foreground">
+                            Được thiết kế để mở rộng
+                        </span>
                     </h1>
 
                     {/* Subheadline */}
                     <p className="mt-6 text-lg text-muted-foreground sm:text-xl max-w-2xl mx-auto leading-relaxed">
-                        <strong>O24</strong> là nền tảng OpenAPI & Open Banking Integration từ{" "}
-                        <strong>vKnight</strong>. Triển khai nhanh trên on-prem hoặc cloud,
-                        với khả năng quan sát toàn diện và bảo mật cấp doanh nghiệp.
+                        <strong>O24</strong> là nền tảng <strong>API Management & Product Service</strong> mã nguồn mở từ{" "}
+                        <strong>vKnight</strong>. Plugin-first architecture, tài liệu đầy đủ,
+                        triển khai linh hoạt trên on-prem hoặc cloud — xây dựng bởi developers, cho developers.
                     </p>
 
                     {/* CTAs */}
                     <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                         <Button variant="gradient" size="lg" className="min-w-[180px]">
-                            Get Started
-                            <ArrowRight className="ml-2 h-5 w-5" />
+                            <Github className="mr-2 h-5 w-5" />
+                            Star on GitHub
                         </Button>
                         <Button variant="outline" size="lg" className="min-w-[180px]">
-                            <Play className="mr-2 h-5 w-5" />
-                            Request Demo
+                            <BookOpen className="mr-2 h-5 w-5" />
+                            Đọc Docs
+                        </Button>
+                        <Button variant="ghost" size="lg" className="min-w-[160px]">
+                            Liên hệ Enterprise
+                            <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                     </div>
 
@@ -73,13 +81,13 @@ export function Hero() {
                         <div className="aspect-[16/9] rounded-xl bg-gradient-to-br from-primary/5 via-amber-500/5 to-orange-500/5 flex items-center justify-center border">
                             <div className="text-center">
                                 <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl gradient-primary mb-4">
-                                    <Zap className="h-10 w-10 text-white" />
+                                    <Code2 className="h-10 w-10 text-white" />
                                 </div>
                                 <p className="text-lg font-semibold text-muted-foreground">
-                                    O24 Dashboard Preview
+                                    O24 Developer Portal
                                 </p>
                                 <p className="text-sm text-muted-foreground/70 mt-1">
-                                    API Gateway • Monitoring • Analytics
+                                    API Gateway • Plugin System • Developer Experience
                                 </p>
                             </div>
                         </div>

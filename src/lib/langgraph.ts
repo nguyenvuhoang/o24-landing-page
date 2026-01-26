@@ -1,6 +1,6 @@
+import { BaseMessage, SystemMessage } from "@langchain/core/messages";
+import { MessagesAnnotation, StateGraph } from "@langchain/langgraph";
 import { ChatOpenAI, OpenAIEmbeddings } from "@langchain/openai";
-import { StateGraph, MessagesAnnotation } from "@langchain/langgraph";
-import { SystemMessage, AIMessage, BaseMessage } from "@langchain/core/messages";
 import { supabase } from "./supabase";
 
 // Embeddings instance

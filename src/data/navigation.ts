@@ -1,7 +1,7 @@
 export const navItems = [
-    { label: "Product", href: "#features" },
-    { label: "Solutions", href: "#solutions" },
-    { label: "Pricing", href: "#pricing" },
-    { label: "Docs", href: "#" },
-    { label: "Contact", href: "#contact" },
+    { label: "Sản phẩm", href: "#features" },
+    { label: "Giải pháp", href: "#solutions" },
+    { label: "Lộ trình", href: "/roadmap" },
+    { label: "Báo giá", href: "#pricing" },
+    { label: "Liên hệ", href: "#contact" },
 ];

@@ -7,7 +7,7 @@ const footerLinks = {
         { label: "Features", href: "#features" },
         { label: "Pricing", href: "#pricing" },
         { label: "Changelog", href: "#" },
-        { label: "Roadmap", href: "#" },
+        { label: "Roadmap", href: "/roadmap" },
     ],
     developers: [
         { label: "Documentation", href: "https://docs.vknight.io.vn" },
