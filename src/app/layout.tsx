@@ -69,6 +69,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="vi" className={quicksand.variable} suppressHydrationWarning>
+            <head>
+                <meta property="zalo-platform-site-verification" content="IDslAR-ZFWv7jhK4lf8zMM63laQDzMeUDJKo" />
+            </head>
             <body className="min-h-screen antialiased font-sans" suppressHydrationWarning>
                 <AnnouncementBar />
                 <Header />
@@ -77,7 +80,6 @@ export default function RootLayout({
                 <ChatBox />
                 <Analytics />
             </body>
-
         </html>
     );
 }
