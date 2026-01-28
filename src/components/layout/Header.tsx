@@ -44,8 +44,8 @@ export function Header() {
                         <Button variant="ghost" size="sm">
                             Đăng nhập
                         </Button>
-                        <Button variant="gradient" size="sm">
-                            Request Demo
+                        <Button variant="gradient" size="sm" asChild>
+                            <Link href="/demo">Request Demo</Link>
                         </Button>
                     </div>
 
@@ -80,8 +80,8 @@ export function Header() {
                             <Button variant="outline" className="w-full">
                                 Đăng nhập
                             </Button>
-                            <Button variant="gradient" className="w-full">
-                                Request Demo
+                            <Button variant="gradient" className="w-full" asChild>
+                                <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request Demo</Link>
                             </Button>
                         </div>
                     </div>
