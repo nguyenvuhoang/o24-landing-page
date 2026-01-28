@@ -5,13 +5,26 @@ import { FileText, Map } from "lucide-react";
 
 export const metadata: Metadata = {
     title: "Request a Technical Demo | O24 Platform",
-    description:
-        "Schedule a live walkthrough of O24 Platform tailored to your API management and integration use case. No slides, real configuration examples.",
+    description: "Schedule a live walkthrough of O24 Platform tailored to your API management and integration use case. No slides, real configuration examples.",
     openGraph: {
         title: "Request a Technical Demo | O24 Platform",
-        description:
-            "Schedule a live walkthrough of O24 Platform tailored to your use case.",
+        description: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
         url: "/demo",
+        images: [
+            {
+                url: "/images/og-image.png", // Đảm bảo link này tồn tại trong public
+                width: 1200,
+                height: 630,
+                alt: "O24 Platform Demo",
+            },
+        ],
+        type: "website",
+    },
+    twitter: {
+        card: "summary_large_image",
+        title: "Request a Technical Demo | O24 Platform",
+        description: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
+        images: ["/images/og-image.png"],
     },
 };
 
