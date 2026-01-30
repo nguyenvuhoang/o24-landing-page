@@ -1,9 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowRight, BookOpen, Github, Code2, Blocks, Server, Shield } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, Blocks, Server, Shield } from "lucide-react";
+import { GitHub } from "@/components/ui/Icons";
+import Link from "next/link";
 
 const trustBadges = [
-    { icon: Github, label: "Open Source" },
+    { icon: GitHub, label: "Open Source" },
     { icon: Blocks, label: "Plugin-first" },
     { icon: BookOpen, label: "Docs-first" },
     { icon: Server, label: "Self-host Ready" },
@@ -23,7 +25,7 @@ export function Hero() {
                 <div className="mx-auto max-w-4xl text-center">
                     {/* Badge */}
                     <Badge variant="secondary" className="mb-6 px-4 py-1.5">
-                        <Github className="mr-2 h-4 w-4" />
+                        <GitHub className="mr-2 h-4 w-4" />
                         Open Source • Community-driven
                     </Badge>
 
@@ -47,10 +49,12 @@ export function Hero() {
 
                     {/* CTAs */}
                     <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <Button variant="gradient" size="lg" className="min-w-[180px]">
-                            <Github className="mr-2 h-5 w-5" />
-                            Star on GitHub
-                        </Button>
+                        <Link href="https://github.com/vknightteam" target="_blank" rel="noopener noreferrer">
+                            <Button variant="gradient" size="lg" className="min-w-[180px]">
+                                <GitHub className="mr-2 h-5 w-5" />
+                                Star on GitHub
+                            </Button>
+                        </Link>
                         <Button variant="outline" size="lg" className="min-w-[180px]">
                             <BookOpen className="mr-2 h-5 w-5" />
                             Đọc Docs

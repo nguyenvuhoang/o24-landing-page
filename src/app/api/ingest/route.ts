@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { supabase } from "@/lib/supabase";
+import { createClient } from "@/lib/supabase/server";
 import { OpenAIEmbeddings } from "@langchain/openai";
 import { O24_KNOWLEDGE } from "@/lib/knowledge";
 
@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
     try {
         const embeddings = new OpenAIEmbeddings();
 
-        console.log("Starting ingestion...");
+        const supabase = await createClient();
 
         for (const item of O24_KNOWLEDGE) {
             const content = `${item.title}: ${item.content}`;

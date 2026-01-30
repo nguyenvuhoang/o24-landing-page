@@ -6,9 +6,11 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/navigation";
+import { LoginModal } from "@/components/auth/LoginModal";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
     return (
         <header className="sticky top-0 z-50 w-full glass">
@@ -21,7 +23,7 @@ export function Header() {
                             alt="vKnight"
                             width={120}
                             height={40}
-                            className="h-9 w-auto"
+                            className="h-10 w-auto"
                             priority
                         />
                     </Link>
@@ -41,7 +43,7 @@ export function Header() {
 
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
-                        <Button variant="ghost" size="sm">
+                        <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
                             Đăng nhập
                         </Button>
                         <Button variant="gradient" size="sm" asChild>
@@ -77,7 +79,14 @@ export function Header() {
                             </Link>
                         ))}
                         <div className="pt-4 px-4 space-y-2">
-                            <Button variant="outline" className="w-full">
+                            <Button
+                                variant="outline"
+                                className="w-full"
+                                onClick={() => {
+                                    setIsLoginModalOpen(true);
+                                    setIsMobileMenuOpen(false);
+                                }}
+                            >
                                 Đăng nhập
                             </Button>
                             <Button variant="gradient" className="w-full" asChild>
@@ -87,6 +96,11 @@ export function Header() {
                     </div>
                 )}
             </div>
+
+            <LoginModal
+                isOpen={isLoginModalOpen}
+                onClose={() => setIsLoginModalOpen(false)}
+            />
         </header>
     );
 }
