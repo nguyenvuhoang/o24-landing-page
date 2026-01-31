@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import nodemailer from "nodemailer";
+import { Resend } from "resend";
 
 interface DemoRequest {
     name: string;
@@ -127,31 +127,26 @@ function formatHtmlContent(data: DemoRequest): string {
 }
 
 async function sendEmail(data: DemoRequest): Promise<boolean> {
-    // Configure SMTP transport
-    // For production, use environment variables for credentials
-    const transporter = nodemailer.createTransport({
-        host: process.env.SMTP_HOST || "smtp.gmail.com",
-        port: parseInt(process.env.SMTP_PORT || "587"),
-        secure: process.env.SMTP_SECURE === "true",
-        auth: {
-            user: process.env.SMTP_USER,
-            pass: process.env.SMTP_PASS,
-        },
-    });
+    const resend = new Resend(process.env.RESEND_API_KEY);
 
     try {
-        await transporter.sendMail({
-            from: process.env.SMTP_FROM || "O24 Platform <noreply@vknight.io.vn>",
-            to: "support@vknight.io.vn",
+        const { error } = await resend.emails.send({
+            from: process.env.SMTP_FROM || "O24 Platform <onboarding@resend.dev>",
+            to: ["support@vknight.io.vn"],
             replyTo: data.email,
             subject: `[Demo Request] ${data.company} - ${data.name}`,
             text: formatEmailContent(data),
             html: formatHtmlContent(data),
         });
 
+        if (error) {
+            console.error("Resend error:", error);
+            return false;
+        }
+
         return true;
     } catch (error) {
-        console.error("Failed to send email:", error);
+        console.error("Failed to send email via Resend:", error);
         return false;
     }
 }
