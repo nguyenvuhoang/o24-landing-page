@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Zap, Github, Linkedin, Twitter, Youtube } from "lucide-react";
+import { Zap, Linkedin, Twitter, Youtube } from "lucide-react";
+import { GitHub } from "@/components/ui/Icons";
+
 
 const footerLinks = {
     product: [
@@ -29,7 +31,7 @@ const footerLinks = {
 };
 
 const socialLinks = [
-    { icon: Github, href: "#", label: "GitHub" },
+    { icon: GitHub, href: "https://github.com/vknightteam", label: "GitHub" },
     { icon: Twitter, href: "#", label: "Twitter" },
     { icon: Linkedin, href: "#", label: "LinkedIn" },
     { icon: Youtube, href: "#", label: "YouTube" },
@@ -48,7 +50,7 @@ export function Footer() {
                                 alt="vKnight"
                                 width={120}
                                 height={40}
-                                className="h-9 w-auto"
+                                className="h-10 w-auto"
                             />
                         </Link>
                         <p className="mt-4 text-sm text-muted-foreground max-w-xs">

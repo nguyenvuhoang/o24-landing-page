@@ -6,6 +6,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { Agentation } from "@/components/agentation/Agentation";
 
 
 const quicksand = Quicksand({
@@ -79,6 +80,7 @@ export default function RootLayout({
                 <Footer />
                 <ChatBox />
                 <Analytics />
+                <Agentation />
             </body>
         </html>
     );
