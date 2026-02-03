@@ -16,7 +16,7 @@ export function AnnouncementBar() {
                     <span className="font-semibold">O24 v3.0</span> đã ra mắt! Hỗ trợ
                     Multi-tenant và Auto-scaling.{" "}
                     <a
-                        href="#features"
+                        href="/features"
                         className="inline-flex items-center gap-1 underline underline-offset-4 hover:no-underline"
                     >
                         Khám phá ngay →

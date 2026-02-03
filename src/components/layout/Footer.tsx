@@ -4,27 +4,27 @@ import { Zap, Github, Linkedin, Twitter, Youtube } from "lucide-react";
 
 const footerLinks = {
     product: [
-        { label: "Features", href: "#features" },
-        { label: "Pricing", href: "#pricing" },
-        { label: "Changelog", href: "#" },
-        { label: "Roadmap", href: "/roadmap" },
+        { label: "Tính năng", href: "/features" },
+        { label: "Bảng giá", href: "/pricing" },
+        { label: "Nhật ký thay đổi", href: "/changelog" },
+        { label: "Lộ trình", href: "/roadmap" },
     ],
     developers: [
-        { label: "Documentation", href: "https://docs.vknight.io.vn" },
-        { label: "API Reference", href: "#" },
+        { label: "Tài liệu", href: "https://docs.vknight.io.vn" },
+        { label: "Tài liệu API", href: "#" },
         { label: "SDK", href: "#" },
-        { label: "Status", href: "#" },
+        { label: "Trạng thái", href: "#" },
     ],
     company: [
-        { label: "About", href: "#" },
-        { label: "Blog", href: "#" },
-        { label: "Careers", href: "#" },
-        { label: "Contact", href: "#contact" },
+        { label: "Về chúng tôi", href: "/about" },
+        { label: "Blog", href: "/blog" },
+        { label: "Tuyển dụng", href: "/careers" },
+        { label: "Liên hệ", href: "/contact" },
     ],
     legal: [
-        { label: "Privacy", href: "#" },
-        { label: "Terms", href: "#" },
-        { label: "Security", href: "#" },
+        { label: "Chính sách bảo mật", href: "/privacy" },
+        { label: "Điều khoản", href: "/terms" },
+        { label: "Bảo mật", href: "/security" },
     ],
 };
 
@@ -71,7 +71,7 @@ export function Footer() {
 
                     {/* Links */}
                     <div>
-                        <h3 className="font-semibold mb-4">Product</h3>
+                        <h3 className="font-semibold mb-4">Sản phẩm</h3>
                         <ul className="space-y-2.5">
                             {footerLinks.product.map((link) => (
                                 <li key={link.label}>
@@ -87,7 +87,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h3 className="font-semibold mb-4">Developers</h3>
+                        <h3 className="font-semibold mb-4">Nhà phát triển</h3>
                         <ul className="space-y-2.5">
                             {footerLinks.developers.map((link) => (
                                 <li key={link.label}>
@@ -103,7 +103,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h3 className="font-semibold mb-4">Company</h3>
+                        <h3 className="font-semibold mb-4">Công ty</h3>
                         <ul className="space-y-2.5">
                             {footerLinks.company.map((link) => (
                                 <li key={link.label}>
@@ -119,7 +119,7 @@ export function Footer() {
                     </div>
 
                     <div>
-                        <h3 className="font-semibold mb-4">Legal</h3>
+                        <h3 className="font-semibold mb-4">Pháp lý</h3>
                         <ul className="space-y-2.5">
                             {footerLinks.legal.map((link) => (
                                 <li key={link.label}>
@@ -138,10 +138,10 @@ export function Footer() {
                 {/* Bottom */}
                 <div className="mt-12 pt-8 border-t flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-sm text-muted-foreground">
-                        © {new Date().getFullYear()} vKnight. All rights reserved.
+                        © {new Date().getFullYear()} vKnight. Bảo lưu mọi quyền.
                     </p>
                     <p className="text-sm text-muted-foreground">
-                        Made with ❤️ in Vietnam
+                        Được làm bằng ❤️ tại Việt Nam
                     </p>
                 </div>
             </div>
