@@ -7,6 +7,7 @@ import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Agentation } from "@/components/agentation/Agentation";
+import { TetHolidayPopup } from "@/components/layout/TetHolidayPopup";
 
 
 const quicksand = Quicksand({
@@ -81,6 +82,7 @@ export default function RootLayout({
                 <ChatBox />
                 <Analytics />
                 <Agentation />
+                <TetHolidayPopup />
             </body>
         </html>
     );
