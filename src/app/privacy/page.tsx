@@ -1,3 +1,15 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Chính sách bảo mật - vKnight",
+    description: "Chính sách bảo mật thông tin và dữ liệu tại vKnight - Cam kết bảo mật an toàn cho người dùng.",
+    openGraph: {
+        title: "Chính sách bảo mật - vKnight",
+        description: "Chính sách bảo mật thông tin và dữ liệu tại vKnight - Cam kết bảo mật an toàn cho người dùng.",
+        url: "/privacy",
+    },
+};
+
 export default function PrivacyPage() {
     return (
         <div className="container mx-auto px-4 py-16 lg:py-24">

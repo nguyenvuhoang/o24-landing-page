@@ -8,6 +8,11 @@ import { ArrowRight, CheckCircle2 } from "lucide-react";
 export const metadata: Metadata = {
     title: "Tính năng | O24",
     description: "Khám phá bộ công cụ toàn diện cho Fintech và Banking của O24",
+    openGraph: {
+        title: "Tính năng | O24",
+        description: "Khám phá bộ công cụ toàn diện cho Fintech và Banking của O24",
+        url: "/features",
+    },
 };
 
 export default function FeaturesPage() {

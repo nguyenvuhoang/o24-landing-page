@@ -3,6 +3,17 @@ import { Card, CardContent } from "@/components/ui/card";
 import { changelogData, ChangeType } from "@/data/changelog";
 import { CheckCircle2, FlaskConical, ShieldCheck, Sparkles, Wrench, Calendar } from "lucide-react";
 import React from "react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Nhật ký thay đổi - O24 Platform",
+    description: "Theo dõi hành trình phát triển và các bản cập nhật mới nhất của O24 Platform.",
+    openGraph: {
+        title: "Nhật ký thay đổi - O24 Platform",
+        description: "Theo dõi hành trình phát triển và các bản cập nhật mới nhất của O24 Platform.",
+        url: "/changelog",
+    },
+};
 
 const ChangeTypeIcon = ({ type }: { type: ChangeType }) => {
     switch (type) {

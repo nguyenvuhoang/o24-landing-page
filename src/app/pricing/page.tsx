@@ -23,6 +23,11 @@ import Link from "next/link";
 export const metadata: Metadata = {
     title: "Bảng giá | O24",
     description: "Các gói dịch vụ linh hoạt phù hợp với mọi quy mô doanh nghiệp",
+    openGraph: {
+        title: "Bảng giá | O24",
+        description: "Các gói dịch vụ linh hoạt phù hợp với mọi quy mô doanh nghiệp",
+        url: "/pricing",
+    },
 };
 
 export default function PricingPage() {

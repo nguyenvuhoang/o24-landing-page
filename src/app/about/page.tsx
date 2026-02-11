@@ -1,6 +1,17 @@
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Về chúng tôi - vKnight",
+    description: "Câu chuyện của vKnight - Đơn vị tiên phong trong lĩnh vực OpenAPI & Open Banking Integration tại Việt Nam.",
+    openGraph: {
+        title: "Về chúng tôi - vKnight",
+        description: "Câu chuyện của vKnight - Đơn vị tiên phong trong lĩnh vực OpenAPI & Open Banking Integration tại Việt Nam.",
+        url: "/about",
+    },
+};
 
 export default function AboutPage() {
     return (
