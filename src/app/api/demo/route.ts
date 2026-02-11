@@ -113,7 +113,7 @@ function formatHtmlContent(data: DemoRequest): string {
             
             <div class="section">
                 <div class="label">Use Case / Message</div>
-                <div class="message-box">${data.message.replace(/\n/g, "<br>")}</div>
+                <div class="message-box">${data.message.replaceAll("\n", "<br>")}</div>
             </div>
             
             <div class="footer">

@@ -65,11 +65,11 @@ export function useRoadmapFilters(data: RoadmapItem[]) {
 
     const quarters = useMemo(() => {
         const uniqueQuarters = Array.from(new Set(data.map(item => item.quarter)));
-        return uniqueQuarters.sort();
+        return uniqueQuarters.sort((a, b) => a.localeCompare(b));
     }, []);
 
     const groups = useMemo(() => {
-        return Array.from(new Set(data.map(item => item.group))).sort();
+        return Array.from(new Set(data.map(item => item.group))).sort((a, b) => a.localeCompare(b));
     }, []);
 
     return {

@@ -8,7 +8,7 @@ export function Features() {
                 {/* Header */}
                 <div className="mx-auto max-w-2xl text-center mb-16">
                     <h2 className="text-3xl font-bold tracking-tight sm:text-4xl lg:text-5xl">
-                        Tất cả những gì bạn cần
+                        Tất cả những gì bạn cần{" "}
                         <span className="block mt-2 bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
                             trong một nền tảng
                         </span>

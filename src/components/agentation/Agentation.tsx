@@ -154,9 +154,10 @@ export function Agentation() {
         <div className="agentation-ui fixed inset-0 pointer-events-none" style={{ zIndex: 9999 }}>
             {/* Markers */}
             {isVisible && annotations.map((anno) => (
-                <div
+                <button
                     key={anno.id}
-                    className="absolute flex items-center justify-center w-6 h-6 rounded-full bg-amber-500 text-white text-[10px] font-bold shadow-lg pointer-events-auto cursor-pointer hover:scale-110 transition-transform"
+                    type="button"
+                    className="absolute flex items-center justify-center w-6 h-6 rounded-full bg-amber-500 text-white text-[10px] font-bold shadow-lg pointer-events-auto cursor-pointer hover:scale-110 transition-transform focus:outline-none focus:ring-2 focus:ring-amber-400 focus:ring-offset-2"
                     style={{
                         left: anno.x - 12,
                         top: anno.y - 12,
@@ -168,7 +169,7 @@ export function Agentation() {
                     title={`Click to remove marker ${anno.label}`}
                 >
                     {anno.label}
-                </div>
+                </button>
             ))}
 
             {/* Hover Highlight */}
