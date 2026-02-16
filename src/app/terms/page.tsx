@@ -1,3 +1,15 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Điều khoản dịch vụ | vKnight O24",
+    description: "Quy định và điều khoản sử dụng nền tảng OpenAPI & Open Banking vKnight O24.",
+    openGraph: {
+        title: "Điều khoản dịch vụ | vKnight O24",
+        description: "Quy định và điều khoản sử dụng nền tảng OpenAPI & Open Banking vKnight O24.",
+        url: "/terms",
+    },
+};
+
 export default function TermsPage() {
     return (
         <div className="container mx-auto px-4 py-16 lg:py-24">

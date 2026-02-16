@@ -10,6 +10,14 @@ export const metadata: Metadata = {
         title: "Về chúng tôi - vKnight",
         description: "Câu chuyện của vKnight - Đơn vị tiên phong trong lĩnh vực OpenAPI & Open Banking Integration tại Việt Nam.",
         url: "/about",
+        images: [
+            {
+                url: "/images/og-image.png",
+                width: 1200,
+                height: 630,
+                alt: "Về chúng tôi - vKnight",
+            },
+        ],
     },
 };
 

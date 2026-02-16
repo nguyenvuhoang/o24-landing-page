@@ -89,7 +89,7 @@ export default function PricingPage() {
                                 size="lg"
                                 asChild
                             >
-                                <Link href="/contact">
+                                <Link href={plan.href}>
                                     {plan.cta}
                                 </Link>
                             </Button>

@@ -1,5 +1,16 @@
 import { ShieldCheck, Lock, Server, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "An ninh & Bảo mật | Bảo vệ bởi vKnight O24",
+    description: "Khám phá cách vKnight bảo vệ dữ liệu tài chính của bạn với các tiêu chuẩn an ninh hàng đầu: AES-256, TLS 1.3, và RBAC.",
+    openGraph: {
+        title: "An ninh & Bảo mật | Bảo vệ bởi vKnight O24",
+        description: "Khám phá cách vKnight bảo vệ dữ liệu tài chính của bạn với các tiêu chuẩn an ninh hàng đầu: AES-256, TLS 1.3, và RBAC.",
+        url: "/security",
+    },
+};
 
 export default function SecurityPage() {
     const features = [

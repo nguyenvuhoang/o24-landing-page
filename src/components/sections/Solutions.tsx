@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { solutions } from "@/data/solutions";
+import Link from "next/link";
 
 export function Solutions() {
     return (
@@ -47,10 +48,33 @@ export function Solutions() {
                                         </li>
                                     ))}
                                 </ul>
-                                <Button variant="ghost" className="group/btn p-0 h-auto">
-                                    {solution.cta}
-                                    <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-                                </Button>
+                                {solution.title === "Bank & Fintech" ? (
+                                    <Button asChild variant="ghost" className="group/btn p-0 h-auto">
+                                        <Link href="/solutions/bank-fintech">
+                                            {solution.cta}
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </Button>
+                                ) : solution.title === "Enterprise" ? (
+                                    <Button asChild variant="ghost" className="group/btn p-0 h-auto">
+                                        <Link href="/solutions/enterprise">
+                                            {solution.cta}
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </Button>
+                                ) : solution.title === "Developers" ? (
+                                    <Button asChild variant="ghost" className="group/btn p-0 h-auto">
+                                        <Link href="/solutions/developers">
+                                            {solution.cta}
+                                            <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                                        </Link>
+                                    </Button>
+                                ) : (
+                                    <Button variant="ghost" className="group/btn p-0 h-auto">
+                                        {solution.cta}
+                                        <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                                    </Button>
+                                )}
                             </CardContent>
                         </Card>
                     ))}

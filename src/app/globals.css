@@ -27,24 +27,24 @@
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --background: 224 71% 4%;
+    --foreground: 210 20% 98%;
+    --card: 224 71% 6%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71% 6%;
+    --popover-foreground: 210 20% 98%;
     --primary: 30 93% 54%;
     --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --secondary: 215 28% 14%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 28% 14%;
+    --muted-foreground: 217 10% 64%;
+    --accent: 215 28% 16%;
+    --accent-foreground: 210 20% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
+    --border: 215 28% 16%;
+    --input: 215 28% 16%;
     --ring: 30 93% 54%;
   }
 }
@@ -57,6 +57,20 @@
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth transitions for theme switching */
+  *,
+  *::before,
+  *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: ease-in-out;
+    transition-duration: 200ms;
+  }
+
+  /* Reset transitions for elements that shouldn't animate (inputs, etc) */
+  input, textarea, select, button {
+    transition-duration: 0ms;
   }
 }
 
@@ -75,17 +89,29 @@ html {
 }
 
 .dark .gradient-hero {
-  background: linear-gradient(135deg, hsl(30, 50%, 8%) 0%, hsl(24, 40%, 6%) 50%, hsl(20, 30%, 5%) 100%);
+  background: linear-gradient(135deg, hsl(224, 71%, 4%) 0%, hsl(228, 60%, 5%) 50%, hsl(232, 50%, 4%) 100%);
 }
 
 /* Glass effect */
 .glass {
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .dark .glass {
-  background: rgba(0, 0, 0, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(10, 14, 24, 0.8);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Dark mode glow accents */
+.dark .shadow-primary\/10 {
+  box-shadow: 0 0 20px hsl(30 93% 54% / 0.08);
+}
+
+.dark .shadow-primary\/5 {
+  box-shadow: 0 0 16px hsl(30 93% 54% / 0.05);
 }

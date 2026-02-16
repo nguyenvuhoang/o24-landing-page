@@ -50,7 +50,7 @@ export function Footer() {
                                 alt="vKnight"
                                 width={120}
                                 height={40}
-                                className="h-10 w-auto"
+                                className="h-10 w-auto dark:brightness-0 dark:invert"
                             />
                         </Link>
                         <p className="mt-4 text-sm text-muted-foreground max-w-xs">

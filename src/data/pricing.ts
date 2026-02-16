@@ -11,6 +11,7 @@ export const plans = [
             "Sandbox environment",
         ],
         cta: "Bắt đầu miễn phí",
+        href: "/pricing/starter",
         popular: false,
     },
     {
@@ -27,6 +28,7 @@ export const plans = [
             "SLA 99.9%",
         ],
         cta: "Liên hệ Sales",
+        href: "/pricing/business",
         popular: true,
     },
     {
@@ -43,6 +45,7 @@ export const plans = [
             "Source code access",
         ],
         cta: "Đặt lịch demo",
+        href: "/demo",
         popular: false,
     },
 ];

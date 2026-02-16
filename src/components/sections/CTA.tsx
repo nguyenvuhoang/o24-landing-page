@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Sparkles } from "lucide-react";
 
@@ -29,18 +30,24 @@ export function CTA() {
 
                         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
                             <Button
+                                asChild
                                 size="lg"
                                 className="bg-white text-primary hover:bg-white/90 min-w-[180px]"
                             >
-                                Bắt đầu miễn phí
-                                <ArrowRight className="ml-2 h-5 w-5" />
+                                <Link href="/pricing">
+                                    Bắt đầu miễn phí
+                                    <ArrowRight className="ml-2 h-5 w-5" />
+                                </Link>
                             </Button>
                             <Button
+                                asChild
                                 size="lg"
                                 variant="outline"
                                 className="border-white/30 bg-transparent text-white hover:bg-white/10 min-w-[180px]"
                             >
-                                Đặt lịch demo
+                                <Link href="/demo">
+                                    Đặt lịch demo
+                                </Link>
                             </Button>
                         </div>
                     </div>

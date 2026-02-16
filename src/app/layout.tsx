@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Agentation } from "@/components/agentation/Agentation";
 import { TetHolidayPopup } from "@/components/layout/TetHolidayPopup";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
 
 
 const quicksand = Quicksand({
@@ -64,6 +65,20 @@ export const metadata: Metadata = {
     },
 };
 
+// Anti-flash script: sets dark class before first paint
+const themeScript = `
+(function() {
+  try {
+    var theme = localStorage.getItem('theme');
+    var resolved = theme;
+    if (!theme || theme === 'system') {
+      resolved = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    document.documentElement.classList.add(resolved);
+  } catch (e) {}
+})();
+`;
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -73,16 +88,19 @@ export default function RootLayout({
         <html lang="vi" className={quicksand.variable} suppressHydrationWarning>
             <head>
                 <meta property="zalo-platform-site-verification" content="IDslAR-ZFWv7jhK4lf8zMM63laQDzMeUDJKo" />
+                <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             </head>
-            <body className="min-h-screen antialiased font-sans" suppressHydrationWarning>
-                <AnnouncementBar />
-                <Header />
-                {children}
-                <Footer />
-                <ChatBox />
-                <Analytics />
-                <Agentation />
-                <TetHolidayPopup />
+            <body className="min-h-screen antialiased font-sans transition-colors duration-300" suppressHydrationWarning>
+                <ThemeProvider>
+                    <AnnouncementBar />
+                    <Header />
+                    {children}
+                    <Footer />
+                    <ChatBox />
+                    <Analytics />
+                    <Agentation />
+                    <TetHolidayPopup />
+                </ThemeProvider>
             </body>
         </html>
     );

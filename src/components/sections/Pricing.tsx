@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Check } from "lucide-react";
+import Link from "next/link";
 
 import { plans } from "@/data/pricing";
 
@@ -62,8 +63,11 @@ export function Pricing() {
                                 <Button
                                     variant={plan.popular ? "gradient" : "outline"}
                                     className="w-full"
+                                    asChild
                                 >
-                                    {plan.cta}
+                                    <Link href={plan.href}>
+                                        {plan.cta}
+                                    </Link>
                                 </Button>
                             </CardContent>
                         </Card>

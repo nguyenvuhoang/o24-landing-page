@@ -3,6 +3,17 @@ import Link from "next/link";
 import { ArrowRight, Calendar } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Blog & Cập nhật | vKnight O24",
+    description: "Thông tin chi tiết, tin tức và hướng dẫn kỹ thuật từ đội ngũ vKnight về Open Banking và API Management.",
+    openGraph: {
+        title: "Blog & Cập nhật | vKnight O24",
+        description: "Thông tin chi tiết, tin tức và hướng dẫn kỹ thuật từ đội ngũ vKnight về Open Banking và API Management.",
+        url: "/blog",
+    },
+};
 
 export default function BlogPage() {
     const posts = [

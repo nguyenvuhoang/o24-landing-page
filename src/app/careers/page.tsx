@@ -3,6 +3,17 @@ import Link from "next/link";
 import { ArrowRight, MapPin, Clock } from "lucide-react";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Tuyển dụng | Gia nhập đội ngũ vKnight",
+    description: "Cơ hội nghề nghiệp hấp dẫn tại vKnight. Cùng chúng tôi xây dựng tương lai của kết nối tài chính tại Việt Nam.",
+    openGraph: {
+        title: "Tuyển dụng | Gia nhập đội ngũ vKnight",
+        description: "Cơ hội nghề nghiệp hấp dẫn tại vKnight. Cùng chúng tôi xây dựng tương lai của kết nối tài chính tại Việt Nam.",
+        url: "/careers",
+    },
+};
 
 export default function CareersPage() {
     const positions = [

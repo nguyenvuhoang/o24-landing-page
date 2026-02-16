@@ -5,6 +5,17 @@ import { Label } from "@/components/ui/label";
 import { Card, CardContent } from "@/components/ui/card";
 import { MapPin, Facebook, Phone, Mail, Send, Building2 } from "lucide-react";
 import Link from "next/link";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+    title: "Liên hệ | vKnight O24 Support",
+    description: "Kết nối với đội ngũ vKnight để được tư vấn và hỗ trợ về giải pháp Open Banking & API Management.",
+    openGraph: {
+        title: "Liên hệ | vKnight O24 Support",
+        description: "Kết nối với đội ngũ vKnight để được tư vấn và hỗ trợ về giải pháp Open Banking & API Management.",
+        url: "/contact",
+    },
+};
 
 export default function ContactPage() {
     return (

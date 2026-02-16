@@ -55,14 +55,18 @@ export function Hero() {
                                 Star on GitHub
                             </Button>
                         </Link>
-                        <Button variant="outline" size="lg" className="min-w-[180px]">
-                            <BookOpen className="mr-2 h-5 w-5" />
-                            Đọc Docs
-                        </Button>
-                        <Button variant="ghost" size="lg" className="min-w-[160px]">
-                            Liên hệ Enterprise
-                            <ArrowRight className="ml-2 h-5 w-5" />
-                        </Button>
+                        <Link href="https://docs.vknight.io.vn" target="_blank" rel="noopener noreferrer">
+                            <Button variant="outline" size="lg" className="min-w-[180px]">
+                                <BookOpen className="mr-2 h-5 w-5" />
+                                Đọc Docs
+                            </Button>
+                        </Link>
+                        <Link href="/enterprise">
+                            <Button variant="ghost" size="lg" className="min-w-[160px]">
+                                Liên hệ Enterprise
+                                <ArrowRight className="ml-2 h-5 w-5" />
+                            </Button>
+                        </Link>
                     </div>
 
                     {/* Trust badges */}

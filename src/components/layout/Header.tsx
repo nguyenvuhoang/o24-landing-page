@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { LoginModal } from "@/components/auth/LoginModal";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -23,7 +24,7 @@ export function Header() {
                             alt="vKnight"
                             width={120}
                             height={40}
-                            className="h-10 w-auto"
+                            className="h-10 w-auto dark:brightness-0 dark:invert"
                             priority
                         />
                     </Link>
@@ -43,6 +44,7 @@ export function Header() {
 
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
+                        <ThemeToggle />
                         <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
                             Đăng nhập
                         </Button>
@@ -52,17 +54,20 @@ export function Header() {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <button
-                        className="md:hidden p-2 hover:bg-accent rounded-lg transition-colors"
-                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        aria-label="Toggle menu"
-                    >
-                        {isMobileMenuOpen ? (
-                            <X className="h-5 w-5" />
-                        ) : (
-                            <Menu className="h-5 w-5" />
-                        )}
-                    </button>
+                    <div className="md:hidden flex items-center gap-2">
+                        <ThemeToggle />
+                        <button
+                            className="p-2 hover:bg-accent rounded-lg transition-colors"
+                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                            aria-label="Toggle menu"
+                        >
+                            {isMobileMenuOpen ? (
+                                <X className="h-5 w-5" />
+                            ) : (
+                                <Menu className="h-5 w-5" />
+                            )}
+                        </button>
+                    </div>
                 </div>
 
                 {/* Mobile Navigation */}
