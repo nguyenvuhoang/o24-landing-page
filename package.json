@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "ping-google": "node scripts/ping-google.mjs"
   },
   "dependencies": {
     "@langchain/community": "^1.1.5",
