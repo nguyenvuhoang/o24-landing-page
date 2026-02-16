@@ -9,6 +9,7 @@ import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Agentation } from "@/components/agentation/Agentation";
 import { TetHolidayPopup } from "@/components/layout/TetHolidayPopup";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 
 const quicksand = Quicksand({
@@ -29,6 +30,11 @@ export const metadata: Metadata = {
         "API Gateway",
         "Fintech",
         "Integration Platform",
+        "Open Banking Vietnam",
+        "Giải pháp Fintech",
+        "Kết nối ngân hàng",
+        "API Management Vietnam",
+        "Chuyển đổi số ngân hàng",
     ],
     authors: [{ name: "vKnight" }],
     openGraph: {
@@ -91,6 +97,32 @@ export default function RootLayout({
                 <script dangerouslySetInnerHTML={{ __html: themeScript }} />
             </head>
             <body className="min-h-screen antialiased font-sans transition-colors duration-300" suppressHydrationWarning>
+                <JsonLd
+                    data={{
+                        "@context": "https://schema.org",
+                        "@type": "Organization",
+                        "name": "vKnight",
+                        "url": "https://vknight.io.vn",
+                        "logo": "https://vknight.io.vn/favicon.ico",
+                        "sameAs": [
+                            "https://www.facebook.com/vknight.team",
+                            "https://github.com/vknightteam"
+                        ]
+                    }}
+                />
+                <JsonLd
+                    data={{
+                        "@context": "https://schema.org",
+                        "@type": "WebSite",
+                        "name": "O24 Platform",
+                        "url": "https://vknight.io.vn",
+                        "potentialAction": {
+                            "@type": "SearchAction",
+                            "target": "https://vknight.io.vn/search?q={search_term_string}",
+                            "query-input": "required name=search_term_string"
+                        }
+                    }}
+                />
                 <ThemeProvider>
                     <AnnouncementBar />
                     <Header />

@@ -6,10 +6,25 @@ import {
 } from "@/components/ui/accordion";
 
 import { faqs } from "@/data/faqs";
+import { JsonLd } from "@/components/seo/JsonLd";
 
 export function FAQ() {
+    const faqSchemaData = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": faqs.map(faq => ({
+            "@type": "Question",
+            "name": faq.question,
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.answer
+            }
+        }))
+    };
+
     return (
         <section className="py-20 lg:py-32 bg-muted/30">
+            <JsonLd data={faqSchemaData} />
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <div className="mx-auto max-w-2xl text-center mb-16">
