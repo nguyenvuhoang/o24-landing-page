@@ -17,11 +17,39 @@ import {
 } from "@/components/ui/popover";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import Link from "next/link";
 
 export function Header() {
     const pathname = usePathname();
     const router = useRouter();
     const supabase = createClient();
+    const [profile, setProfile] = useState<{ full_name: string; email: string; avatar_url: string } | null>(null);
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            if (user) {
+                const { data, error } = await supabase
+                    .from("profiles")
+                    .select("full_name, email, avatar_url")
+                    .eq("id", user.id)
+                    .single();
+
+                if (!error && data) {
+                    setProfile(data);
+                } else {
+                    // Fallback to auth metadata if profile table fetch fails
+                    setProfile({
+                        full_name: user.user_metadata?.full_name || user.user_metadata?.name || "User",
+                        email: user.email || "",
+                        avatar_url: user.user_metadata?.avatar_url || user.user_metadata?.picture || "",
+                    });
+                }
+            }
+        };
+        fetchProfile();
+    }, [supabase]);
 
     const getBreadcrumb = () => {
         const parts = pathname.split("/").filter(Boolean);
@@ -66,25 +94,29 @@ export function Header() {
 
                     <Popover>
                         <PopoverTrigger asChild>
-                            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full bg-accent/50 ml-2 overflow-hidden">
-                                <User className="h-5 w-5" />
+                            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-full bg-accent/50 ml-2 overflow-hidden border border-border/50">
+                                {profile?.avatar_url ? (
+                                    <img src={profile.avatar_url} alt={profile.full_name} className="h-full w-full object-cover" />
+                                ) : (
+                                    <User className="h-5 w-5" />
+                                )}
                             </Button>
                         </PopoverTrigger>
                         <PopoverContent className="w-56 p-2" align="end">
                             <div className="px-2 py-1.5 mb-2 border-b border-border">
-                                <p className="text-sm font-medium">Hoang Nguyen</p>
-                                <p className="text-xs text-muted-foreground truncate">hoang@o24.io</p>
+                                <p className="text-sm font-medium truncate">{profile?.full_name || "Loading..."}</p>
+                                <p className="text-xs text-muted-foreground truncate">{profile?.email || ""}</p>
                             </div>
-                            <div className="space-y-1">
-                                <button className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent">
+                            <div className="space-y-1 text-sm">
+                                <Link href="/dashboard/profile" className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-accent">
                                     <User className="h-4 w-4" /> Profile
-                                </button>
-                                <button className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent">
+                                </Link>
+                                <Link href="/dashboard/settings" className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-accent">
                                     <SettingsIcon className="h-4 w-4" /> Settings
-                                </button>
-                                <button className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-accent">
+                                </Link>
+                                <Link href="/dashboard/support" className="flex w-full items-center gap-2 rounded-md px-2 py-1.5 transition-colors hover:bg-accent">
                                     <HelpCircle className="h-4 w-4" /> Support
-                                </button>
+                                </Link>
                             </div>
                             <div className="mt-2 pt-2 border-t border-border">
                                 <button

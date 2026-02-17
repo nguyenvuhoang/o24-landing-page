@@ -9,8 +9,22 @@ export async function GET(request: Request) {
 
     if (code) {
         const supabase = await createClient();
-        const { error } = await supabase.auth.exchangeCodeForSession(code);
-        if (!error) {
+        const { data: { session }, error } = await supabase.auth.exchangeCodeForSession(code);
+
+        if (!error && session?.user) {
+            const { user } = session;
+            const fullName = user.user_metadata?.full_name || user.user_metadata?.name || "User";
+            const avatarUrl = user.user_metadata?.avatar_url || user.user_metadata?.picture || "";
+
+            // Sync user to profiles table
+            await supabase.from("profiles").upsert({
+                id: user.id,
+                full_name: fullName,
+                avatar_url: avatarUrl,
+                email: user.email,
+                updated_at: new Date().toISOString(),
+            }, { onConflict: 'id' });
+
             return NextResponse.redirect(`${origin}${next}`);
         }
     }
