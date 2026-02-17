@@ -1,17 +1,39 @@
 "use client";
 
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { LoginModal } from "@/components/auth/LoginModal";
 import { ThemeToggle } from "./ThemeToggle";
+import { usePathname } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+import { User as SupabaseUser } from "@supabase/supabase-js";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+    const [user, setUser] = useState<SupabaseUser | null>(null);
+    const pathname = usePathname();
+    const supabase = createClient();
+
+    useEffect(() => {
+        const getUser = async () => {
+            const { data: { user } } = await supabase.auth.getUser();
+            setUser(user);
+        };
+        getUser();
+
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            setUser(session?.user ?? null);
+        });
+
+        return () => subscription.unsubscribe();
+    }, [supabase]);
+
+    if (pathname?.startsWith("/dashboard")) return null;
 
     return (
         <header className="sticky top-0 z-50 w-full glass">
@@ -45,9 +67,15 @@ export function Header() {
                     {/* Desktop CTA */}
                     <div className="hidden md:flex items-center gap-3">
                         <ThemeToggle />
-                        <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
-                            Đăng nhập
-                        </Button>
+                        {!user ? (
+                            <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
+                                Đăng nhập
+                            </Button>
+                        ) : (
+                            <Button variant="ghost" size="sm" asChild>
+                                <Link href="/dashboard">Dashboard</Link>
+                            </Button>
+                        )}
                         <Button variant="gradient" size="sm" asChild>
                             <Link href="/demo">Request Demo</Link>
                         </Button>
@@ -84,16 +112,27 @@ export function Header() {
                             </Link>
                         ))}
                         <div className="pt-4 px-4 space-y-2">
-                            <Button
-                                variant="outline"
-                                className="w-full"
-                                onClick={() => {
-                                    setIsLoginModalOpen(true);
-                                    setIsMobileMenuOpen(false);
-                                }}
-                            >
-                                Đăng nhập
-                            </Button>
+                            {!user ? (
+                                <Button
+                                    variant="outline"
+                                    className="w-full"
+                                    onClick={() => {
+                                        setIsLoginModalOpen(true);
+                                        setIsMobileMenuOpen(false);
+                                    }}
+                                >
+                                    Đăng nhập
+                                </Button>
+                            ) : (
+                                <Button
+                                    variant="outline"
+                                    className="w-full"
+                                    asChild
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                >
+                                    <Link href="/dashboard">Dashboard</Link>
+                                </Button>
+                            )}
                             <Button variant="gradient" className="w-full" asChild>
                                 <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request Demo</Link>
                             </Button>

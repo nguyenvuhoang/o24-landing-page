@@ -3,10 +3,13 @@
 import { X } from "lucide-react";
 import { useState } from "react";
 
+import { usePathname } from "next/navigation";
+
 export function AnnouncementBar() {
     const [isVisible, setIsVisible] = useState(true);
+    const pathname = usePathname();
 
-    if (!isVisible) return null;
+    if (!isVisible || pathname?.startsWith("/dashboard")) return null;
 
     return (
         <div className="relative bg-gradient-to-r from-amber-500 via-primary to-orange-600 text-white">

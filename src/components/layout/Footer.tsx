@@ -1,7 +1,10 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { Zap, Linkedin, Twitter, Youtube } from "lucide-react";
 import { GitHub } from "@/components/ui/Icons";
+import { usePathname } from "next/navigation";
 
 
 const footerLinks = {
@@ -38,6 +41,9 @@ const socialLinks = [
 ];
 
 export function Footer() {
+    const pathname = usePathname();
+    if (pathname?.startsWith("/dashboard")) return null;
+
     return (
         <footer className="border-t bg-muted/30" id="contact">
             <div className="container mx-auto px-4 py-12 lg:py-16">
