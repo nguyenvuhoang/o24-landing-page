@@ -67,10 +67,8 @@ export function Header() {
             <div className="flex h-full items-center justify-between px-6">
                 <div className="flex items-center gap-8">
                     <div className="flex items-center gap-2">
-                        <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-                            <span className="text-primary-foreground font-bold italic tracking-tighter">O24</span>
-                        </div>
-                        <span className="font-bold text-xl tracking-tight hidden md:inline-block">O24 Page</span>
+                        <img src="/images/Logo.png" alt="O24" className="h-8 w-auto object-contain" />
+                        <span className="font-bold text-xl tracking-tight hidden md:inline-block">vKnight</span>
                     </div>
 
                     <nav className="hidden lg:flex items-center text-sm font-medium text-muted-foreground">

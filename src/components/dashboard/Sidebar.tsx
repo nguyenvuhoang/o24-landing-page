@@ -11,7 +11,8 @@ import {
   ChevronRight,
   Shield,
   CreditCard,
-  Users
+  Users,
+  Smartphone
 } from "lucide-react";
 
 const menuItems = [
@@ -19,6 +20,11 @@ const menuItems = [
     title: "Overview",
     icon: LayoutDashboard,
     href: "/dashboard",
+  },
+  {
+    title: "W4S Project",
+    icon: Smartphone,
+    href: "/dashboard/w4s",
   },
   {
     title: "Workflows",
