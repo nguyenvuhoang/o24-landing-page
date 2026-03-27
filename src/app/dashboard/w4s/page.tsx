@@ -23,6 +23,14 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogHeader,
+    DialogTitle,
+    DialogTrigger,
+} from "@/components/ui/dialog";
 
 export default function W4SProgressReport() {
     const today = new Date().toLocaleDateString('vi-VN', {
@@ -83,6 +91,66 @@ export default function W4SProgressReport() {
             setIsGenerating(false);
         }
     };
+
+    const weeklyPlan = [
+        {
+            id: 1,
+            title: "Hoàn tất review Figma",
+            shortDesc: "Complete Figma review and finalize UI/UX alignment across stakeholders",
+            fullDesc: "Hoàn thành việc review toàn bộ thiết kế ứng dụng W4S Mobile Application. Thống nhất UI/UX cuối cùng giữa các bên liên quan và đóng băng thiết kế (design freeze) để chuyển sang giai đoạn triển khai ổn định.",
+            status: "In Progress",
+            timeframe: "Tuần 1",
+            icon: Figma,
+            border: "border-t-blue-500",
+            bgIcon: "bg-blue-500/20 border border-blue-500/20",
+            textIcon: "text-blue-400",
+            badgeClass: "bg-blue-500/10 text-blue-400 border-blue-500/20",
+            cardClass: "bg-slate-900 border-slate-800 hover:bg-slate-800/80 cursor-pointer shadow-lg hover:shadow-blue-500/10 transition-all",
+        },
+        {
+            id: 2,
+            title: "Release version thiết kế",
+            shortDesc: "Release application version fully aligned with approved design",
+            fullDesc: "Cập nhật ứng dụng đảm bảo đúng 100% theo Figma đã được duyệt. Đồng bộ UI thực tế với thiết kế chuẩn và đảm bảo không còn sai lệch.",
+            status: "Pending",
+            timeframe: "Tuần 2 - 3",
+            icon: Smartphone,
+            border: "border-t-slate-600",
+            bgIcon: "bg-slate-800 border border-slate-700",
+            textIcon: "text-slate-400",
+            badgeClass: "bg-slate-800 text-slate-400 border-slate-700",
+            cardClass: "bg-slate-900 border-slate-800 hover:bg-slate-800/80 cursor-pointer shadow-lg transition-all",
+        },
+        {
+            id: 3,
+            title: "Release test nghiệp vụ",
+            shortDesc: "Deliver final testing version covering all business functionalities",
+            fullDesc: "Phát hành bản test hoàn chỉnh cho toàn bộ các chức năng nghiệp vụ. Đảm bảo các flow chính đã có thể chạy end-to-end, sẵn sàng cho việc kiểm thử thực tế.",
+            status: "Pending",
+            timeframe: "Tháng 4 - Đầu Tháng 5",
+            icon: Activity,
+            border: "border-t-slate-600",
+            bgIcon: "bg-slate-800 border border-slate-700",
+            textIcon: "text-slate-400",
+            badgeClass: "bg-slate-800 text-slate-400 border-slate-700",
+            cardClass: "bg-slate-900 border-slate-800 hover:bg-slate-800/80 cursor-pointer shadow-lg transition-all",
+        },
+        {
+            id: 4,
+            title: "UAT & App Store Release",
+            shortDesc: "Conduct UAT testing and prepare for App Store / Google Play release",
+            fullDesc: "Tiến hành UAT với các bên liên quan. Ghi nhận và xử lý triệt để issue. Hoàn tất các bước chuẩn bị (metadata, screenshots) để release đúng hạn Go-Live.",
+            status: "Tháng 5 Go-Live",
+            timeframe: "Trước Cuối Tháng 5",
+            icon: Rocket,
+            border: "border-t-orange-500",
+            bgIcon: "bg-orange-500/20 shadow-[0_0_15px_rgba(249,115,22,0.3)] border border-orange-500/30",
+            textIcon: "text-orange-500",
+            badgeClass: "bg-orange-500/20 text-orange-400 border-orange-500/30 animate-pulse font-bold",
+            cardClass: "bg-orange-500/10 border-orange-500/50 hover:shadow-[0_0_30px_rgba(249,115,22,0.3)] cursor-pointer transition-all relative overflow-hidden",
+            extraBg: true,
+        }
+    ];
 
     if (isChecking) {
         return <div className="min-h-[50vh] flex items-center justify-center text-slate-400">Checking credentials...</div>;
@@ -174,11 +242,11 @@ export default function W4SProgressReport() {
                         </CardHeader>
                         <CardContent>
                             <div className="flex items-baseline gap-2">
-                                <span className="text-4xl font-bold text-slate-50">65</span>
+                                <span className="text-4xl font-bold text-slate-50">35</span>
                                 <span className="text-xl text-slate-400">%</span>
                             </div>
                             <div className="mt-4 h-2 w-full bg-slate-800 rounded-full overflow-hidden">
-                                <div className="h-full bg-orange-500 w-[65%] rounded-full shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
+                                <div className="h-full bg-orange-500 w-[35%] rounded-full shadow-[0_0_10px_rgba(249,115,22,0.5)]" />
                             </div>
                         </CardContent>
                     </Card>
@@ -328,8 +396,8 @@ export default function W4SProgressReport() {
                     </div>
                 </div>
 
-                {/* Achievements & Next Actions */}
-                <div className="grid gap-6 md:grid-cols-2">
+                {/* Achievements */}
+                <div className="grid gap-6">
                     <Card className="bg-slate-900 border-slate-800">
                         <CardHeader>
                             <CardTitle className="text-lg flex items-center gap-2 text-slate-100">
@@ -356,32 +424,87 @@ export default function W4SProgressReport() {
                             </ul>
                         </CardContent>
                     </Card>
+                </div>
 
-                    <Card className="bg-slate-900 border-slate-800">
-                        <CardHeader>
-                            <CardTitle className="text-lg flex items-center gap-2 text-slate-100">
-                                <Rocket className="w-5 h-5 text-blue-400" />
-                                Bước Tiếp Theo
-                            </CardTitle>
-                        </CardHeader>
-                        <CardContent>
-                            <ul className="space-y-4">
-                                {[
-                                    "Tiếp tục review và thống nhất Figma với các bên liên quan",
-                                    "Tổng hợp đánh giá từ người dùng thông qua bản prototype",
-                                    "Cập nhật và điều chỉnh ứng dụng real-time dựa trên feedback",
-                                    "Chuẩn bị phương án hợp nhất thiết kế và chốt luồng nghiệp vụ cuối cùng"
-                                ].map((item, idx) => (
-                                    <li key={idx} className="flex flex-start gap-3 text-sm text-slate-300">
-                                        <div className="bg-blue-500/20 p-1 rounded-full text-blue-400 mt-0.5 shrink-0">
-                                            <ArrowRight className="w-3 h-3" />
+                {/* Next Actions / Weekly Action Plan */}
+                <div className="space-y-4 pt-2">
+                    <h3 className="text-lg font-bold text-slate-100 flex items-center gap-2 shrink-0">
+                        <CalendarDays className="w-5 h-5 text-orange-500" />
+                        Kế hoạch tiếp theo
+                    </h3>
+                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+                        {weeklyPlan.map((task) => {
+                            const Icon = task.icon;
+                            return (
+                                <Dialog key={task.id}>
+                                    <DialogTrigger asChild>
+                                        <Card className={`flex flex-col border-t-4 ${task.border} ${task.cardClass}`}>
+                                            {task.extraBg && (
+                                                <div className="absolute top-0 right-0 p-4 opacity-10">
+                                                    <Icon className="w-24 h-24 text-orange-500" />
+                                                </div>
+                                            )}
+                                            <CardHeader className="p-4 pb-2 relative z-10">
+                                                <div className="flex justify-between items-start mb-2">
+                                                    <div className={`p-2 rounded-lg ${task.bgIcon}`}>
+                                                        <Icon className={`w-5 h-5 ${task.textIcon}`} />
+                                                    </div>
+                                                    <span className={`inline-flex items-center px-2 py-1 rounded text-[10px] uppercase tracking-wider ${task.badgeClass}`}>
+                                                        {task.status}
+                                                    </span>
+                                                </div>
+                                                <CardTitle className="text-base font-bold text-slate-100 leading-tight">
+                                                    {task.title}
+                                                </CardTitle>
+                                                <div className="text-[10px] font-medium text-slate-500 uppercase tracking-widest mt-1">
+                                                    Timeline: {task.timeframe}
+                                                </div>
+                                            </CardHeader>
+                                            <CardContent className="p-4 pt-0 mt-auto relative z-10">
+                                                <p className={`text-xs leading-relaxed ${task.extraBg ? 'text-orange-200/70' : 'text-slate-400'}`}>
+                                                    {task.shortDesc}
+                                                </p>
+                                            </CardContent>
+                                        </Card>
+                                    </DialogTrigger>
+                                    <DialogContent className="bg-slate-950 border-slate-800 text-slate-50 shadow-2xl p-0 overflow-hidden sm:max-w-md">
+                                        <div className={`h-1 w-full ${task.border.replace('border-t-', 'bg-')}`}></div>
+                                        <div className="p-6">
+                                            <DialogHeader className="mb-4">
+                                                <div className="flex items-center gap-3 mb-2">
+                                                    <div className={`p-3 rounded-xl ${task.bgIcon}`}>
+                                                        <Icon className={`w-6 h-6 ${task.textIcon}`} />
+                                                    </div>
+                                                    <div>
+                                                        <DialogTitle className="text-xl font-bold bg-gradient-to-br from-slate-100 to-slate-300 bg-clip-text text-transparent">
+                                                            {task.title}
+                                                        </DialogTitle>
+                                                        <DialogDescription className="text-slate-400 mt-1">
+                                                            Target: <span className="text-slate-200 font-semibold">{task.timeframe}</span>
+                                                        </DialogDescription>
+                                                    </div>
+                                                </div>
+                                            </DialogHeader>
+                                            <div className="bg-slate-900/50 rounded-lg p-4 border border-slate-800 space-y-3 mt-4">
+                                                <h4 className="text-sm font-semibold text-slate-300 flex items-center gap-2">
+                                                    <Activity className="w-4 h-4 text-orange-500" />
+                                                    Chi tiết công việc
+                                                </h4>
+                                                <p className="text-sm text-slate-400 leading-relaxed">
+                                                    {task.fullDesc}
+                                                </p>
+                                                <div className="pt-2">
+                                                    <span className={`inline-flex items-center px-2 py-1 rounded text-[10px] uppercase tracking-wider ${task.badgeClass}`}>
+                                                        {task.status}
+                                                    </span>
+                                                </div>
+                                            </div>
                                         </div>
-                                        <span>{item}</span>
-                                    </li>
-                                ))}
-                            </ul>
-                        </CardContent>
-                    </Card>
+                                    </DialogContent>
+                                </Dialog>
+                            );
+                        })}
+                    </div>
                 </div>
 
                 {/* Risks / Notes */}

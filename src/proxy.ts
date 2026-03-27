@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { createServerClient } from "@supabase/ssr";
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
-  
+
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
@@ -28,7 +28,7 @@ export async function middleware(request: NextRequest) {
     if (request.nextUrl.pathname.startsWith("/dashboard/w4s")) {
       return response; // W4S allows external users (has its own password gate)
     }
-    
+
     // Normal dashboard requires login
     if (!user) {
       const url = request.nextUrl.clone();
