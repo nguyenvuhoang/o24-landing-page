@@ -6,6 +6,7 @@ import { Pricing } from "@/components/sections/Pricing";
 import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { HolidayNoticeModal } from "@/components/holiday/HolidayNoticeModal";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -21,6 +22,7 @@ export const metadata: Metadata = {
 export default function Home() {
     return (
         <main>
+            <HolidayNoticeModal />
             <JsonLd
                 data={{
                     "@context": "https://schema.org",
