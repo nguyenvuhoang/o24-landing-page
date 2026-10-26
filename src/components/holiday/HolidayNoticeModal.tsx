@@ -1,3 +1,4 @@
+
 "use client";
 
 import * as React from "react";
@@ -6,113 +7,185 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-/**
- * Update this config (or set enabled=false) to control the holiday notice —
- * no other file needs to change once the campaign window is over.
- */
-const HOLIDAY_NOTICE = {
-    enabled: true,
-    storageKey: "o24_holiday_notice_2026_national_day",
-    startAt: "2026-08-26T00:00:00+07:00",
-    endAt: "2026-09-02T23:59:59+07:00",
+type NoticeCampaign = {
+    enabled: boolean;
+    storageKey: string;
+    startAt: string;
+    endAt: string;
+    title: string;
+    description: string;
     image: {
-        src: "/images/holiday/national-day-2026.png",
-        alt: "Thông báo lịch nghỉ lễ Quốc Khánh 2/9/2026 - O24",
-        width: 1254,
-        height: 1254,
-    },
-} as const;
+        src: string;
+        alt: string;
+        width: number;
+        height: number;
+    };
+};
 
-function isWithinNoticeWindow(now: Date): boolean {
-    const start = new Date(HOLIDAY_NOTICE.startAt);
-    const end = new Date(HOLIDAY_NOTICE.endAt);
-    return now >= start && now <= end;
+const NOTICE_CAMPAIGNS: NoticeCampaign[] = [
+    {
+        enabled: false,
+        storageKey: "o24_holiday_notice_2026_national_day",
+        startAt: "2026-08-26T00:00:00+07:00",
+        endAt: "2026-09-02T23:59:59+07:00",
+        title: "Thông báo nghỉ lễ Quốc Khánh 2/9",
+        description: "Lịch nghỉ lễ Quốc Khánh năm 2026 của O24.",
+        image: {
+            src: "/images/holiday/national-day-2026.png",
+            alt: "Thông báo Quốc Khánh 2026 - O24",
+            width: 1254,
+            height: 1254,
+        },
+    },
+    {
+        enabled: true,
+        storageKey: "o24_campaign_halloween_2026",
+        startAt: "2026-10-27T00:00:00+07:00",
+        endAt: "2026-11-01T23:59:59+07:00",
+        title: "Happy Halloween 2026 - vKnight",
+        description: "Halloween cùng vKnight và nền tảng O24.",
+        image: {
+            src: "/images/holiday/halloween-2026.png",
+            alt: "Happy Halloween 2026 - vKnight O24",
+            width: 1024,
+            height: 1536,
+        },
+    },
+];
+
+function getActiveCampaign(now: Date): NoticeCampaign | null {
+    return (
+        NOTICE_CAMPAIGNS.find((campaign) => {
+            if (!campaign.enabled) return false;
+
+            const start = new Date(campaign.startAt);
+            const end = new Date(campaign.endAt);
+
+            return now >= start && now <= end;
+        }) ?? null
+    );
 }
 
 export function HolidayNoticeModal() {
     const [open, setOpen] = React.useState(false);
+    const [campaign, setCampaign] =
+        React.useState<NoticeCampaign | null>(null);
 
     React.useEffect(() => {
-        if (!HOLIDAY_NOTICE.enabled) return;
-        if (!isWithinNoticeWindow(new Date())) return;
+        const activeCampaign = getActiveCampaign(new Date());
+
+        if (!activeCampaign) return;
 
         try {
-            if (window.sessionStorage.getItem(HOLIDAY_NOTICE.storageKey)) return;
+            if (
+                window.sessionStorage.getItem(
+                    activeCampaign.storageKey
+                )
+            ) {
+                return;
+            }
         } catch {
-            // sessionStorage unavailable (e.g. privacy mode) — show once for this mount anyway
+            // sessionStorage unavailable
         }
 
+        setCampaign(activeCampaign);
         setOpen(true);
     }, []);
 
     const handleOpenChange = (nextOpen: boolean) => {
         setOpen(nextOpen);
-        if (!nextOpen) {
+
+        if (!nextOpen && campaign) {
             try {
-                window.sessionStorage.setItem(HOLIDAY_NOTICE.storageKey, "1");
+                window.sessionStorage.setItem(
+                    campaign.storageKey,
+                    "1"
+                );
             } catch {
-                // ignore
+                // Ignore storage errors
             }
         }
     };
 
-    if (!HOLIDAY_NOTICE.enabled) return null;
+    if (!campaign) return null;
 
     return (
-        <DialogPrimitive.Root open={open} onOpenChange={handleOpenChange}>
+        <DialogPrimitive.Root
+            open={open}
+            onOpenChange={handleOpenChange}
+        >
             <DialogPrimitive.Portal>
                 <DialogPrimitive.Overlay
                     className={cn(
-                        "fixed inset-0 z-[100] bg-black/50 backdrop-blur-sm",
+                        "fixed inset-0 z-[100] bg-black/70 backdrop-blur-sm",
                         "data-[state=open]:animate-in data-[state=closed]:animate-out",
                         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
                     )}
                 />
+
                 <DialogPrimitive.Content
-                    onPointerDownOutside={(e) => e.preventDefault()}
-                    onInteractOutside={(e) => e.preventDefault()}
+                    onPointerDownOutside={(e) =>
+                        e.preventDefault()
+                    }
+                    onInteractOutside={(e) =>
+                        e.preventDefault()
+                    }
                     className={cn(
-                        "fixed left-1/2 top-1/2 z-[101] w-[calc(100vw-2rem)] max-w-[600px] -translate-x-1/2 -translate-y-1/2",
-                        "flex max-h-[90vh] flex-col items-center gap-3 outline-none",
+                        "fixed left-1/2 top-1/2 z-[101]",
+                        "w-[calc(100vw-2rem)] max-w-[520px]",
+                        "-translate-x-1/2 -translate-y-1/2",
+                        "flex max-h-[95dvh] flex-col items-center gap-3",
+                        "outline-none",
                         "data-[state=open]:animate-in data-[state=closed]:animate-out",
                         "data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0",
-                        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 duration-200"
+                        "data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95",
+                        "duration-200"
                     )}
                 >
                     <DialogPrimitive.Title className="sr-only">
-                        Thông báo lịch nghỉ lễ Quốc Khánh 2/9
+                        {campaign.title}
                     </DialogPrimitive.Title>
+
                     <DialogPrimitive.Description className="sr-only">
-                        Lịch nghỉ lễ Quốc Khánh Việt Nam 2/9 năm 2026 của O24.
+                        {campaign.description}
                     </DialogPrimitive.Description>
 
-                    <div className="relative w-full">
+                    <div className="relative flex w-full justify-center">
                         <Image
-                            src={HOLIDAY_NOTICE.image.src}
-                            alt={HOLIDAY_NOTICE.image.alt}
-                            width={HOLIDAY_NOTICE.image.width}
-                            height={HOLIDAY_NOTICE.image.height}
-                            sizes="(max-width: 640px) 90vw, 600px"
+                            src={campaign.image.src}
+                            alt={campaign.image.alt}
+                            width={campaign.image.width}
+                            height={campaign.image.height}
+                            sizes="(max-width: 640px) 90vw, 520px"
                             priority
-                            className="h-auto max-h-[75vh] w-auto max-w-full rounded-2xl object-contain shadow-2xl"
+                            className={cn(
+                                "h-auto w-auto max-w-full",
+                                "max-h-[85dvh]",
+                                "rounded-2xl object-contain shadow-2xl"
+                            )}
                         />
 
                         <DialogPrimitive.Close
                             aria-label="Đóng thông báo"
                             className={cn(
-                                "absolute right-3 top-3 flex h-8 w-8 items-center justify-center rounded-full",
-                                "bg-black/60 text-white backdrop-blur-sm transition hover:bg-black/80",
+                                "absolute right-2 top-2 z-10",
+                                "flex h-9 w-9 items-center justify-center",
+                                "rounded-full bg-black/65 text-white",
+                                "backdrop-blur-sm transition",
+                                "hover:bg-black/85",
                                 "focus:outline-none focus:ring-2 focus:ring-white/70"
                             )}
                         >
-                            <X className="h-4 w-4" />
+                            <X className="h-5 w-5" />
                         </DialogPrimitive.Close>
                     </div>
 
                     <DialogPrimitive.Close
                         className={cn(
-                            "rounded-full bg-black/40 px-4 py-1.5 text-xs font-medium text-white/90",
-                            "backdrop-blur-sm transition hover:bg-black/60",
+                            "rounded-full bg-white/15 px-5 py-2",
+                            "text-sm font-medium text-white",
+                            "backdrop-blur-sm transition",
+                            "hover:bg-white/25",
                             "focus:outline-none focus:ring-2 focus:ring-white/70"
                         )}
                     >
