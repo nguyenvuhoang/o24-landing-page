@@ -40,7 +40,7 @@ const NOTICE_CAMPAIGNS: NoticeCampaign[] = [
     {
         enabled: true,
         storageKey: "o24_campaign_halloween_2026",
-        startAt: "2026-10-27T00:00:00+07:00",
+        startAt: "2026-10-26T00:00:00+07:00",
         endAt: "2026-11-01T23:59:59+07:00",
         title: "Happy Halloween 2026 - vKnight",
         description: "Halloween cùng vKnight và nền tảng O24.",
