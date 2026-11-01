@@ -26,6 +26,16 @@ export type BlogArticle = {
 
 export const blogArticles: readonly BlogArticle[] = [
   {
+    slug: "docker-cicd-dotnet-10-microservices",
+    category: "DevOps",
+    title: "Docker CI/CD for .NET 10 Microservices: Build, Promote, and Roll Back Safely",
+    description:
+      "Containerize ASP.NET Core with multi-stage Docker builds, test and publish images via GitHub Actions, promote immutable digests, and design health-aware rollbacks.",
+    icon: "server",
+    readTimeMinutes: 16,
+    status: "published",
+  },
+  {
     slug: "rabbitmq-event-driven-transactions-dotnet-10",
     category: ".NET Architecture",
     title: "RabbitMQ & Event-Driven Transaction Processing in .NET 10",
