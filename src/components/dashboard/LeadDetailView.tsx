@@ -22,6 +22,7 @@ import {
   type ActivityEntry,
   type EmailEntry,
 } from "./LeadTimelines";
+import { LeadCustomerActivities } from "./LeadCustomerActivities";
 export type LeadDetailViewProps = {
   lead: Lead;
   directory: Admin[];
@@ -177,6 +178,7 @@ export function LeadDetailView({
         <aside className="crm-management-panel">
           <LeadEditor key={l.updated_at} lead={l} admins={directory} />
         </aside>
+        <LeadCustomerActivities leadId={l.id} />
         <section
           className="crm-panel crm-detail-activity"
           aria-labelledby="activity-heading"

@@ -1,0 +1,7 @@
+In src/components/dashboard/LeadDetailView.tsx add import:
+
+import { LeadCustomerActivities } from "./LeadCustomerActivities";
+
+Then in the JSX inside <div className="crm-detail-grid">, immediately BEFORE the existing <section className="crm-panel crm-detail-activity"...> insert:
+
+<LeadCustomerActivities leadId={l.id} />
