@@ -184,17 +184,15 @@ export async function POST(request: Request) {
             );
         }
 
-        // Log the demo request
-        console.log("Demo request received:", {
-            ...body,
-            timestamp: new Date().toISOString(),
-        });
-
-        // Send email notification
+                // Do not log PII. Success means Resend accepted the email request,
+        // not that it was delivered to the recipient inbox.
         const emailSent = await sendEmail(body);
-
         if (!emailSent) {
-            console.warn("Email notification failed, but request was logged");
+            console.error("Demo delivery failed");
+            return NextResponse.json(
+                { success: false, error: "Unable to accept demo request" },
+                { status: 502 }
+            );
         }
 
         return NextResponse.json(

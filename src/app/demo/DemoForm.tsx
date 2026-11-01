@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { track } from "@vercel/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -87,6 +88,7 @@ export function DemoForm() {
     const [showOptional, setShowOptional] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     const validateForm = (): boolean => {
         const newErrors: FormErrors = {};
@@ -130,6 +132,7 @@ export function DemoForm() {
 
         if (!validateForm()) return;
 
+        setSubmitError("");
         setIsSubmitting(true);
 
         try {
@@ -140,10 +143,16 @@ export function DemoForm() {
             });
 
             if (response.ok) {
+                const payload: { success?: boolean } = await response.json();
+                if (!payload.success) throw new Error("Request not confirmed");
                 setIsSuccess(true);
+                // No personal information is sent to analytics.
+                try { track("demo_request_success", { source: "demo_form" }); } catch { /* Non-blocking */ }
+            } else {
+                setSubmitError("We could not submit your request. Please try again.");
             }
         } catch {
-            // Handle error silently for now
+            setSubmitError("A network error occurred. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -372,6 +381,8 @@ export function DemoForm() {
                 Your information is used only to prepare the demo session. We do not share your data with third parties.
                 No automated follow-ups — expect a direct reply from our engineering team.
             </p>
+
+            {submitError && <p role="alert" className="text-sm text-destructive">{submitError}</p>}
 
             {/* Submit Button */}
             <Button
