@@ -26,6 +26,16 @@ export type BlogArticle = {
 
 export const blogArticles: readonly BlogArticle[] = [
   {
+    slug: "api-security-dotnet-10-jwt-oauth2-mtls-zero-trust",
+    category: "Security",
+    title: "API Security in .NET 10: JWT, OAuth 2.0, mTLS & Zero Trust",
+    description:
+      "Secure ASP.NET Core APIs with issuer-validated JWT access tokens, OAuth 2.0 scopes, mutual TLS, least-privilege authorization, and Zero Trust controls for banking systems.",
+    icon: "shield",
+    readTimeMinutes: 17,
+    status: "published",
+  },
+  {
     slug: "docker-cicd-dotnet-10-microservices",
     category: "DevOps",
     title: "Docker CI/CD for .NET 10 Microservices: Build, Promote, and Roll Back Safely",
