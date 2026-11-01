@@ -1,211 +1,136 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { demoAdmin } from "@/lib/demo-admin";
 
-interface DemoRequest {
-    name: string;
-    email: string;
-    company: string;
-    role: string;
-    interest: string;
-    deployment: string;
-    message: string;
-    timeline?: string;
-    openSource?: string;
-}
+export const runtime = "nodejs";
 
-const roleLabels: Record<string, string> = {
-    cto: "CTO",
-    "tech-lead": "Tech Lead",
-    developer: "Developer",
-    "platform-engineer": "Platform Engineer",
-    "product-owner": "Product Owner",
-    other: "Other",
+type DemoRequest = {
+  name: string;
+  email: string;
+  company: string;
+  role: string;
+  interest: string;
+  deployment: string;
+  message: string;
+  timeline?: string;
+  openSource?: string;
 };
 
-const interestLabels: Record<string, string> = {
-    "api-management": "API Management",
-    "product-service": "Product Service",
-    both: "Both",
-};
+const selections = {
+  role: ["cto", "tech-lead", "developer", "platform-engineer", "product-owner", "other"],
+  interest: ["api-management", "product-service", "both"],
+  deployment: ["cloud", "on-premise", "hybrid", "not-decided"],
+  timeline: ["exploring", "1-3-months", "scheduled"],
+  openSource: ["yes", "no", "not-sure"],
+} as const;
 
-const deploymentLabels: Record<string, string> = {
-    cloud: "Cloud-managed",
-    "on-premise": "On-premise",
-    hybrid: "Hybrid",
-    "not-decided": "Not decided",
-};
+const clean = (value: unknown, max: number) =>
+  typeof value === "string" && value.trim().length <= max ? value.trim() : null;
+const escapeHtml = (value: string) => value.replace(/[&<>"']/g, character => ({
+  "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;",
+})[character] ?? character);
 
-const timelineLabels: Record<string, string> = {
-    exploring: "Just exploring",
-    "1-3-months": "Within 1-3 months",
-    scheduled: "Scheduled project",
-};
-
-const openSourceLabels: Record<string, string> = {
-    yes: "Yes",
-    no: "No",
-    "not-sure": "Not sure",
-};
-
-function formatEmailContent(data: DemoRequest): string {
-    return `
-New Demo Request from O24 Website
-==================================
-
-Contact Information:
-- Name: ${data.name}
-- Email: ${data.email}
-- Company: ${data.company}
-- Role: ${roleLabels[data.role] || data.role}
-
-Requirements:
-- Primary Interest: ${interestLabels[data.interest] || data.interest}
-- Expected Deployment: ${deploymentLabels[data.deployment] || data.deployment}
-${data.timeline ? `- Timeline: ${timelineLabels[data.timeline] || data.timeline}` : ""}
-${data.openSource ? `- Open-source Interest: ${openSourceLabels[data.openSource] || data.openSource}` : ""}
-
-Use Case / Message:
-${data.message}
-
----
-Submitted at: ${new Date().toISOString()}
-`;
-}
-
-function formatHtmlContent(data: DemoRequest): string {
-    return `
-<!DOCTYPE html>
-<html>
-<head>
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #333; }
-        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
-        .header { background: linear-gradient(135deg, #f59e0b, #ea580c); color: white; padding: 20px; border-radius: 8px 8px 0 0; }
-        .content { background: #f9fafb; padding: 20px; border: 1px solid #e5e7eb; border-top: none; border-radius: 0 0 8px 8px; }
-        .section { margin-bottom: 20px; }
-        .label { font-weight: 600; color: #6b7280; font-size: 12px; text-transform: uppercase; }
-        .value { font-size: 14px; margin-top: 4px; }
-        .message-box { background: white; padding: 16px; border-radius: 8px; border: 1px solid #e5e7eb; }
-        .footer { margin-top: 20px; font-size: 12px; color: #9ca3af; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <div class="header">
-            <h1 style="margin: 0; font-size: 20px;">New Demo Request</h1>
-            <p style="margin: 8px 0 0; opacity: 0.9;">O24 Platform</p>
-        </div>
-        <div class="content">
-            <div class="section">
-                <div class="label">Contact</div>
-                <div class="value"><strong>${data.name}</strong></div>
-                <div class="value"><a href="mailto:${data.email}">${data.email}</a></div>
-                <div class="value">${data.company} - ${roleLabels[data.role] || data.role}</div>
-            </div>
-            
-            <div class="section">
-                <div class="label">Requirements</div>
-                <div class="value"><strong>Interest:</strong> ${interestLabels[data.interest] || data.interest}</div>
-                <div class="value"><strong>Deployment:</strong> ${deploymentLabels[data.deployment] || data.deployment}</div>
-                ${data.timeline ? `<div class="value"><strong>Timeline:</strong> ${timelineLabels[data.timeline] || data.timeline}</div>` : ""}
-                ${data.openSource ? `<div class="value"><strong>Open-source:</strong> ${openSourceLabels[data.openSource] || data.openSource}</div>` : ""}
-            </div>
-            
-            <div class="section">
-                <div class="label">Use Case / Message</div>
-                <div class="message-box">${data.message.replaceAll("\n", "<br>")}</div>
-            </div>
-            
-            <div class="footer">
-                Submitted at ${new Date().toLocaleString("vi-VN", { timeZone: "Asia/Ho_Chi_Minh" })}
-            </div>
-        </div>
-    </div>
-</body>
-</html>
-`;
-}
-
-async function sendEmail(data: DemoRequest): Promise<boolean> {
-    const resend = new Resend(process.env.RESEND_API_KEY);
-
-    try {
-        const { error } = await resend.emails.send({
-            from: process.env.SMTP_FROM || "O24 Platform <onboarding@resend.dev>",
-            to: ["support@vknight.io.vn"],
-            replyTo: data.email,
-            subject: `[Demo Request] ${data.company} - ${data.name}`,
-            text: formatEmailContent(data),
-            html: formatHtmlContent(data),
-        });
-
-        if (error) {
-            console.error("Resend error:", error);
-            return false;
-        }
-
-        return true;
-    } catch (error) {
-        console.error("Failed to send email via Resend:", error);
-        return false;
-    }
+function parseDemo(value: unknown): DemoRequest | null {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+  const body = value as Record<string, unknown>;
+  const name = clean(body.name, 160);
+  const email = clean(body.email, 254);
+  const company = clean(body.company, 200);
+  const message = clean(body.message, 5000);
+  const role = clean(body.role, 60);
+  const interest = clean(body.interest, 60);
+  const deployment = clean(body.deployment, 60);
+  const timeline = clean(body.timeline ?? "", 60);
+  const openSource = clean(body.openSource ?? "", 60);
+  if (!name || !email || !company || !message || !role || !interest || !deployment ||
+    timeline === null || openSource === null ||
+    !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+    !selections.role.includes(role as never) ||
+    !selections.interest.includes(interest as never) ||
+    !selections.deployment.includes(deployment as never) ||
+    (timeline !== "" && !selections.timeline.includes(timeline as never)) ||
+    (openSource !== "" && !selections.openSource.includes(openSource as never))) return null;
+  return { name, email, company, role, interest, deployment, message, timeline, openSource };
 }
 
 export async function POST(request: Request) {
-    try {
-        const body: DemoRequest = await request.json();
+  let payload: unknown;
+  try {
+    if (Number(request.headers.get("content-length") ?? 0) > 20_000)
+      return NextResponse.json({ error: "Request too large" }, { status: 413 });
+    payload = await request.json();
+  } catch {
+    return NextResponse.json({ error: "Invalid JSON" }, { status: 400 });
+  }
+  const input = parseDemo(payload);
+  if (!input) return NextResponse.json({ error: "Invalid demo request" }, { status: 400 });
 
-        // Validate required fields
-        const requiredFields = [
-            "name",
-            "email",
-            "company",
-            "role",
-            "interest",
-            "deployment",
-            "message",
-        ] as const;
+  const db = demoAdmin();
+  const { data: saved, error: insertError } = await db.from("demo_requests").insert({
+    name: input.name,
+    email: input.email,
+    company: input.company,
+    role: input.role,
+    interest: input.interest,
+    deployment: input.deployment,
+    message: input.message,
+    timeline: input.timeline || null,
+    open_source: input.openSource || null,
+    email_status: "pending",
+  }).select("id").single();
 
-        for (const field of requiredFields) {
-            if (!body[field] || body[field].trim() === "") {
-                return NextResponse.json(
-                    { error: `Field '${field}' is required` },
-                    { status: 400 }
-                );
-            }
-        }
+  if (insertError || !saved) {
+    console.error("Demo persistence failed", insertError?.code ?? "no-record");
+    return NextResponse.json({ error: "Unable to save demo request" }, { status: 503 });
+  }
 
-        // Validate email format
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!emailRegex.test(body.email)) {
-            return NextResponse.json(
-                { error: "Invalid email format" },
-                { status: 400 }
-            );
-        }
+  const apiKey = process.env.RESEND_API_KEY;
+  const sender = process.env.SMTP_FROM;
+  if (!apiKey || !sender) {
+    await db.from("demo_requests").update({ email_status: "failed", email_status_at: new Date().toISOString() }).eq("id", saved.id);
+    return NextResponse.json({ error: "Email service not configured", requestId: saved.id }, { status: 503 });
+  }
 
-                // Do not log PII. Success means Resend accepted the email request,
-        // not that it was delivered to the recipient inbox.
-        const emailSent = await sendEmail(body);
-        if (!emailSent) {
-            console.error("Demo delivery failed");
-            return NextResponse.json(
-                { success: false, error: "Unable to accept demo request" },
-                { status: 502 }
-            );
-        }
+  const html = `
+    <h2>New O24 Demo Request</h2>
+    <p><b>Request ID:</b> ${escapeHtml(saved.id)}</p>
+    <p><b>Name:</b> ${escapeHtml(input.name)}</p>
+    <p><b>Email:</b> ${escapeHtml(input.email)}</p>
+    <p><b>Company:</b> ${escapeHtml(input.company)}</p>
+    <p><b>Role:</b> ${escapeHtml(input.role)}</p>
+    <p><b>Interest:</b> ${escapeHtml(input.interest)}</p>
+    <p><b>Deployment:</b> ${escapeHtml(input.deployment)}</p>
+    <p><b>Timeline:</b> ${escapeHtml(input.timeline ?? "")}</p>
+    <p><b>Open-source:</b> ${escapeHtml(input.openSource ?? "")}</p>
+    <p><b>Message:</b><br>${escapeHtml(input.message).replaceAll("\n", "<br>")}</p>`;
 
-        return NextResponse.json(
-            {
-                success: true,
-                message: "Demo request received successfully",
-            },
-            { status: 200 }
-        );
-    } catch {
-        return NextResponse.json(
-            { error: "Failed to process request" },
-            { status: 500 }
-        );
+  try {
+    const { data, error } = await new Resend(apiKey).emails.send({
+      from: sender,
+      to: [process.env.DEMO_NOTIFICATION_EMAIL || "support@vknight.io.vn"],
+      replyTo: input.email,
+      subject: `[Demo Request] ${input.company} - ${input.name}`,
+      html,
+      text: `Request: ${saved.id}\nName: ${input.name}\nEmail: ${input.email}\nCompany: ${input.company}\nRole: ${input.role}\nInterest: ${input.interest}\nDeployment: ${input.deployment}\nTimeline: ${input.timeline ?? ""}\nOpen-source: ${input.openSource ?? ""}\nMessage:\n${input.message}`,
+    });
+    if (error || !data?.id) {
+      await db.from("demo_requests").update({ email_status: "failed", email_status_at: new Date().toISOString() }).eq("id", saved.id);
+      console.error("Demo email not accepted", error?.name ?? "missing-email-id");
+      return NextResponse.json({ error: "Demo saved but email notification failed. Contact support with your reference ID.", requestId: saved.id }, { status: 502 });
     }
+    const { error: updateError } = await db.from("demo_requests").update({
+      resend_email_id: data.id,
+      email_status: "accepted",
+      email_status_at: new Date().toISOString(),
+    }).eq("id", saved.id);
+    if (updateError) {
+      console.error("Demo email ID persistence failed", updateError.code);
+      return NextResponse.json({ error: "Demo saved but notification state could not be confirmed. Contact support with reference ID.", requestId: saved.id }, { status: 503 });
+    }
+    return NextResponse.json({ success: true, requestId: saved.id, message: "Demo request saved and email accepted" });
+  } catch (error) {
+    await db.from("demo_requests").update({ email_status: "failed", email_status_at: new Date().toISOString() }).eq("id", saved.id);
+    console.error("Demo email processing failed", error instanceof Error ? error.name : "unknown");
+    return NextResponse.json({ error: "Demo saved but email notification failed. Contact support with your reference ID.", requestId: saved.id }, { status: 502 });
+  }
 }
