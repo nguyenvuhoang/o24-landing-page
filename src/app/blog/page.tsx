@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, BookOpen, Code2, Landmark, Layers3, ShieldCheck } from "lucide-react";
+import { ArrowRight, BookOpen, Code2, Landmark, Layers3, ShieldCheck, Server } from "lucide-react";
+import { getPublishedArticles, type BlogIcon } from "@/data/blog";
 
 export const metadata: Metadata = {
   title: "Engineering Blog | API Architecture & Banking Integration | vKnight",
@@ -15,25 +16,15 @@ export const metadata: Metadata = {
   },
 };
 
-const articles = [
-  {
-    slug: "cqrs-pattern-dotnet-10",
-    category: ".NET Architecture",
-    title: "CQRS Pattern in .NET 10: A Practical Guide",
-    description: "Build a small ASP.NET Core API with separate command and query handlers, dependency injection, and an in-memory store. Learn the trade-offs before production.",
-    icon: Code2,
-    readTime: "10 min read",
-  },
-  {
-    slug: "api-gateway-vs-reverse-proxy",
-    category: "API Architecture",
-    title: "API Gateway vs. Reverse Proxy: What Changes in an Enterprise Architecture?",
-    description:
-      "Understand the roles of routing, authentication, policies, observability, and service ownership before choosing an API entry point.",
-    icon: Layers3,
-    readTime: "7 min read",
-  },
-];
+const articles = getPublishedArticles();
+
+const articleIcons: Record<BlogIcon, typeof Code2> = {
+  code: Code2,
+  layers: Layers3,
+  landmark: Landmark,
+  shield: ShieldCheck,
+  server: Server,
+};
 
 const topics = [
   { title: "API Architecture", description: "Gateways, contracts, routing and governance", icon: Code2, href: "/features" },
@@ -76,11 +67,11 @@ export default function BlogPage() {
         </div>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {articles.map((article) => {
-            const Icon = article.icon;
+            const Icon = articleIcons[article.icon];
             return (
               <article key={article.slug} className="group relative flex h-full flex-col rounded-2xl border bg-card p-6 shadow-sm transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-lg hover:shadow-primary/5">
                 <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary"><Icon className="h-6 w-6" aria-hidden="true" /></div>
-                <p className="text-xs font-semibold uppercase tracking-widest text-primary">{article.category} · {article.readTime}</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-primary">{article.category} · {article.readTimeMinutes} min read</p>
                 <h3 className="mt-3 text-xl font-bold leading-snug">
                   <Link className="outline-none after:absolute after:inset-0 focus-visible:underline" href={`/blog/${article.slug}`}>{article.title}</Link>
                 </h3>
