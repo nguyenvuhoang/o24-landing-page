@@ -26,6 +26,16 @@ export type BlogArticle = {
 
 export const blogArticles: readonly BlogArticle[] = [
   {
+    slug: "rabbitmq-event-driven-transactions-dotnet-10",
+    category: ".NET Architecture",
+    title: "RabbitMQ & Event-Driven Transaction Processing in .NET 10",
+    description:
+      "Build reliable event-driven transaction workflows with a transactional outbox, bounded retries, dead-letter queues, idempotent consumers, and reconciliation.",
+    icon: "server",
+    readTimeMinutes: 18,
+    status: "published",
+  },
+  {
     slug: "core-banking-integration-architecture",
     category: "Banking Integration",
     title: "Core Banking Integration Architecture: A Developer’s Guide",
