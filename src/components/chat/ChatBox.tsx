@@ -1,8 +1,11 @@
 "use client";
 
+import { usePathname } from "next/navigation";
 import { O24ChatBot } from "@vknight/o24-uikit";
 
 export default function ChatBox() {
+    const pathname = usePathname();
+    if (pathname.startsWith("/dashboard")) return null;
     return (
         <O24ChatBot
             title="O24 Assistant"

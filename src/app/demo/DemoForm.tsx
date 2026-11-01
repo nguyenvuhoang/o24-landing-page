@@ -174,13 +174,13 @@ export function DemoForm() {
                 </div>
                 <h2 className="text-2xl font-bold mb-4">Demo request received</h2>
                 <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                    Thank you. Our team will review your request and respond within 1-2 business days.
-                    You will receive an email with available time slots and a short pre-call questionnaire.
+                    Thank you. Your request has been saved. Our team will review it and respond
+                    using your work email within 1-2 business days to arrange the next steps.
                 </p>
                 <div className="text-left max-w-sm mx-auto p-4 rounded-xl bg-muted/50">
                     <h3 className="font-medium mb-2">Next steps</h3>
                     <ul className="text-sm text-muted-foreground space-y-1">
-                        <li>• Check your inbox for confirmation</li>
+                        <li>• Our team will follow up using your work email</li>
                         <li>• Prepare any specific questions or integration scenarios</li>
                         <li>• Demo session typically runs 30-45 minutes</li>
                     </ul>
