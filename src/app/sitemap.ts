@@ -12,6 +12,7 @@ const staticRoutes = [
   "/changelog",
   "/contact",
   "/demo",
+  "/developers",
   "/enterprise",
   "/features",
   "/pricing",

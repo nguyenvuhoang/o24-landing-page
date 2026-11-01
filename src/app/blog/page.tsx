@@ -50,7 +50,7 @@ export default function BlogPage() {
             <Link href="#articles" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-semibold text-primary-foreground transition-opacity hover:opacity-90">
               Read articles <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </Link>
-            <Link href="/solutions/developers" className="inline-flex min-h-11 items-center rounded-xl border bg-background px-5 py-3 text-sm font-semibold hover:border-primary/40">
+            <Link href="/developers" className="inline-flex min-h-11 items-center rounded-xl border bg-background px-5 py-3 text-sm font-semibold hover:border-primary/40">
               Developer resources
             </Link>
           </div>
