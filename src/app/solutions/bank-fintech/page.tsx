@@ -1,13 +1,17 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import BankFintechClient from "./BankFintechClient";
 
 export const metadata: Metadata = {
-    title: "Giải pháp Ngân hàng & Fintech | vKnight O24",
-    description: "Tích hợp Core Banking, xử lý giao dịch real-time và tuân thủ bảo mật PCI-DSS với nền tảng O24.",
+    title: "Banking & Fintech Integration Solutions | vKnight O24",
+    description:
+        "Explore API-led banking and fintech integration approaches with O24, including core banking connectivity, workflow orchestration, and enterprise security planning.",
+    alternates: { canonical: "/solutions/bank-fintech" },
     openGraph: {
-        title: "Giải pháp Ngân hàng & Fintech | vKnight O24",
-        description: "Tích hợp Core Banking, xử lý giao dịch real-time và tuân thủ bảo mật PCI-DSS với nền tảng O24.",
+        title: "Banking & Fintech Integration Solutions | vKnight O24",
+        description:
+            "Connect core banking systems, digital channels, and partner services through API-led integration architecture.",
         url: "/solutions/bank-fintech",
+        type: "website",
     },
 };
 

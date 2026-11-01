@@ -1,32 +1,50 @@
 import { Building2, Code2, Landmark } from "lucide-react";
 
+/** Public-facing solution summaries. Keep claims aligned with verified O24 capabilities. */
 export const solutions = [
     {
+        id: "bank-fintech",
         icon: Landmark,
-        title: "Bank & Fintech",
+        audience: "FINANCIAL SERVICES",
+        title: "Banking & Fintech",
         description:
-            "Giải pháp tích hợp toàn diện cho ngân hàng và fintech. Kết nối Core Banking, xử lý giao dịch real-time, và tuân thủ quy định.",
+            "Connect banking services and digital channels through a more organized API and integration architecture.",
         features: [
-            "Tích hợp Core Banking",
-            "Payment Gateway",
-            "Compliance & Reporting",
+            "Core system integration patterns",
+            "API-led banking services",
+            "Workflow orchestration",
         ],
-        cta: "Tìm hiểu thêm",
+        href: "/solutions/bank-fintech",
+        cta: "Explore banking solutions",
     },
     {
+        id: "enterprise",
         icon: Building2,
-        title: "Enterprise",
+        audience: "ENTERPRISE TEAMS",
+        title: "Enterprise Integration",
         description:
-            "Nền tảng API cho doanh nghiệp lớn. Quản lý microservices, orchestration, và monitoring tập trung.",
-        features: ["Service Mesh", "API Management", "Enterprise SSO"],
-        cta: "Liên hệ Sales",
+            "Bring services, business processes, and integrations together with an extensible platform approach.",
+        features: [
+            "API lifecycle management",
+            "Service orchestration",
+            "Deployment flexibility",
+        ],
+        href: "/solutions/enterprise",
+        cta: "Explore enterprise solutions",
     },
     {
+        id: "developers",
         icon: Code2,
-        title: "Developers",
+        audience: "BUILDERS & ENGINEERS",
+        title: "Developer Experience",
         description:
-            "SDK và công cụ mạnh mẽ cho developers. Tài liệu chi tiết, sandbox environment, và hỗ trợ kỹ thuật 24/7.",
-        features: ["RESTful API", "SDK đa nền tảng", "Sandbox miễn phí"],
-        cta: "Đọc Docs",
+            "Explore O24 concepts, architecture, and development workflows with a practical path from learning to building.",
+        features: [
+            "API development concepts",
+            "Workflow and CQRS patterns",
+            "Architecture resources",
+        ],
+        href: "/solutions/developers",
+        cta: "Explore developer resources",
     },
-];
+] as const;

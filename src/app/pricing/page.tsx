@@ -64,9 +64,13 @@ export default function PricingPage() {
                             <CardTitle className="text-2xl">{plan.name}</CardTitle>
                             <div className="mt-4">
                                 <span className="text-4xl font-bold">{plan.price}</span>
-                                {plan.price !== "Liên hệ" && plan.price !== "Custom" && plan.price !== "Miễn phí" && (
-                                    <span className="text-muted-foreground">/tháng</span>
-                                )}
+                                {![
+                                    "Starter",
+                                    "Talk to us",
+                                    "Custom scope",
+                                ].includes(plan.price) && (
+                                        <span className="text-muted-foreground">/tháng</span>
+                                    )}
                             </div>
                             <CardDescription className="mt-2">
                                 {plan.description}

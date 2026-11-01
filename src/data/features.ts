@@ -10,38 +10,56 @@ import {
 export const features = [
     {
         icon: Globe,
+        category: "API INFRASTRUCTURE",
         title: "API Gateway",
         description:
-            "Gateway thông minh với rate limiting, caching, và routing linh hoạt. Hỗ trợ REST, SOAP, GraphQL, và gRPC.",
+            "Bring API entry points together with routing, access control, and a foundation for managing integrations across services.",
+        audience: "Developers & Enterprise",
+        highlights: ["Routing", "Access control"],
     },
     {
         icon: Database,
-        title: "Open Banking Integration",
+        category: "CONNECTED SYSTEMS",
+        title: "Banking Integration",
         description:
-            "Kết nối trực tiếp với các Core Banking phổ biến: T24, Finastra, Flexcube, Optimal9. Chuẩn hóa dữ liệu tự động.",
+            "Connect banking services and existing systems through a structured integration layer designed for complex enterprise environments.",
+        audience: "Enterprise",
+        highlights: ["Core systems", "Integration"],
     },
     {
         icon: Workflow,
+        category: "SERVICE ORCHESTRATION",
         title: "Workflow & CQRS",
         description:
-            "Engine xử lý workflow mạnh mẽ với pattern CQRS/Event Sourcing. Đảm bảo consistency và audit trail.",
+            "Organize business operations into workflows and separate commands from queries to keep service responsibilities clear.",
+        audience: "Developers",
+        highlights: ["Workflows", "CQRS"],
     },
     {
         icon: Activity,
+        category: "OPERATIONAL VISIBILITY",
         title: "Observability",
         description:
-            "Logs, Metrics, Tracing tích hợp sẵn với OpenTelemetry. Dashboard real-time và cảnh báo thông minh.",
+            "Make service activity easier to understand with operational logs and visibility into distributed integrations.",
+        audience: "Developers & Enterprise",
+        highlights: ["Logs", "Monitoring"],
     },
     {
         icon: Shield,
+        category: "ACCESS & GOVERNANCE",
         title: "Security",
         description:
-            "OAuth2, JWT, mTLS. Tích hợp O24 KeyVault, Azure KeyVault & HashiCorp Vault. Tuân thủ PCI-DSS và các chuẩn bảo mật.",
+            "Build secure integration flows with authentication, authorization, and configurable controls appropriate to your deployment.",
+        audience: "Enterprise",
+        highlights: ["Authentication", "Authorization"],
     },
     {
         icon: Smartphone,
+        category: "MULTI-CHANNEL DELIVERY",
         title: "Multi-channel",
         description:
-            "SDK cho Web, iOS, Android. Hỗ trợ omni-channel với trải nghiệm nhất quán trên mọi nền tảng.",
+            "Support experiences across web, mobile, and partner channels by connecting them to a shared service architecture.",
+        audience: "Developers & Enterprise",
+        highlights: ["Web & mobile", "Partner channels"],
     },
-];
+] as const;

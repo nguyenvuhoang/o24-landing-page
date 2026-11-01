@@ -1,256 +1,206 @@
-"use client";
-
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import {
-    Code2,
-    Terminal,
-    Smartphone,
-    ArrowLeft,
-    CheckCircle2,
-    FileText,
-    Cpu,
-    Zap,
-    BookOpen,
-    Puzzle,
-    Coffee
-} from "lucide-react";
 import Link from "next/link";
+import {
+    ArrowLeft,
+    ArrowRight,
+    ArrowUpRight,
+    BookOpen,
+    Braces,
+    Building2,
+    CheckCircle2,
+    Code2,
+    Database,
+    GitBranch,
+    Layers3,
+    LockKeyhole,
+    Network,
+    Server,
+    Terminal,
+    Workflow,
+} from "lucide-react";
+
+const topics = [
+    {
+        icon: Network,
+        category: "API INFRASTRUCTURE",
+        title: "API management",
+        description: "Understand how to organize API entry points, access policies, and integrations within a platform architecture.",
+        points: ["Gateway architecture", "Routing concepts", "API lifecycle"],
+    },
+    {
+        icon: Workflow,
+        category: "APPLICATION ARCHITECTURE",
+        title: "Workflows & CQRS",
+        description: "Explore patterns for coordinating business processes and separating commands from queries.",
+        points: ["Workflow patterns", "CQRS concepts", "Service boundaries"],
+    },
+    {
+        icon: Database,
+        category: "ENTERPRISE SYSTEMS",
+        title: "System integration",
+        description: "Learn architectural considerations for connecting modern services to established business systems.",
+        points: ["Integration boundaries", "Data contracts", "Reliable messaging"],
+    },
+];
+
+const learningPath = [
+    { number: "01", title: "Explore the architecture", description: "Learn how clients, gateways, services, and downstream systems fit together.", href: "/features", action: "View overview" },
+    { number: "02", title: "Review platform capabilities", description: "Explore the major O24 feature areas before planning an integration.", href: "/features", action: "Explore features" },
+    { number: "03", title: "Discuss your use case", description: "Ask about supported environments, integration approaches, and access to technical resources.", href: "/contact", action: "Contact the team" },
+];
+
+const architectureSteps = [
+    { icon: Code2, title: "Client apps", detail: "Web · Mobile · Partners" },
+    { icon: LockKeyhole, title: "API entry point", detail: "Authentication · Policies" },
+    { icon: GitBranch, title: "Business services", detail: "Workflows · Domain services" },
+    { icon: Server, title: "External systems", detail: "Core systems · APIs · Data" },
+];
 
 export default function DevelopersClient() {
     return (
-        <div className="min-h-screen bg-background">
-            <main>
-                {/* Hero Section */}
-                <section className="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
-                    <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,hsl(var(--primary)/0.05)_0%,transparent_100%)]" />
-                    <div className="container mx-auto px-4">
-                        <Link
-                            href="/#solutions"
-                            className="inline-flex items-center text-sm font-medium text-muted-foreground hover:text-primary mb-8 transition-colors"
-                        >
-                            <ArrowLeft className="mr-2 h-4 w-4" />
-                            Quay lại Giải pháp
+        <main className="min-h-screen bg-background">
+            <section className="relative isolate overflow-hidden border-b border-border/70 bg-gradient-to-br from-amber-50/90 via-background to-orange-50/50 py-20 dark:from-[#12100d] dark:via-background dark:to-[#16100c] lg:py-28">
+                <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
+                <div className="container relative mx-auto grid items-center gap-14 px-4 lg:grid-cols-[1.05fr_.95fr]">
+                    <div>
+                        <Link href="/#solutions" className="mb-7 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary">
+                            <ArrowLeft className="h-4 w-4" /> Back to solutions
                         </Link>
-
-                        <div className="max-w-4xl">
-                            <div className="animate-in fade-in slide-in-from-bottom-5 duration-700">
-                                <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary mb-6">
-                                    <Code2 className="h-4 w-4" />
-                                    Dành cho Developers
-                                </div>
-                                <h1 className="text-4xl font-bold tracking-tight sm:text-6xl mb-6">
-                                    Xây dựng nhanh hơn với <span className="text-primary italic font-serif">DX Tuyệt vời</span>
-                                </h1>
-                                <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-                                    Bộ công cụ SDK đa ngôn ngữ, tài liệu API chi tiết và môi trường Sandbox miễn phí giúp bạn
-                                    tích hợp O24 vào ứng dụng chỉ trong vài phút.
-                                </p>
-                                <div className="flex flex-col sm:flex-row gap-4">
-                                    <Button asChild size="lg" className="rounded-full px-8">
-                                        <a href="https://docs.vknight.io.vn" target="_blank" rel="noopener noreferrer">
-                                            Đọc tài liệu (Docs)
-                                        </a>
-                                    </Button>
-                                    <Button asChild size="lg" variant="outline" className="rounded-full px-8">
-                                        <Link href="/demo">
-                                            Thử Sandbox
-                                        </Link>
-                                    </Button>
-                                </div>
-                            </div>
+                        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold tracking-wide text-primary">
+                            <Terminal className="h-4 w-4" /> O24 DEVELOPER HUB
                         </div>
-                    </div>
-                </section>
-
-                {/* Developer Experience Metrics */}
-                <section className="py-12 bg-muted/30">
-                    <div className="container mx-auto px-4">
-                        <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-                            {[
-                                { label: "Time to First Call", value: "< 5 mins", icon: Zap },
-                                { label: "SDKs hỗ trợ", value: "10+", icon: Puzzle },
-                                { label: "Uptime Sandbox", value: "99.9%", icon: Activity },
-                                { label: "Community", value: "5k+", icon: Coffee },
-                            ].map((stat, i) => (
-                                <div
-                                    key={i}
-                                    className="text-center animate-in fade-in slide-in-from-bottom-5 duration-700 fill-mode-both"
-                                    style={{ animationDelay: `${i * 100}ms` }}
-                                >
-                                    <div className="flex justify-center mb-2">
-                                        <stat.icon className="h-5 w-5 text-primary/60" />
-                                    </div>
-                                    <div className="text-2xl font-bold text-primary">{stat.value}</div>
-                                    <div className="text-sm text-muted-foreground">{stat.label}</div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Core Tools */}
-                <section className="py-24">
-                    <div className="container mx-auto px-4">
-                        <div className="text-center max-w-3xl mx-auto mb-16">
-                            <h2 className="text-3xl font-bold mb-4">Công cụ xây dựng hệ sinh thái</h2>
-                            <p className="text-muted-foreground">Chúng tôi cung cấp mọi thứ bạn cần để phát triển các sản phẩm tài chính sáng tạo.</p>
-                        </div>
-
-                        <div className="grid md:grid-cols-3 gap-8">
-                            {[
-                                {
-                                    title: "RESTful API Chuẩn hóa",
-                                    description: "Hệ thống API thiết kế theo chuẩn OpenAPI (Swagger), dễ dàng thử nghiệm ngay trên trình duyệt.",
-                                    icon: Terminal,
-                                    features: ["JSON/REST Standard", "Pagination & Filtering", "Rate Limiting"]
-                                },
-                                {
-                                    title: "SDK đa nền tảng",
-                                    description: "Thư viện được build sẵn cho Node.js, Python, Go, Java, Swift và Kotlin.",
-                                    icon: Smartphone,
-                                    features: ["Type-safe classes", "Automatic retries", "Error handling"]
-                                },
-                                {
-                                    title: "Tài liệu chi tiết",
-                                    description: "Guides, tutorials và code snippets cho mọi use case phổ biến nhất.",
-                                    icon: BookOpen,
-                                    features: ["Copy-paste code", "Interactive Playground", "Change logs"]
-                                }
-                            ].map((item, i) => (
-                                <Card key={i} className="border-none shadow-lg bg-card/50 backdrop-blur">
-                                    <CardContent className="pt-8">
-                                        <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                                            <item.icon className="h-6 w-6" />
-                                        </div>
-                                        <h3 className="text-xl font-bold mb-3">{item.title}</h3>
-                                        <p className="text-muted-foreground mb-6 text-sm leading-relaxed">
-                                            {item.description}
-                                        </p>
-                                        <ul className="space-y-3">
-                                            {item.features.map((f, j) => (
-                                                <li key={j} className="flex items-center gap-2 text-sm">
-                                                    <CheckCircle2 className="h-4 w-4 text-primary" />
-                                                    <span>{f}</span>
-                                                </li>
-                                            ))}
-                                        </ul>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
-                    </div>
-                </section>
-
-                {/* Sandbox Section */}
-                <section className="py-24 bg-zinc-900 text-zinc-100 overflow-hidden">
-                    <div className="container mx-auto px-4">
-                        <div className="grid lg:grid-cols-2 gap-16 items-center">
-                            <div>
-                                <div className="inline-flex items-center gap-2 rounded-full bg-primary/20 px-3 py-1 text-xs font-semibold text-primary mb-6">
-                                    Developer First
-                                </div>
-                                <h2 className="text-3xl font-bold mb-6">Môi trường Sandbox Miễn phí</h2>
-                                <p className="text-zinc-400 mb-8 leading-relaxed">
-                                    Đừng chờ đợi phê duyệt. Đăng ký tài khoản developer và nhận API Key ngay lập tức để bắt đầu
-                                    thử nghiệm với dữ liệu giả lập chất lượng cao.
-                                </p>
-                                <div className="space-y-6">
-                                    <div className="flex gap-4 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
-                                        <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                                            <FileText className="h-5 w-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold">Mô phỏng Error States</h4>
-                                            <p className="text-sm text-zinc-500">Thử nghiệm cách ứng dụng của bạn phản ứng với lỗi network hoặc từ chối giao dịch.</p>
-                                        </div>
-                                    </div>
-                                    <div className="flex gap-4 p-4 rounded-xl bg-zinc-800/50 border border-zinc-700/50">
-                                        <div className="h-10 w-10 rounded-lg bg-primary/20 flex items-center justify-center shrink-0">
-                                            <Cpu className="h-5 w-5 text-primary" />
-                                        </div>
-                                        <div>
-                                            <h4 className="font-bold">Mock Data phong phú</h4>
-                                            <p className="text-sm text-zinc-500">Dữ liệu tài khoản, thẻ và giao dịch được gen tự động theo thực tế.</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="relative">
-                                {/* Visual Code representation */}
-                                <div className="rounded-xl bg-zinc-950 border border-zinc-800 shadow-2xl p-6 font-mono text-sm overflow-hidden">
-                                    <div className="flex gap-2 mb-4 italic opacity-50">
-                                        <div className="h-3 w-3 rounded-full bg-red-500/50" />
-                                        <div className="h-3 w-3 rounded-full bg-amber-500/50" />
-                                        <div className="h-3 w-3 rounded-full bg-green-500/50" />
-                                    </div>
-                                    <div className="space-y-2">
-                                        <div className="text-primary">const <span className="text-zinc-100">o24</span> = require(<span className="text-emerald-400">'@vknight/o24-sdk'</span>);</div>
-                                        <div>&nbsp;</div>
-                                        <div className="text-zinc-100">o24.init({'{'}</div>
-                                        <div className="text-zinc-400">&nbsp;&nbsp;apiKey: <span className="text-emerald-400">'sk_test_123...'</span>,</div>
-                                        <div className="text-zinc-400">&nbsp;&nbsp;env: <span className="text-emerald-400">'sandbox'</span></div>
-                                        <div className="text-zinc-100">{'})'};</div>
-                                        <div>&nbsp;</div>
-                                        <div className="text-zinc-100">o24.payments.create({'{'}</div>
-                                        <div className="text-zinc-400">&nbsp;&nbsp;amount: <span className="text-amber-400">50000</span>,</div>
-                                        <div className="text-zinc-400">&nbsp;&nbsp;currency: <span className="text-emerald-400">'VND'</span>,</div>
-                                        <div className="text-zinc-400">&nbsp;&nbsp;desc: <span className="text-emerald-400">'Thanh toan don hang #024'</span></div>
-                                        <div className="text-zinc-100">{'})'}.then(res ={'>'} console.log(res));</div>
-                                    </div>
-                                </div>
-                                {/* Added glow effect */}
-                                <div className="absolute inset-0 bg-primary/20 blur-[100px] -z-10" />
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Final CTA */}
-                <section className="py-24">
-                    <div className="container mx-auto px-4 text-center">
-                        <div className="inline-flex h-20 w-20 items-center justify-center rounded-2xl bg-primary/10 text-primary mb-8 animate-bounce">
-                            <Puzzle className="h-10 w-10" />
-                        </div>
-                        <h2 className="text-3xl font-bold mb-6">Mọi thứ bạn cần để thành công</h2>
-                        <p className="text-muted-foreground mb-10 max-w-2xl mx-auto">
-                            Bắt đầu xây dựng ngay hôm nay với API Key sandbox. Tài liệu của chúng tôi sẽ dẫn dắt bạn từng bước.
+                        <h1 className="max-w-2xl text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-6xl">
+                            Build with clarity. <span className="bg-gradient-to-r from-amber-500 via-primary to-orange-600 bg-clip-text text-transparent">Integrate with confidence.</span>
+                        </h1>
+                        <p className="mt-6 max-w-xl text-lg leading-relaxed text-muted-foreground">
+                            Explore O24 architecture, integration concepts, and developer-oriented resources to plan your next API or enterprise integration project.
                         </p>
-                        <div className="flex flex-col sm:flex-row justify-center gap-4">
-                            <Button asChild size="lg" className="rounded-full px-12">
-                                <a href="https://docs.vknight.io.vn" target="_blank" rel="noopener noreferrer">
-                                    Khám phá Docs
-                                </a>
-                            </Button>
-                            <Button asChild size="lg" variant="outline" className="rounded-full px-12">
-                                <Link href="/contact">
-                                    Hỗ trợ Kỹ thuật
-                                </Link>
-                            </Button>
+                        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+                            <Link href="/features" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3 text-sm font-semibold text-primary-foreground shadow-lg shadow-primary/15 transition-colors hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                                Explore capabilities <ArrowRight className="h-4 w-4" />
+                            </Link>
+                            <Link href="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-border bg-background/80 px-6 py-3 text-sm font-semibold transition-colors hover:border-primary/40 hover:text-primary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                                Ask a technical question <ArrowUpRight className="h-4 w-4" />
+                            </Link>
+                        </div>
+                        <div className="mt-8 flex flex-wrap gap-x-6 gap-y-3 text-xs font-medium text-muted-foreground">
+                            <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Architecture-first</span>
+                            <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Integration-focused</span>
+                            <span className="inline-flex items-center gap-2"><CheckCircle2 className="h-4 w-4 text-primary" /> Enterprise-aware</span>
                         </div>
                     </div>
-                </section>
-            </main>
-        </div>
-    );
-}
+                    <div className="relative rounded-3xl border border-slate-700/80 bg-[#0d1424] p-4 text-slate-100 shadow-2xl shadow-slate-950/20 sm:p-6">
+                        <div className="mb-5 flex items-center justify-between border-b border-slate-700/80 pb-4">
+                            <div className="flex items-center gap-2 text-sm font-semibold"><Layers3 className="h-4 w-4 text-orange-400" /> Integration overview</div>
+                            <span className="rounded-full border border-orange-400/30 bg-orange-400/10 px-2 py-1 text-[10px] font-medium text-orange-300">ILLUSTRATIVE</span>
+                        </div>
+                        <div className="space-y-3">
+                            {architectureSteps.map((step, index) => (
+                                <div key={step.title}>
+                                    <div className={`flex items-center gap-3 rounded-xl border p-4 ${index === 1 ? "border-orange-400/50 bg-orange-400/10" : "border-slate-700 bg-slate-800/50"}`}>
+                                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-orange-400/10 text-orange-300"><step.icon className="h-5 w-5" /></div>
+                                        <div className="min-w-0"><p className="text-sm font-semibold">{step.title}</p><p className="text-xs text-slate-400">{step.detail}</p></div>
+                                        <span className="ml-auto text-xs text-slate-500">0{index + 1}</span>
+                                    </div>
+                                    {index < architectureSteps.length - 1 && <div aria-hidden="true" className="mx-auto h-3 w-px bg-orange-400/40" />}
+                                </div>
+                            ))}
+                        </div>
+                        <p className="mt-5 text-xs text-slate-400">Conceptual system flow — not a live environment or production dashboard.</p>
+                    </div>
+                </div>
+            </section>
 
-// Simple Activity icon replacement
-function Activity(props: any) {
-    return (
-        <svg
-            {...props}
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-        >
-            <path d="M22 12h-4l-3 9L9 3l-3 9H2" />
-        </svg>
-    )
+            <section className="py-20 lg:py-24" id="developer-topics">
+                <div className="container mx-auto px-4">
+                    <div className="mx-auto mb-12 max-w-3xl text-center">
+                        <span className="text-xs font-bold tracking-[.2em] text-primary">EXPLORE THE PLATFORM</span>
+                        <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Understand the building blocks</h2>
+                        <p className="mt-4 text-muted-foreground">Start with the concepts that matter most for integration and distributed applications.</p>
+                    </div>
+                    <div className="grid gap-5 md:grid-cols-3">
+                        {topics.map((topic) => (
+                            <article key={topic.title} className="group rounded-2xl border border-border bg-card p-6 transition-colors hover:border-primary/40 hover:bg-primary/[0.02]">
+                                <div className="mb-6 inline-flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary"><topic.icon className="h-6 w-6" /></div>
+                                <p className="text-[11px] font-bold tracking-widest text-primary">{topic.category}</p>
+                                <h3 className="mt-2 text-xl font-bold">{topic.title}</h3>
+                                <p className="mt-3 min-h-24 text-sm leading-relaxed text-muted-foreground">{topic.description}</p>
+                                <ul className="mt-5 space-y-3 border-t border-border pt-5">
+                                    {topic.points.map((point) => <li key={point} className="flex items-center gap-2 text-sm"><CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />{point}</li>)}
+                                </ul>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="border-y border-border bg-muted/30 py-20 lg:py-24" id="developer-path">
+                <div className="container mx-auto px-4">
+                    <div className="mb-12 max-w-2xl">
+                        <span className="text-xs font-bold tracking-[.2em] text-primary">GET ORIENTED</span>
+                        <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Your path to O24</h2>
+                        <p className="mt-4 text-muted-foreground">A practical route from understanding the architecture to discussing a real integration.</p>
+                    </div>
+                    <div className="grid gap-5 lg:grid-cols-3">
+                        {learningPath.map((step) => (
+                            <article key={step.number} className="flex h-full flex-col rounded-2xl border border-border bg-background p-6">
+                                <span className="text-3xl font-extrabold text-primary/60">{step.number}</span>
+                                <h3 className="mt-5 text-xl font-bold">{step.title}</h3>
+                                <p className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+                                <Link href={step.href} className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">{step.action}<ArrowRight className="h-4 w-4" /></Link>
+                            </article>
+                        ))}
+                    </div>
+                </div>
+            </section>
+
+            <section className="py-20 lg:py-24">
+                <div className="container mx-auto grid items-center gap-10 px-4 lg:grid-cols-2">
+                    <div>
+                        <span className="text-xs font-bold tracking-[.2em] text-primary">DESIGN FOR REAL SYSTEMS</span>
+                        <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">Think beyond a single API.</h2>
+                        <p className="mt-5 leading-relaxed text-muted-foreground">Enterprise integrations involve authentication, service contracts, asynchronous processing, and operational visibility. Explore these concerns early in the architecture process.</p>
+                        <div className="mt-7 flex flex-wrap gap-2">
+                            {["API contracts", "Authentication", "CQRS", "Messaging", "Observability", "Deployment"].map((tag) => <span key={tag} className="rounded-full border border-primary/20 bg-primary/5 px-3 py-1.5 text-xs font-medium text-foreground">{tag}</span>)}
+                        </div>
+                        <Link href="/solutions/enterprise" className="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-primary hover:underline">Explore enterprise solutions <ArrowUpRight className="h-4 w-4" /></Link>
+                    </div>
+                    <div className="rounded-2xl border border-border bg-card p-6 sm:p-8">
+                        <div className="mb-5 flex items-center gap-2 text-sm font-semibold"><Braces className="h-5 w-5 text-primary" /> Integration design checklist</div>
+                        <div className="space-y-4">
+                            {[
+                                { icon: LockKeyhole, title: "Secure the boundary", text: "Define authentication and access requirements." },
+                                { icon: GitBranch, title: "Choose reliable workflows", text: "Plan retries, errors, and state transitions." },
+                                { icon: Database, title: "Clarify data contracts", text: "Model systems of record and integration payloads." },
+                                { icon: BookOpen, title: "Document operations", text: "Specify monitoring and deployment expectations." },
+                            ].map((item) => (
+                                <div key={item.title} className="flex gap-3 rounded-xl border border-border bg-muted/30 p-4">
+                                    <item.icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
+                                    <div><h3 className="text-sm font-semibold">{item.title}</h3><p className="mt-1 text-xs leading-relaxed text-muted-foreground">{item.text}</p></div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section className="pb-20 lg:pb-28">
+                <div className="container mx-auto px-4">
+                    <div className="relative overflow-hidden rounded-3xl bg-[#101827] px-7 py-12 text-white sm:px-12 lg:px-16">
+                        <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-orange-500/15 blur-3xl" />
+                        <div className="relative flex flex-col items-start justify-between gap-8 lg:flex-row lg:items-center">
+                            <div className="max-w-2xl">
+                                <div className="mb-4 inline-flex items-center gap-2 text-xs font-bold tracking-widest text-orange-300"><Building2 className="h-4 w-4" /> NEXT STEP</div>
+                                <h2 className="text-3xl font-bold sm:text-4xl">Have an integration challenge?</h2>
+                                <p className="mt-4 text-sm leading-relaxed text-slate-300 sm:text-base">Tell us about your architecture, platform requirements, or development goals. We can help you identify an appropriate next step.</p>
+                            </div>
+                            <div className="flex w-full flex-col gap-3 sm:w-auto sm:flex-row lg:flex-col">
+                                <Link href="/contact" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white hover:bg-orange-600">Contact the team <ArrowRight className="h-4 w-4" /></Link>
+                                <Link href="/demo" className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-slate-600 px-6 py-3 text-sm font-semibold text-white hover:bg-white/10">Request a demo <ArrowUpRight className="h-4 w-4" /></Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    );
 }

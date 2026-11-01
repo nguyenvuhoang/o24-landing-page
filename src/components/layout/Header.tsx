@@ -3,44 +3,50 @@
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { ChevronDown, Menu, X } from "lucide-react";
+import type { User as SupabaseUser } from "@supabase/supabase-js";
+
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
 import { navItems } from "@/data/navigation";
 import { LoginModal } from "@/components/auth/LoginModal";
-import { ThemeToggle } from "./ThemeToggle";
-import { usePathname } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { User as SupabaseUser } from "@supabase/supabase-js";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function Header() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
     const [user, setUser] = useState<SupabaseUser | null>(null);
+    const [supabase] = useState(createClient);
     const pathname = usePathname();
-    const supabase = createClient();
 
     useEffect(() => {
-        const getUser = async () => {
-            const { data: { user } } = await supabase.auth.getUser();
-            setUser(user);
-        };
-        getUser();
+        let mounted = true;
 
-        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
-            setUser(session?.user ?? null);
+        void supabase.auth.getUser().then(({ data }) => {
+            if (mounted) setUser(data.user);
         });
 
-        return () => subscription.unsubscribe();
+        const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+            if (mounted) setUser(session?.user ?? null);
+        });
+
+        return () => {
+            mounted = false;
+            subscription.unsubscribe();
+        };
     }, [supabase]);
 
     if (pathname?.startsWith("/dashboard")) return null;
 
+    const isActive = (href: string) =>
+        href === "/" ? pathname === "/" : pathname === href || pathname?.startsWith(`${href}/`);
+
     return (
-        <header className="sticky top-0 z-50 w-full glass">
+        <header className="sticky top-0 z-50 w-full glass border-b border-border/40">
             <div className="container mx-auto px-4">
-                <div className="flex h-16 items-center justify-between">
-                    {/* Logo */}
-                    <Link href="/" className="flex items-center gap-2">
+                <div className="flex h-16 items-center justify-between gap-3">
+                    <Link href="/" className="flex shrink-0 items-center gap-2" aria-label="vKnight homepage">
                         <Image
                             src="/images/Logo.png"
                             alt="vKnight"
@@ -51,22 +57,46 @@ export function Header() {
                         />
                     </Link>
 
-                    {/* Desktop Navigation */}
-                    <nav className="hidden md:flex items-center gap-1">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.label}
-                                href={item.href}
-                                className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors rounded-lg hover:bg-accent"
-                            >
-                                {item.label}
-                            </Link>
-                        ))}
+                    <nav aria-label="Main navigation" className="hidden lg:flex items-center gap-1">
+                        {navItems.map((item) => {
+                            const selected = isActive(item.href) || item.children?.some(child => isActive(child.href));
+                            return (
+                                <div key={item.label} className="group relative">
+                                    <Link
+                                        href={item.href}
+                                        aria-current={isActive(item.href) ? "page" : undefined}
+                                        className={`inline-flex items-center gap-1 rounded-lg px-3 py-2 text-sm font-medium transition-colors hover:bg-accent hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${selected ? "text-foreground" : "text-muted-foreground"}`}
+                                    >
+                                        {item.label}
+                                        {item.children && <ChevronDown aria-hidden="true" className="h-3.5 w-3.5 transition-transform group-hover:rotate-180 group-focus-within:rotate-180" />}
+                                    </Link>
+                                    {item.children && (
+                                        <div className="invisible absolute left-0 top-full z-50 w-72 pt-2 opacity-0 transition-all duration-150 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100">
+                                            <div className="rounded-xl border border-border bg-background p-2 shadow-xl">
+                                                {item.children.map(child => (
+                                                    <Link
+                                                        key={`${item.label}-${child.href}`}
+                                                        href={child.href}
+                                                        aria-current={isActive(child.href) ? "page" : undefined}
+                                                        className="block rounded-lg px-3 py-2.5 hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                                                    >
+                                                        <span className="block text-sm font-semibold text-foreground">{child.label}</span>
+                                                        {child.description && <span className="mt-0.5 block text-xs text-muted-foreground">{child.description}</span>}
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+                            );
+                        })}
                     </nav>
 
-                    {/* Desktop CTA */}
-                    <div className="hidden md:flex items-center gap-3">
+                    <div className="hidden lg:flex shrink-0 items-center gap-2">
                         <ThemeToggle />
+                        <Button variant="ghost" size="sm" asChild>
+                            <Link href="/solutions/developers">For Developers</Link>
+                        </Button>
                         {!user ? (
                             <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
                                 Đăng nhập
@@ -77,41 +107,56 @@ export function Header() {
                             </Button>
                         )}
                         <Button variant="gradient" size="sm" asChild>
-                            <Link href="/demo">Request Demo</Link>
+                            <Link href="/demo">Book a Demo</Link>
                         </Button>
                     </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center gap-2">
+                    <div className="flex items-center gap-2 lg:hidden">
                         <ThemeToggle />
                         <button
-                            className="p-2 hover:bg-accent rounded-lg transition-colors"
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle menu"
+                            type="button"
+                            className="rounded-lg p-2 transition-colors hover:bg-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+                            onClick={() => setIsMobileMenuOpen(open => !open)}
+                            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
+                            aria-expanded={isMobileMenuOpen}
+                            aria-controls="mobile-main-navigation"
                         >
-                            {isMobileMenuOpen ? (
-                                <X className="h-5 w-5" />
-                            ) : (
-                                <Menu className="h-5 w-5" />
-                            )}
+                            {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
                         </button>
                     </div>
                 </div>
 
-                {/* Mobile Navigation */}
                 {isMobileMenuOpen && (
-                    <div className="md:hidden border-t py-4 space-y-2">
-                        {navItems.map((item) => (
-                            <Link
-                                key={item.label}
-                                href={item.href}
-                                className="block px-4 py-2.5 text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-lg transition-colors"
-                                onClick={() => setIsMobileMenuOpen(false)}
-                            >
-                                {item.label}
-                            </Link>
+                    <nav id="mobile-main-navigation" aria-label="Mobile navigation" className="max-h-[calc(100dvh-4rem)] overflow-y-auto border-t border-border py-3 lg:hidden">
+                        {navItems.map(item => (
+                            <div key={item.label} className="border-b border-border/40 py-2 last:border-b-0">
+                                <Link
+                                    href={item.href}
+                                    onClick={() => setIsMobileMenuOpen(false)}
+                                    className="block rounded-lg px-3 py-2 text-sm font-semibold text-foreground hover:bg-accent"
+                                >
+                                    {item.label}
+                                </Link>
+                                {item.children && (
+                                    <div className="ml-3 border-l border-border pl-2">
+                                        {item.children.map(child => (
+                                            <Link
+                                                key={`${item.label}-${child.href}`}
+                                                href={child.href}
+                                                onClick={() => setIsMobileMenuOpen(false)}
+                                                className="block rounded-lg px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
+                                            >
+                                                {child.label}
+                                            </Link>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
                         ))}
-                        <div className="pt-4 px-4 space-y-2">
+                        <div className="grid gap-2 px-3 pt-4">
+                            <Button variant="outline" className="w-full" asChild>
+                                <Link href="/solutions/developers" onClick={() => setIsMobileMenuOpen(false)}>For Developers</Link>
+                            </Button>
                             {!user ? (
                                 <Button
                                     variant="outline"
@@ -124,20 +169,15 @@ export function Header() {
                                     Đăng nhập
                                 </Button>
                             ) : (
-                                <Button
-                                    variant="outline"
-                                    className="w-full"
-                                    asChild
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                >
-                                    <Link href="/dashboard">Dashboard</Link>
+                                <Button variant="outline" className="w-full" asChild>
+                                    <Link href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</Link>
                                 </Button>
                             )}
                             <Button variant="gradient" className="w-full" asChild>
-                                <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Request Demo</Link>
+                                <Link href="/demo" onClick={() => setIsMobileMenuOpen(false)}>Book a Demo</Link>
                             </Button>
                         </div>
-                    </div>
+                    </nav>
                 )}
             </div>
 

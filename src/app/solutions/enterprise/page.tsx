@@ -1,13 +1,17 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
 import EnterpriseSolutionClient from "./EnterpriseSolutionClient";
 
 export const metadata: Metadata = {
-    title: "Giải pháp cho Doanh nghiệp | vKnight O24 Platform",
-    description: "Quản trị tập trung, bảo mật doanh nghiệp và khả năng triển khai Hybrid/On-premise cho các tổ chức quy mô lớn.",
+    title: "Enterprise API Integration Solutions | O24 by vKnight",
+    description:
+        "Explore O24 enterprise API integration, workflow orchestration, architecture considerations, and deployment planning. Discuss your requirements with vKnight.",
+    alternates: { canonical: "/solutions/enterprise" },
     openGraph: {
-        title: "Giải pháp cho Doanh nghiệp | vKnight O24 Platform",
-        description: "Quản trị tập trung, bảo mật doanh nghiệp và khả năng triển khai Hybrid/On-premise cho các tổ chức quy mô lớn.",
+        title: "Enterprise API Integration Solutions | O24 by vKnight",
+        description:
+            "Plan API modernization and enterprise integrations with O24. Explore solutions and discuss your requirements with vKnight.",
         url: "/solutions/enterprise",
+        type: "website",
     },
 };
 

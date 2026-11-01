@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Hero } from "@/components/sections/Hero";
 import { Features } from "@/components/sections/Features";
 import { Solutions } from "@/components/sections/Solutions";
@@ -7,16 +8,17 @@ import { FAQ } from "@/components/sections/FAQ";
 import { CTA } from "@/components/sections/CTA";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { HolidayNoticeModal } from "@/components/holiday/HolidayNoticeModal";
-import type { Metadata } from "next";
+
+const title = "O24 Platform by vKnight | API Management & Enterprise Integration";
+const description =
+    "Build, integrate, and scale with O24: API management, workflow orchestration, and enterprise integration capabilities for developers and organizations.";
 
 export const metadata: Metadata = {
-    title: "O24 Platform | vKnight - OpenAPI & Open Banking Integration",
-    description: "O24 là nền tảng OpenAPI & Open Banking Integration mạnh mẽ từ vKnight. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud.",
-    openGraph: {
-        title: "O24 Platform | vKnight - OpenAPI & Open Banking Integration",
-        description: "O24 là nền tảng OpenAPI & Open Banking Integration mạnh mẽ từ vKnight. Triển khai nhanh, bảo mật cao, hỗ trợ on-prem & cloud.",
-        url: "/",
-    },
+    title,
+    description,
+    alternates: { canonical: "/" },
+    openGraph: { title, description, url: "/", type: "website" },
+    twitter: { card: "summary_large_image", title, description },
 };
 
 export default function Home() {
@@ -27,20 +29,11 @@ export default function Home() {
                 data={{
                     "@context": "https://schema.org",
                     "@type": "SoftwareApplication",
-                    "name": "O24 Platform",
-                    "operatingSystem": "All",
-                    "applicationCategory": "BusinessApplication",
-                    "description": "Nền tảng OpenAPI & Open Banking Integration mạnh mẽ.",
-                    "offers": {
-                        "@type": "Offer",
-                        "price": "0",
-                        "priceCurrency": "VND"
-                    },
-                    "aggregateRating": {
-                        "@type": "AggregateRating",
-                        "ratingValue": "4.9",
-                        "ratingCount": "120"
-                    }
+                    name: "O24 Platform",
+                    applicationCategory: "BusinessApplication",
+                    description,
+                    url: "https://vknight.io.vn/",
+                    publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn/" },
                 }}
             />
             <Hero />
