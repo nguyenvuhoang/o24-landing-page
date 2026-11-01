@@ -1,4 +1,12 @@
 "use client";
+import {
+  Save,
+  Route,
+  CalendarClock,
+  NotebookPen,
+  ShieldCheck,
+} from "lucide-react";
+import { label } from "./presentation";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { statuses, type Lead, type Admin } from "@/lib/leads/domain";
@@ -13,7 +21,7 @@ export function LeadEditor({ lead, admins }: { lead: Lead; admins: Admin[] }) {
       s === "LOST" ||
       (current < 4 && i === current + 1),
   );
-  const input = "mt-2 w-full rounded-md border bg-background p-2.5 text-sm";
+  const input = "crm-input";
   async function save(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     setPending(true);
@@ -59,79 +67,120 @@ export function LeadEditor({ lead, admins }: { lead: Lead; admins: Admin[] }) {
   const local = (v: string | null) =>
     v ? new Date(v).toISOString().slice(0, 16) : "";
   return (
-    <form onSubmit={save} className="space-y-5">
-      <fieldset disabled={pending} className="space-y-5">
-        <legend className="font-semibold mb-4">Manage this lead</legend>
-        <label className="block text-sm">
-          Lead status
-          <select
-            name="status"
-            defaultValue={lead.lead_status}
-            className={input}
+    <form onSubmit={save} className="crm-panel crm-editor">
+      <div className="crm-panel-heading">
+        <h2>
+          <Route size={18} aria-hidden="true" />
+          Lead management
+        </h2>
+      </div>
+      <div className="crm-editor-content">
+        <fieldset disabled={pending} className="crm-editor-fields">
+          <legend className="sr-only">Manage this lead</legend>
+          <div className="crm-editor-section">
+            <h3>Pipeline & ownership</h3>
+            <label className="crm-field">
+              Lead status
+              <select
+                name="status"
+                defaultValue={lead.lead_status}
+                className={input}
+              >
+                {allowed.map((s) => (
+                  <option key={s} value={s}>
+                    {label(s)}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <p className="crm-field-help">
+              Move to the next stage, or mark this lead as lost. All changes
+              stay in its history.
+            </p>
+            <label className="crm-field">
+              Assigned administrator
+              <select
+                name="assignedAdmin"
+                defaultValue={lead.assigned_admin || ""}
+                className={input}
+              >
+                <option value="">Unassigned</option>
+                {admins.map((a) => (
+                  <option key={a.user_id} value={a.user_id}>
+                    {a.display_name}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
+          <div className="crm-editor-section">
+            <h3>
+              <CalendarClock size={15} aria-hidden="true" />
+              Contact & scheduling
+            </h3>
+            <label className="crm-field">
+              Last contacted
+              <input
+                name="lastContactedAt"
+                type="datetime-local"
+                defaultValue={local(lead.last_contacted_at)}
+                className={input}
+              />
+            </label>
+            <label className="crm-field">
+              Demo scheduled
+              <input
+                name="demoScheduledAt"
+                type="datetime-local"
+                defaultValue={local(lead.demo_scheduled_at)}
+                className={input}
+              />
+            </label>
+            <p className="crm-field-help">
+              All dates are in UTC. Set a demo date when moving to Demo
+              scheduled.
+            </p>
+          </div>
+          <div className="crm-editor-section">
+            <h3>
+              <NotebookPen size={15} aria-hidden="true" />
+              Internal note
+            </h3>
+            <label className="crm-field">
+              <span className="sr-only">Add internal note</span>
+              <textarea
+                name="note"
+                maxLength={5000}
+                rows={4}
+                placeholder="Add context, a contact activity or next steps…"
+                className={input}
+              />
+            </label>
+            <p className="crm-field-help">
+              Only administrators can see these notes. Your name and the time
+              are recorded.
+            </p>
+          </div>
+          <button
+            className="crm-button crm-button-primary crm-save"
+            disabled={pending}
           >
-            {allowed.map((s) => (
-              <option key={s}>{s}</option>
-            ))}
-          </select>
-        </label>
-        <p className="text-xs text-muted-foreground">
-          NEW → CONTACTED → QUALIFIED → DEMO SCHEDULED → WON. Mark LOST at any
-          stage; history is retained.
+            <Save size={16} aria-hidden="true" />
+            {pending ? "Saving…" : "Save changes"}
+          </button>
+        </fieldset>
+        <p
+          role="status"
+          aria-live="polite"
+          className={`crm-save-feedback ${message ? "has-message" : ""}`}
+        >
+          {message}
         </p>
-        <label className="block text-sm">
-          Assigned administrator
-          <select
-            name="assignedAdmin"
-            defaultValue={lead.assigned_admin || ""}
-            className={input}
-          >
-            <option value="">Unassigned</option>
-            {admins.map((a) => (
-              <option key={a.user_id} value={a.user_id}>
-                {a.display_name}
-              </option>
-            ))}
-          </select>
-        </label>
-        <label className="block text-sm">
-          Last contacted (UTC)
-          <input
-            name="lastContactedAt"
-            type="datetime-local"
-            defaultValue={local(lead.last_contacted_at)}
-            className={input}
-          />
-        </label>
-        <label className="block text-sm">
-          Demo scheduled (UTC)
-          <input
-            name="demoScheduledAt"
-            type="datetime-local"
-            defaultValue={local(lead.demo_scheduled_at)}
-            className={input}
-          />
-        </label>
-        <label className="block text-sm">
-          Add internal note
-          <textarea
-            name="note"
-            maxLength={5000}
-            rows={4}
-            placeholder="Record context, a contact activity or next steps…"
-            className={input}
-          />
-        </label>
-        <p className="text-xs text-muted-foreground">
-          Notes are appended to the history with your identity and the time of
-          the change.
+        <p className="crm-editor-footer">
+          <ShieldCheck size={14} aria-hidden="true" />
+          Original submission stays unchanged
         </p>
-        <button className="rounded-md bg-primary text-primary-foreground w-full p-3 font-semibold disabled:opacity-50">
-          {pending ? "Saving…" : "Save changes"}
-        </button>
-      </fieldset>
-      <p role="status" aria-live="polite" className="text-sm">
-        {message}
-      </p>
+      </div>
     </form>
   );
 }

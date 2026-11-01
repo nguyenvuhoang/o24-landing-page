@@ -1,15 +1,27 @@
 "use client";
+import Link from "next/link";
+import { CircleAlert, RotateCw, ArrowLeft } from "lucide-react";
 export default function ErrorPage({ reset }: { reset: () => void }) {
   return (
-    <div role="alert" className="rounded-lg border p-8">
-      <h1 className="text-2xl font-semibold">Unable to load this workspace</h1>
-      <p className="my-4 text-muted-foreground">
-        Check your connection and try again. If this continues, ask an
-        administrator to verify the dashboard migration.
+    <div role="alert" className="crm-panel crm-state">
+      <span className="crm-state-icon">
+        <CircleAlert size={26} aria-hidden="true" />
+      </span>
+      <h1 className="crm-state-title">Unable to load this workspace</h1>
+      <p>
+        Your leads could not be loaded. Check your connection and try again. If
+        this continues, contact your administrator.
       </p>
-      <button onClick={reset} className="rounded-md border px-4 py-2">
-        Try again
-      </button>
+      <div className="flex flex-wrap justify-center gap-3">
+        <button onClick={reset} className="crm-button crm-button-primary">
+          <RotateCw size={15} aria-hidden="true" />
+          Try again
+        </button>
+        <Link href="/dashboard" className="crm-button crm-button-secondary">
+          <ArrowLeft size={15} aria-hidden="true" />
+          Overview
+        </Link>
+      </div>
     </div>
   );
 }
