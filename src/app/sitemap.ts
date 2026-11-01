@@ -1,15 +1,13 @@
 import type { MetadataRoute } from "next";
+import { getPublishedArticlePaths } from "@/data/blog";
 
 const BASE_URL = "https://vknight.io.vn";
 
-// Keep this list aligned with published, indexable public pages.
-// Do not add authenticated routes, API routes, drafts or placeholder articles.
-const publicRoutes = [
+// Public non-article pages only. Blog articles come from the content registry.
+const staticRoutes = [
   "/",
   "/about",
   "/blog",
-  "/blog/api-gateway-vs-reverse-proxy",
-  "/blog/cqrs-pattern-dotnet-10",
   "/careers",
   "/changelog",
   "/contact",
@@ -29,8 +27,9 @@ const publicRoutes = [
 ] as const;
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return publicRoutes.map((route) => ({
-    url: `${BASE_URL}${route}`,
+  const routes = [...staticRoutes, ...getPublishedArticlePaths()];
+  return [...new Set(routes)].map((route) => ({
+    url: new URL(route, BASE_URL).toString(),
     changeFrequency: route === "/" ? "weekly" : "monthly",
     priority: route === "/" ? 1 : route.startsWith("/blog/") ? 0.7 : 0.6,
   }));
