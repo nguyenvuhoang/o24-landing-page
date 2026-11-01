@@ -23,6 +23,7 @@ import {
   type EmailEntry,
 } from "./LeadTimelines";
 import { LeadCustomerActivities } from "./LeadCustomerActivities";
+import { FollowUpWorkspace } from "./FollowUpWorkspace";
 export type LeadDetailViewProps = {
   lead: Lead;
   directory: Admin[];
@@ -118,6 +119,7 @@ export function LeadDetailView({
         </div>
       </header>
       <LeadPipeline status={l.lead_status} />
+      <FollowUpWorkspace initialLeadId={l.id} />
       <div className="crm-detail-grid">
         <section
           className="crm-panel crm-detail-customer"
