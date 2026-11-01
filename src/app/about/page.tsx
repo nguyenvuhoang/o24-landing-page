@@ -4,6 +4,7 @@ import { ArrowRight } from "lucide-react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/about" },
     title: "Về chúng tôi - vKnight",
     description: "Câu chuyện của vKnight - Đơn vị tiên phong trong lĩnh vực OpenAPI & Open Banking Integration tại Việt Nam.",
     openGraph: {

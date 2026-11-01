@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/careers" },
     title: "Tuyển dụng | Gia nhập đội ngũ vKnight",
     description: "Cơ hội nghề nghiệp hấp dẫn tại vKnight. Cùng chúng tôi xây dựng tương lai của kết nối tài chính tại Việt Nam.",
     openGraph: {

@@ -1,6 +1,7 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/terms" },
     title: "Điều khoản dịch vụ | vKnight O24",
     description: "Quy định và điều khoản sử dụng nền tảng OpenAPI & Open Banking vKnight O24.",
     openGraph: {

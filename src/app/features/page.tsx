@@ -6,6 +6,7 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2 } from "lucide-react";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/features" },
     title: "Tính năng | O24",
     description: "Khám phá bộ công cụ toàn diện cho Fintech và Banking của O24",
     openGraph: {

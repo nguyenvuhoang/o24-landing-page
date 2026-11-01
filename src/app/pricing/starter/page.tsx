@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/pricing/starter" },
     title: "Bắt đầu với O24 Starter | Miễn phí cho Developers",
     description: "Khám phá sức mạnh của O24 Community Edition. Open-source, dễ dàng triển khai, và hoàn toàn miễn phí.",
     openGraph: {

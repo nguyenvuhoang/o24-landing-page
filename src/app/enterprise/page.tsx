@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/enterprise" },
     title: "Enterprise | O24 Platform – Giải pháp API Management cho doanh nghiệp",
     description:
         "Liên hệ đội ngũ tư vấn O24 để nhận giải pháp API Management tùy chỉnh cho doanh nghiệp. On-premise, SLA đảm bảo, hỗ trợ 24/7.",

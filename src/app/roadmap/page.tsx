@@ -4,6 +4,7 @@ import { roadmapData } from "@/data/roadmap";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/roadmap" },
     title: "Roadmap | Lộ trình phát triển O24 Platform",
     description: "Khám phá lộ trình phát triển và các tính năng đột phá sắp tới của vKnight O24.",
     openGraph: {

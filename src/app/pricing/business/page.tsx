@@ -6,6 +6,7 @@ import Link from "next/link";
 import { EnterpriseForm } from "../../enterprise/EnterpriseForm";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/pricing/business" },
     title: "O24 Business | Giải pháp cho Teams chuyên nghiệp",
     description: "Nắm quyền kiểm soát hạ tầng API với gói O24 Business. Advanced monitoring, priority support và 99.9% SLA.",
     openGraph: {

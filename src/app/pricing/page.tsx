@@ -21,6 +21,7 @@ import {
 import Link from "next/link";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/pricing" },
     title: "Bảng giá | O24",
     description: "Các gói dịch vụ linh hoạt phù hợp với mọi quy mô doanh nghiệp",
     openGraph: {

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/contact" },
     title: "Liên hệ | vKnight O24 Support",
     description: "Kết nối với đội ngũ vKnight để được tư vấn và hỗ trợ về giải pháp Open Banking & API Management.",
     openGraph: {

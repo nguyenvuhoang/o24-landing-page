@@ -6,6 +6,7 @@ import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/changelog" },
     title: "Nhật ký thay đổi - O24 Platform",
     description: "Theo dõi hành trình phát triển và các bản cập nhật mới nhất của O24 Platform.",
     openGraph: {

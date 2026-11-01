@@ -4,6 +4,7 @@ import Link from "next/link";
 import { FileText, Map } from "lucide-react";
 
 export const metadata: Metadata = {
+    alternates: { canonical: "/demo" },
     title: "Request a Technical Demo | O24 Platform",
     description: "Schedule a live walkthrough of O24 Platform tailored to your API management and integration use case. No slides, real configuration examples.",
     openGraph: {
