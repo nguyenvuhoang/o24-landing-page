@@ -26,6 +26,16 @@ export type BlogArticle = {
 
 export const blogArticles: readonly BlogArticle[] = [
   {
+    slug: "core-banking-integration-architecture",
+    category: "Banking Integration",
+    title: "Core Banking Integration Architecture: A Developer’s Guide",
+    description:
+      "Design a resilient banking integration layer with API gateways, anti-corruption adapters, CQRS, transaction states, RabbitMQ, and defense-in-depth security.",
+    icon: "landmark",
+    readTimeMinutes: 15,
+    status: "published",
+  },
+  {
     slug: "building-api-gateway-aspnet-core",
     category: "API Architecture",
     title: "Building an API Gateway with ASP.NET Core and YARP",
