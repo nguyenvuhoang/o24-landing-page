@@ -9,6 +9,7 @@ const publicRoutes = [
   "/about",
   "/blog",
   "/blog/api-gateway-vs-reverse-proxy",
+  "/blog/cqrs-pattern-dotnet-10",
   "/careers",
   "/changelog",
   "/contact",

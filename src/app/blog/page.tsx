@@ -17,6 +17,14 @@ export const metadata: Metadata = {
 
 const articles = [
   {
+    slug: "cqrs-pattern-dotnet-10",
+    category: ".NET Architecture",
+    title: "CQRS Pattern in .NET 10: A Practical Guide",
+    description: "Build a small ASP.NET Core API with separate command and query handlers, dependency injection, and an in-memory store. Learn the trade-offs before production.",
+    icon: Code2,
+    readTime: "10 min read",
+  },
+  {
     slug: "api-gateway-vs-reverse-proxy",
     category: "API Architecture",
     title: "API Gateway vs. Reverse Proxy: What Changes in an Enterprise Architecture?",
