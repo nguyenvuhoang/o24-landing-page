@@ -1,20 +1,28 @@
-# Step 29.1 — Security & Trust Center
-
-## Install
-Copy `src/app/security/page.tsx` into the same location in your Next.js project, replacing the old page. No dependencies or database changes required.
-
-## Verification
-```powershell
-pnpm exec eslint src/app/security/page.tsx
-pnpm exec tsc --noEmit
-pnpm build
-```
-Open `/security` and verify dark/light mode, mobile behavior, CTAs and canonical metadata.
-
-## Source-review findings (not automatically fixed)
-- The prior `/security` page claimed AES-256, TLS 1.3, industry compliance, regular penetration tests, and 24/7 monitoring without supporting evidence. New content states areas for project-specific review instead of certifying specific controls.
-- `/enterprise` remains an older Vietnamese landing page with 99.99% uptime, 24/7 support, <1h response, unlimited traffic, and open-source availability claims. Verify with product/legal owners or revise separately.
-- Do not present a security certification or SLA until documented, approved evidence exists.
+# Step 30.1 — Conversion Tracking Foundation
 
 ## Scope
-Only `/security` changes. No admin, Supabase, CRM, demo form, developer portal or payment integrations touched.
+Aggregate marketing journey events through existing `@vercel/analytics`; no database changes. Does not change DemoForm, EnterpriseForm, API endpoints, CRM, existing `ConversionLink`, or `TrackedLink`.
+
+Events:
+- `journey_page_view`: fixed `page`, `stage` properties when arriving at a known marketing route.
+- `journey_navigation`: fixed `from`, `to`, `from_stage`, `to_stage` when clicking a link between known marketing routes.
+
+Events represent anonymous aggregate traffic and click intent, not an individual lead's origin. The existing `demo_request_success` event remains the only observed client-side successful demo form signal, and is subject to delivery and analytics sampling/blocking. No PII is sent by the new component.
+
+## Install
+1. Unzip at `C:\O24\o24-landing-page` preserving folder structure.
+2. Run `node scripts/step30-1-integrate.mjs` (idempotent).
+3. Run `pnpm exec eslint src/components/analytics/JourneyAnalytics.tsx src/lib/analytics/journey.ts src/app/layout.tsx`.
+4. Run `pnpm exec tsc --noEmit`, `pnpm test`, `pnpm build`.
+5. Check the source/target pairs in Vercel Analytics, e.g. `features → solutions`, `security → demo`.
+
+## Limitations
+- Does not persist visitor session identity or map click events to CRM leads.
+- A blocked analytics client or ad blocker may suppress events; do not assume 100% coverage.
+- `journey_page_view` is custom instrumentation in addition to Vercel's automatic page views; don't sum them together.
+- Only browser navigation through clicked `<a>` links is tracked by `journey_navigation`.
+- Check analytics consent/privacy requirements before production roll-out.
+- Dashboard, auth, API URLs and other unknown paths intentionally excluded.
+
+## Rollback
+Delete `<JourneyAnalytics />` and its import from `src/app/layout.tsx`. No migrations or user data to revert.

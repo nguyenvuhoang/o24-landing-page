@@ -21,6 +21,8 @@ const staticRoutes = [
   "/developers/guides/api-gateway",
   "/developers/guides/core-banking-integration",
   "/enterprise",
+  "/enterprise/security-review",
+  "/enterprise/deployment",
   "/features",
   "/pricing",
   "/pricing/business",

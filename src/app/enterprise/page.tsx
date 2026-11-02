@@ -15,13 +15,13 @@ import {
 
 export const metadata: Metadata = {
     alternates: { canonical: "/enterprise" },
-    title: "Enterprise | O24 Platform – Giải pháp API Management cho doanh nghiệp",
+    title: "Enterprise Consultation | O24 by vKnight",
     description:
-        "Liên hệ đội ngũ tư vấn O24 để nhận giải pháp API Management tùy chỉnh cho doanh nghiệp. On-premise, SLA đảm bảo, hỗ trợ 24/7.",
+        "Discuss enterprise API integration, deployment planning and operational requirements with the O24 team.",
     openGraph: {
         title: "Enterprise | O24 Platform",
         description:
-            "Giải pháp API Management tùy chỉnh cho doanh nghiệp. On-premise, SLA đảm bảo, hỗ trợ 24/7.",
+            "Discuss enterprise API integration, security review, deployment planning and operating responsibilities.",
         url: "/enterprise",
         siteName: "O24 by vKnight",
         locale: "vi_VN",
@@ -40,33 +40,33 @@ export const metadata: Metadata = {
 const enterpriseBenefits = [
     {
         icon: Server,
-        title: "On-premise & Private Cloud",
-        desc: "Triển khai trong môi trường nội bộ, hoàn toàn kiểm soát dữ liệu.",
+        title: "Deployment options",
+        desc: "Review on-premises, private cloud or hybrid requirements for your environment.",
     },
     {
         icon: Shield,
-        title: "SLA cam kết",
-        desc: "Đảm bảo uptime lên đến 99.99% với đội ngũ hỗ trợ chuyên biệt.",
+        title: "Service level planning",
+        desc: "Confirm availability objectives and support commitments during commercial review.",
     },
     {
         icon: HeadphonesIcon,
-        title: "Hỗ trợ ưu tiên 24/7",
-        desc: "Kênh hỗ trợ riêng, dedicated engineer, response time < 1 giờ.",
+        title: "Support & incident ownership",
+        desc: "Define escalation paths, incident ownership and support scope with the team.",
     },
     {
         icon: Clock,
-        title: "Onboarding chuyên sâu",
-        desc: "Đào tạo team, migration support, và kiến trúc review miễn phí.",
+        title: "Integration onboarding",
+        desc: "Plan migration, team handover and architecture workshops according to project scope.",
     },
 ];
 
 const enterpriseFeatures = [
-    "Unlimited API endpoints & traffic",
-    "Custom plugin / middleware development",
-    "Dedicated infrastructure & tenant isolation",
-    "Advanced audit logging & compliance",
-    "SSO / LDAP / Active Directory integration",
-    "Custom SLA & priority support channel",
+    "API capacity and traffic planning",
+    "Extension and middleware requirements",
+    "Infrastructure boundaries and isolation",
+    "Audit and regulatory requirements",
+    "Identity integration assessment",
+    "Contracted SLAs and support scope",
 ];
 
 const trustedBy = [
@@ -93,10 +93,12 @@ export default function EnterprisePage() {
                         </span>
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
-                        Giải pháp tùy chỉnh, triển khai on-premise, SLA cam kết, và đội ngũ hỗ trợ chuyên biệt.
+                        Explore integration, deployment and service operations planning tailored to your organization&apos;s requirements.
                         Để lại thông tin để nhận tư vấn miễn phí từ đội ngũ kỹ thuật O24.
                     </p>
                 </div>
+
+                <div className="mb-10 flex flex-wrap gap-3"><Link href="/enterprise/deployment" className="inline-flex min-h-11 items-center rounded-xl border border-primary/30 bg-primary/5 px-5 py-3 text-sm font-bold text-primary hover:bg-primary/10">Explore deployment & operations →</Link><Link href="/security" className="inline-flex min-h-11 items-center rounded-xl border px-5 py-3 text-sm font-semibold hover:border-primary/40">Security & Trust →</Link></div>
 
                 {/* Enterprise Benefits Cards */}
                 <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
@@ -121,7 +123,7 @@ export default function EnterprisePage() {
                         <div className="p-6 md:p-8 rounded-2xl border border-border bg-card shadow-sm">
                             <h2 className="text-2xl font-bold mb-2">Liên hệ tư vấn Enterprise</h2>
                             <p className="text-muted-foreground mb-8">
-                                Điền thông tin bên dưới, đội ngũ sẽ liên hệ trong 1-2 ngày làm việc.
+                                Share your requirements and our team will review your request and follow up.
                             </p>
                             <EnterpriseForm />
                         </div>
@@ -133,7 +135,7 @@ export default function EnterprisePage() {
                         <div className="p-6 rounded-2xl border border-border bg-muted/30">
                             <h3 className="font-semibold mb-4 flex items-center gap-2">
                                 <Lock className="w-4 h-4 text-primary" />
-                                Enterprise bao gồm
+                                Topics for enterprise review
                             </h3>
                             <ul className="space-y-3">
                                 {enterpriseFeatures.map((feature) => (
@@ -165,7 +167,7 @@ export default function EnterprisePage() {
                         <div className="p-6 rounded-2xl border border-primary/20 bg-primary/5">
                             <h3 className="font-semibold mb-2">Bắt đầu miễn phí</h3>
                             <p className="text-sm text-muted-foreground mb-4">
-                                O24 Community Edition hoàn toàn miễn phí và open-source. Nâng cấp lên Enterprise khi bạn sẵn sàng.
+                                Explore public developer resources and discuss licensing or deployment terms with our team.
                             </p>
                             <Link
                                 href="https://github.com/vknightteam"
@@ -196,6 +198,9 @@ export default function EnterprisePage() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div className="container mx-auto px-4 pb-12">
+                <Link href="/enterprise/security-review" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-primary/30 bg-primary/5 px-5 py-3 text-sm font-semibold text-primary hover:bg-primary/10">Security review &amp; FAQ →</Link>
             </div>
         </main>
     );

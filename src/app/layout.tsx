@@ -5,6 +5,7 @@ import { Header } from "@/components/layout/Header";
 import { ThemeProvider } from "@/components/layout/ThemeProvider";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { Analytics } from "@vercel/analytics/next";
+import { JourneyAnalytics } from "@/components/analytics/JourneyAnalytics";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
@@ -127,6 +128,7 @@ export default function RootLayout({
                     <Header />
                     {children}
                     <Footer />
+                    <JourneyAnalytics />
                     {/* <ChatBox /> */}
                     {process.env.VERCEL === "1" && <Analytics />}
                     {process.env.NODE_ENV === "development" && <Agentation />}
