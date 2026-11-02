@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type KeyboardEvent } from "react";
 import {
   Activity, ArrowUpRight, Blocks, Braces, Check, ChevronRight,
   CircleDot, GitBranch, Layers3, LockKeyhole, Play, Radio, Server,
@@ -115,8 +115,20 @@ function MonitorView() {
 
 export function O24ProductPreview() {
   const [view, setView] = useState<View>("api");
+  function onTabKeyDown(event: KeyboardEvent<HTMLButtonElement>, index: number) {
+    let next = index;
+    if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
+    else if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+    else if (event.key === "Home") next = 0;
+    else if (event.key === "End") next = tabs.length - 1;
+    else return;
+    event.preventDefault();
+    const id = tabs[next].id;
+    setView(id);
+    document.getElementById(`o24-tab-${id}`)?.focus();
+  }
   return (
-    <div className="relative mx-auto w-full max-w-[720px]" aria-label="Interactive illustrated O24 product workspace">
+    <div className="relative mx-auto w-full min-w-0 max-w-[720px]" aria-label="Interactive illustrated O24 product workspace">
       <div aria-hidden="true" className="pointer-events-none absolute -inset-5 rounded-[2rem] bg-gradient-to-br from-amber-400/20 via-orange-500/10 to-sky-500/10 blur-3xl" />
       <div className="relative overflow-hidden rounded-2xl border border-[#23334c] bg-[#0b1425] text-left shadow-[0_32px_90px_-26px_rgba(6,17,36,.65)]">
         <div className="flex items-center gap-3 border-b border-white/10 bg-[#111e32] px-4 py-3 sm:px-5">
@@ -131,10 +143,10 @@ export function O24ProductPreview() {
               <div><p className="text-[10px] font-semibold uppercase tracking-[.17em] text-amber-400">O24 platform</p><h3 className="mt-1 text-base font-semibold tracking-tight text-white sm:text-lg">Integration control center</h3><p className="mt-1 text-[11px] text-slate-400">Build, orchestrate and observe integrations.</p></div>
               <div className="hidden items-center gap-1.5 rounded-lg border border-white/10 bg-white/[.035] px-2.5 py-2 text-[10px] text-slate-300 sm:flex"><Play size={11} className="text-amber-400"/> Interactive preview</div>
             </div>
-            <div role="tablist" aria-label="Product preview sections" className="mb-4 mt-5 flex gap-1 overflow-x-auto rounded-xl border border-white/10 bg-[#101b2e] p-1">
-              {tabs.map(({id,label,icon:Icon})=><button key={id} type="button" role="tab" id={`o24-tab-${id}`} aria-controls={`o24-panel-${id}`} aria-selected={view===id} onClick={()=>setView(id)} className={`flex min-w-0 flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2.5 text-[10px] font-semibold transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-400 sm:text-xs ${view===id?"bg-[#273750] text-white shadow-sm":"text-slate-400 hover:bg-white/[.05] hover:text-slate-200"}`}><Icon size={13}/>{label}</button>)}
+            <div role="tablist" aria-label="Product preview sections" className="mb-4 mt-5 flex gap-1 overflow-x-auto overscroll-x-contain rounded-xl border border-white/10 bg-[#101b2e] p-1">
+              {tabs.map(({id,label,icon:Icon}, index)=><button key={id} type="button" role="tab" id={`o24-tab-${id}`} aria-controls={`o24-panel-${id}`} aria-selected={view===id} tabIndex={view===id?0:-1} onKeyDown={(event)=>onTabKeyDown(event,index)} onClick={()=>setView(id)} className={`flex min-h-11 min-w-[116px] flex-1 items-center justify-center gap-1.5 whitespace-nowrap rounded-lg px-2 py-2.5 text-[10px] font-semibold transition-colors motion-reduce:transition-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-amber-400 sm:text-xs ${view===id?"bg-[#273750] text-white shadow-sm":"text-slate-400 hover:bg-white/[.05] hover:text-slate-200"}`}><Icon size={13}/>{label}</button>)}
             </div>
-            <div role="tabpanel" id={`o24-panel-${view}`} aria-labelledby={`o24-tab-${view}`} className="min-h-[262px] sm:min-h-[266px]">{view==="api"?<ApiView/>:view==="workflow"?<WorkflowView/>:<MonitorView/>}</div>
+            <div role="tabpanel" id={`o24-panel-${view}`} aria-labelledby={`o24-tab-${view}`} tabIndex={0} className="min-h-[262px] min-w-0 sm:min-h-[266px]">{view==="api"?<ApiView/>:view==="workflow"?<WorkflowView/>:<MonitorView/>}</div>
           </div>
         </div>
         <div className="flex flex-wrap items-center justify-between gap-2 border-t border-white/10 bg-[#0e192b] px-4 py-3 text-[10px] text-slate-400 sm:px-5"><span className="inline-flex items-center gap-1.5"><ShieldCheck size={13} className="text-amber-400"/> Architecture-focused product walkthrough</span><span>Illustrative UI · no live data</span></div>

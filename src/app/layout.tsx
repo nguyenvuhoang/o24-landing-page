@@ -1,15 +1,14 @@
+import { Agentation } from "@/components/agentation/Agentation";
+import ChatBox from "@/components/chat/ChatBox";
+import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
+import { Footer } from "@/components/layout/Footer";
+import { Header } from "@/components/layout/Header";
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
-import ChatBox from "@/components/chat/ChatBox";
-import { Analytics } from "@vercel/analytics/next";
-import { Header } from "@/components/layout/Header";
-import { Footer } from "@/components/layout/Footer";
-import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
-import { Agentation } from "@/components/agentation/Agentation";
-import { TetHolidayPopup } from "@/components/layout/TetHolidayPopup";
-import { ThemeProvider } from "@/components/layout/ThemeProvider";
-import { JsonLd } from "@/components/seo/JsonLd";
 
 const siteUrl = "https://vknight.io.vn";
 const siteDescription =
@@ -131,8 +130,8 @@ export default function RootLayout({
                     <Footer />
                     <ChatBox />
                     <Analytics />
-                    <Agentation />
-                    <TetHolidayPopup />
+                    {process.env.NODE_ENV === "development" && <Agentation />}
+                    {/* <TetHolidayPopup /> */}
                 </ThemeProvider>
             </body>
         </html>

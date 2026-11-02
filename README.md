@@ -1,71 +1,43 @@
-# Step 23: Database-backed demo leads + Resend delivery webhook
+# Step 26.1D — Responsive, Motion & Accessibility hardening
 
-This package is based on the public `nguyenvuhoang/o24-landing-page` project structure as inspected on 2026-11-01. It does not change DemoForm.tsx; keep the Step 22 client-side success event and error UI. Local files may differ from GitHub; review diffs before copying.
+This drop-in package contains **four sections** based on steps 26.1A, 26.1B.1 and 26.1C. It does not touch `page.tsx`, Supabase, dashboard, APIs, or introduce packages.
 
-## Files
-- `supabase/migrations/20261101_demo_leads.sql`: run manually in Supabase SQL Editor FIRST.
-- `src/lib/demo-admin.ts`: new server-only Supabase admin client (NOT the cookie client).
-- `src/app/api/demo/route.ts`: replaces existing API route; validates input, saves lead first, sends Resend notification, stores Resend email ID.
-- `src/app/api/webhooks/resend/route.ts`: new signed webhook receiver; records delivery events atomically by Svix ID.
+## Integration
 
-## Prerequisites
+Back up any local edits first. **Do not overwrite files blindly if you customized them since the preceding steps.** Compare with `git diff -- src/components/sections/...` and selectively merge changes. Copy the `src/` tree to the project root when ready.
 
-`npm install svix`
+## Changes
 
-Configure in Vercel (Production and relevant Preview environments) and local `.env.local`:
+- Hero: smaller minimum mobile headline, responsive spacing and sensible minimum widths.
+- Product preview: scrollable 44px+ tab targets; roving tab focus and ArrowLeft/ArrowRight/Home/End keyboard behavior; accessible tab panel and minimum-width protection.
+- In Action: narrower mobile gutters, code overflow containment, one concise status live region; suppress repeated verbose screen-reader announcements. Respects `prefers-reduced-motion` by removing visual width animation and fast-forwarding timer stages after the user clicks Run.
+- Architecture: CSS connector is aligned to the icon rail; localized screen-reader announcement on layer change; prevents long JSON lines from widening layout.
 
-```
-NEXT_PUBLIC_SUPABASE_URL=https://YOURPROJECT.supabase.co
-SUPABASE_SECRET_KEY=sb_secret_...    # preferred; or SUPABASE_SERVICE_ROLE_KEY (legacy)
-RESEND_API_KEY=re_...
-RESEND_WEBHOOK_SECRET=whsec_...
-SMTP_FROM="O24 Platform <no-reply@your-verified-domain>"
-DEMO_NOTIFICATION_EMAIL=support@vknight.io.vn
-```
+All JSON and performance indicators are examples, not live banking activity.
 
-**Never put the secret key or webhook secret in a NEXT_PUBLIC_ variable.** Use a server-only Supabase client; never import it into the browser. Never store secret values in Git.
+## Local verification
 
-Create a webhook in Resend Dashboard with URL `https://vknight.io.vn/api/webhooks/resend` and subscribe at least to `email.sent`, `email.delivered`, `email.bounced`, `email.complained`, `email.delivery_delayed` (and `email.failed` if offered). Copy its signing secret into `RESEND_WEBHOOK_SECRET`.
-
-For local webhook testing, use an HTTPS tunnel and a separate webhook secret.
-
-## Operational semantics
-
-- DB insertion failure: reject request, do not send email.
-- DB insertion succeeds and Resend accepts email: returns `200`, `requestId`, email_status initially `accepted` (or a later status replayed from webhook).
-- Resend rejects email: saves `failed` status, responds `502` with `requestId`. The lead **has been saved**: tell users not to submit repeated copies, and provide support a reference.
-- Resend accepts email but saving email ID fails: responds `503`, lead remains in DB but email may have been sent. This must be reconciled manually by support, so DO NOT blindly retry submissions.
-- Verified webhook: event inserted by `svix-id` once, request status advanced by priority. Out-of-order events arriving before linking the email ID are replayed on ID update.
-- `accepted` is NOT delivered; `delivered` is a provider delivery report, not a human reading the email.
-- Demo request success in the browser means the API saved the lead AND Resend accepted the notification; this event is not proof the recipient got it.
-
-## Test / deploy
-
-```
-npm install svix
-npx tsc --noEmit
-npx eslint src/app/api/demo/route.ts src/app/api/webhooks/resend/route.ts src/lib/demo-admin.ts
-npm run build
+```powershell
+pnpm exec eslint src/components/sections/Hero.tsx src/components/sections/O24ProductPreview.tsx src/components/sections/O24InAction.tsx src/components/sections/Architecture.tsx
+pnpm exec tsc --noEmit
+pnpm test
+pnpm build
+pnpm dev
 ```
 
-Never test delivery status by posting unsigned webhook payloads in production. Use Resend's webhook test feature.
+### Browser acceptance matrix
 
-For end-to-end smoke test, submit one real demo request and confirm it appears in `demo_requests` before checking its `resend_email_id` and webhook events. Test a forced email API failure and ensure the lead persists with `failed`.
+- Widths: 320, 375, 390, 768, 1024, 1440 px; no page-level horizontal scroll. Verify both themes.
+- 200% browser zoom: text and controls remain operable.
+- Keyboard-only: Tab to preview tabs; use Left/Right/Home/End to switch and focus. Tab through Scenario, Run, Pause, Step, Reset, Copy JSON; architecture selectors and Next/Previous.
+- Reduced motion: DevTools -> Rendering -> Emulate CSS media feature `prefers-reduced-motion: reduce`; flow steps advance immediately after Run and width transitions are off.
+- Check that JSON scrolls within its own panel and CTA `/demo` remains reachable.
+- Mobile: inspect spacing at 320px, all buttons visible and clickable; ensure no page-level scrollbars.
 
-### Database status query (SQL Editor only)
+### Measure performance against a baseline
 
-```sql
-select id, company, submitted_at, email_status, resend_email_id
-from public.demo_requests order by submitted_at desc limit 20;
+Use production build (`pnpm build && pnpm start`) and Chrome DevTools Lighthouse, 3 runs mobile and desktop per condition, same network/device settings. Compare medians of LCP, INP, CLS, transferred JS, layout shifts. Suggested goals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 (field Core Web Vitals guidance); lab Lighthouse cannot conclusively measure field INP. No scores are asserted by this package. Check `next build` output and DevTools Performance for long tasks and main-thread work.
 
-select event_id, resend_email_id, event_type, received_at
-from public.demo_email_events order by received_at desc limit 20;
-```
+### Scope
 
-## Security / release requirements
-
-- Separate rate limiting, CAPTCHA/Turnstile and abuse protection are required before opening a high-volume public API. Add request body size enforcement at the edge; Content-Length alone can be omitted by clients.
-- Restrict admin reads to authenticated staff in a future dashboard; no public list endpoint is included here.
-- Define retention period and deletion policy for personal data.
-- DB persistence alone is not a durable email job queue. For production-grade resilience, use a background worker + outbox for notification dispatch and retry policies.
-- Review existing `/api/demo` semantics, especially Step 22 client UI messaging, because a 502 may mean a saved lead.
+No changes to navigation, CRM, Supabase, migrations, or production data. This is an optimization pass rather than a redesign or synthetic test result.
