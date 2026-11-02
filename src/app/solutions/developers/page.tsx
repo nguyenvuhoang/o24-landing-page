@@ -1,21 +1,16 @@
 import type { Metadata } from "next";
 import DevelopersClient from "./DevelopersClient";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
     title: "O24 Developer Hub | API Architecture & Integration | vKnight",
     description:
         "Explore O24 API management, workflow architecture, CQRS concepts, and enterprise integration resources for developers and engineering teams.",
-    alternates: {
-        canonical: "/solutions/developers",
-    },
-    openGraph: {
-        title: "O24 Developer Hub | vKnight",
-        description:
-            "Explore API architecture, service orchestration, and integration concepts with O24 by vKnight.",
-        url: "/solutions/developers",
-        type: "website",
-    },
-};
+    path: "/solutions/developers",
+    ogTitle: "O24 Developer Hub | vKnight",
+    ogDescription:
+        "Explore API architecture, service orchestration, and integration concepts with O24 by vKnight.",
+});
 
 export default function DevelopersPage() {
     return <DevelopersClient />;

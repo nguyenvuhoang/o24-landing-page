@@ -6,20 +6,16 @@ import {
   ShieldCheck, Smartphone, Workflow,
 } from "lucide-react";
 import { features } from "@/data/features";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "O24 Platform Capabilities | API Management, Workflows & Integration",
   description:
     "Explore O24 API management, workflow orchestration, banking integration, security, observability and multi-channel architecture. Discover practical integration approaches.",
-  alternates: { canonical: "/features" },
-  openGraph: {
-    title: "O24 Platform Capabilities | vKnight",
-    description: "Build, orchestrate and connect services with O24's API-led enterprise integration approach.",
-    url: "/features",
-    type: "website",
-  },
-  twitter: { card: "summary_large_image" },
-};
+  path: "/features",
+  ogTitle: "O24 Platform Capabilities | vKnight",
+  ogDescription: "Build, orchestrate and connect services with O24's API-led enterprise integration approach.",
+});
 
 const architecture = [
   { name: "Client channels", detail: "Web · Mobile · Partners", icon: Smartphone },

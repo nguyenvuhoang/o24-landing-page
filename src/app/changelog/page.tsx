@@ -4,17 +4,13 @@ import { changelogData, ChangeType } from "@/data/changelog";
 import { CheckCircle2, FlaskConical, ShieldCheck, Sparkles, Wrench, Calendar } from "lucide-react";
 import React from "react";
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/changelog" },
+export const metadata: Metadata = createPageMetadata({
     title: "Nhật ký thay đổi - O24 Platform",
     description: "Theo dõi hành trình phát triển và các bản cập nhật mới nhất của O24 Platform.",
-    openGraph: {
-        title: "Nhật ký thay đổi - O24 Platform",
-        description: "Theo dõi hành trình phát triển và các bản cập nhật mới nhất của O24 Platform.",
-        url: "/changelog",
-    },
-};
+    path: "/changelog",
+});
 
 const ChangeTypeIcon = ({ type }: { type: ChangeType }) => {
     switch (type) {

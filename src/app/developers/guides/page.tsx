@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, Braces, GitBranch, Landmark, ShieldCheck } from "lucide-react";
 import { guides } from "@/lib/developer-guides/content";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Engineering Guides | O24 Developer Hub",
   description: "Learn workflow orchestration, CQRS, API gateway design and core banking integration through practical architecture guides.",
-  alternates: { canonical: "/developers/guides" },
-};
+  path: "/developers/guides",
+});
 const icons = [GitBranch, Braces, ShieldCheck, Landmark];
 export default function GuidesIndex() {
   return <main className="min-h-screen bg-background">

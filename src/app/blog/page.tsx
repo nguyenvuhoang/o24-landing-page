@@ -3,19 +3,16 @@ import Link from "next/link";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ArrowRight, BookOpen, Code2, Landmark, Layers3, ShieldCheck, Server } from "lucide-react";
 import { getPublishedArticles, type BlogIcon } from "@/data/blog";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Engineering Blog | API Architecture & Banking Integration | vKnight",
   description:
     "Practical engineering guides on API architecture, integration patterns, security, and banking technology from vKnight.",
-  alternates: { canonical: "/blog" },
-  openGraph: {
-    title: "vKnight Engineering Blog",
-    description: "Engineering notes on APIs, integration, and building reliable systems.",
-    url: "/blog",
-    type: "website",
-  },
-};
+  path: "/blog",
+  ogTitle: "vKnight Engineering Blog",
+  ogDescription: "Engineering notes on APIs, integration, and building reliable systems.",
+});
 
 const articles = getPublishedArticles();
 

@@ -2,12 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Check, ShieldCheck } from "lucide-react";
 import { plans } from "@/data/pricing";
-export const metadata: Metadata = {
+import { createPageMetadata } from "@/lib/seo";
+export const metadata: Metadata = createPageMetadata({
   title: "O24 Pricing & Plans | Starter, Business & Enterprise",
   description: "Compare O24 evaluation paths for individual developers, growing teams and enterprise integrations. Confirm pricing and service terms with vKnight.",
-  alternates: { canonical: "/pricing" },
-  openGraph: { title: "O24 Pricing & Plans | vKnight", description: "Explore Starter, Business and Enterprise engagement paths.", url: "/pricing", type: "website" },
-};
+  path: "/pricing",
+  ogTitle: "O24 Pricing & Plans | vKnight",
+  ogDescription: "Explore Starter, Business and Enterprise engagement paths.",
+});
 const questions = [
   { q: "Are prices and entitlements fixed?", a: "No public contractual pricing is displayed here. Licensing, capacity, support and deployment scope are confirmed during consultation." },
   { q: "Can we evaluate an integration before production?", a: "Discuss a proof-of-concept scope and environment requirements with the team. Access and availability are confirmed on a project basis." },

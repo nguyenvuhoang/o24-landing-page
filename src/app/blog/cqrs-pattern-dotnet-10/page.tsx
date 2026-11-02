@@ -2,19 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, Code2, Database, ShieldCheck } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { createPageMetadata } from "@/lib/seo";
 
 const slug = "/blog/cqrs-pattern-dotnet-10";
 const url = `https://vknight.io.vn${slug}`;
 const title = "CQRS Pattern in .NET 10: A Practical Guide";
 const description = "Learn CQRS with an ASP.NET Core .NET 10 Minimal API example, separate command and query handlers, dependency injection, and production trade-offs.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: slug },
-  openGraph: { title, description, url: slug, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path: slug,
+  type: "article",
+  ogTitle: title,
+});
 
 // This is an illustrative, fully local example—not an O24 SDK or banking integration.
 const setup = `dotnet new web -n CqrsDemo -f net10.0

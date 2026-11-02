@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ChevronRight, ClipboardCheck, ShieldCheck } from "lucide-react";
 import SecurityReviewClient from "./SecurityReviewClient";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Enterprise Security Review & FAQ | O24 by vKnight",
   description: "Plan an O24 enterprise security assessment: review identity, data, network, audit, operations and deployment responsibilities, with practical FAQs for technology teams.",
-  alternates: { canonical: "/enterprise/security-review" },
-  openGraph: {
-    title: "Enterprise Security Review & FAQ | O24 by vKnight",
-    description: "Security review questions, evidence checklist, and enterprise integration FAQs for O24 evaluation.",
-    url: "/enterprise/security-review", type: "website",
-  },
-};
+  path: "/enterprise/security-review",
+  ogDescription: "Security review questions, evidence checklist, and enterprise integration FAQs for O24 evaluation.",
+});
 
 export default function EnterpriseSecurityReviewPage() {
   return <main className="min-h-screen overflow-x-clip bg-background text-foreground">

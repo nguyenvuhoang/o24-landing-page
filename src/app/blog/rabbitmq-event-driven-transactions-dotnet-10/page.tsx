@@ -6,6 +6,7 @@ import {
   GitBranch, RefreshCcw, Server, ShieldCheck, Workflow,
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { createPageMetadata } from "@/lib/seo";
 
 const slug = "rabbitmq-event-driven-transactions-dotnet-10";
 const path = `/blog/${slug}`;
@@ -14,13 +15,13 @@ const title = "RabbitMQ & Event-Driven Transaction Processing in .NET 10";
 const description =
   "A practical guide to transactional outbox, retries, RabbitMQ dead-letter queues, idempotent consumers, and financial transaction reconciliation in .NET 10.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: path },
-  openGraph: { title, description, url: path, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path,
+  type: "article",
+  ogTitle: title,
+});
 
 const sections = [
   { id: "delivery", label: "Delivery is not settlement" },

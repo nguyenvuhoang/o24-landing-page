@@ -2,32 +2,15 @@ import { Metadata } from "next";
 import { DemoForm } from "./DemoForm";
 import Link from "next/link";
 import { FileText, Map } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/demo" },
+export const metadata: Metadata = createPageMetadata({
     title: "Request a Technical Demo | O24 Platform",
     description: "Request an O24 technical walkthrough focused on your API management and integration requirements. Session content and environment access are confirmed with the team.",
-    openGraph: {
-        title: "Request a Technical Demo | O24 Platform",
-        description: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
-        url: "/demo",
-        images: [
-            {
-                url: "/images/og-image.png", // Đảm bảo link này tồn tại trong public
-                width: 1200,
-                height: 630,
-                alt: "O24 Platform Demo",
-            },
-        ],
-        type: "website",
-    },
-    twitter: {
-        card: "summary_large_image",
-        title: "Request a Technical Demo | O24 Platform",
-        description: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
-        images: ["/images/og-image.png"],
-    },
-};
+    path: "/demo",
+    ogDescription: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
+    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Platform Demo" },
+});
 
 const demoScopes = [
     "API lifecycle management: publish, version control, deprecation policy",

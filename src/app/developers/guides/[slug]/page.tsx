@@ -4,12 +4,19 @@ import { notFound } from "next/navigation";
 import { ArrowRight, BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { CodeExample } from "@/components/developers/CodeExample";
 import { getGuide, guides } from "@/lib/developer-guides/content";
+import { createPageMetadata } from "@/lib/seo";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() { return guides.map(guide => ({ slug: guide.slug })); }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params; const guide = getGuide(slug); if (!guide) return { title: "Guide not found" };
-  return { title: `${guide.title} | O24 Developer Guides`, description: guide.summary, alternates: { canonical: `/developers/guides/${guide.slug}` }, openGraph: { title: guide.title, description: guide.summary, url: `/developers/guides/${guide.slug}`, type: "article" } };
+  return createPageMetadata({
+    title: `${guide.title} | O24 Developer Guides`,
+    description: guide.summary,
+    path: `/developers/guides/${guide.slug}`,
+    type: "article",
+    ogTitle: guide.title,
+  });
 }
 export default async function GuidePage({ params }: Props) {
   const { slug } = await params; const guide = getGuide(slug); if (!guide) notFound();

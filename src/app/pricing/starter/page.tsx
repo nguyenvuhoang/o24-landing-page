@@ -4,17 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Github, BookOpen, Terminal, Rocket, Globe, Shield } from "lucide-react";
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/pricing/starter" },
+export const metadata: Metadata = createPageMetadata({
     title: "Bắt đầu với O24 Starter | Miễn phí cho Developers",
     description: "Khám phá sức mạnh của O24 Community Edition. Open-source, dễ dàng triển khai, và hoàn toàn miễn phí.",
-    openGraph: {
-        title: "Bắt đầu với O24 Starter | Miễn phí cho Developers",
-        description: "Khám phá sức mạnh của O24 Community Edition. Open-source, dễ dàng triển khai, và hoàn toàn miễn phí.",
-        url: "/pricing/starter",
-    },
-};
+    path: "/pricing/starter",
+});
 
 const features = [
     {

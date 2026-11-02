@@ -1,16 +1,18 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Layers3 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
 const title = "API Gateway vs. Reverse Proxy: What Changes in an Enterprise Architecture?";
 const description = "A practical comparison of reverse proxies and API gateways: traffic routing, identity, policies, observability, and choosing the right architecture.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: "/blog/api-gateway-vs-reverse-proxy" },
-  openGraph: { title, description, url: "/blog/api-gateway-vs-reverse-proxy", type: "article" },
-};
+  path: "/blog/api-gateway-vs-reverse-proxy",
+  type: "article",
+  ogTitle: title,
+});
 
 const comparison = [
   { dimension: "Primary purpose", proxy: "Forward traffic to upstream services", gateway: "Expose and govern an API surface" },

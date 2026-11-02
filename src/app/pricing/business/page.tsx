@@ -4,17 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import { Check, Shield, Zap, Headphones, BarChart, Server, Users, ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { EnterpriseForm } from "../../enterprise/EnterpriseForm";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/pricing/business" },
+export const metadata: Metadata = createPageMetadata({
     title: "O24 Business | Giải pháp cho Teams chuyên nghiệp",
     description: "Nắm quyền kiểm soát hạ tầng API với gói O24 Business. Advanced monitoring, priority support và 99.9% SLA.",
-    openGraph: {
-        title: "O24 Business | Giải pháp cho Teams chuyên nghiệp",
-        description: "Nắm quyền kiểm soát hạ tầng API với gói O24 Business. Advanced monitoring, priority support và 99.9% SLA.",
-        url: "/pricing/business",
-    },
-};
+    path: "/pricing/business",
+});
 
 const valueProps = [
     {

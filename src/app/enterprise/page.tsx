@@ -12,30 +12,20 @@ import {
     Lock,
     Check,
 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/enterprise" },
+export const metadata: Metadata = createPageMetadata({
     title: "Enterprise Consultation | O24 by vKnight",
     description:
         "Discuss enterprise API integration, deployment planning and operational requirements with the O24 team.",
-    openGraph: {
-        title: "Enterprise | O24 Platform",
-        description:
-            "Discuss enterprise API integration, security review, deployment planning and operating responsibilities.",
-        url: "/enterprise",
-        siteName: "O24 by vKnight",
-        locale: "vi_VN",
-        type: "website",
-        images: [
-            {
-                url: "/images/og-image.png",
-                width: 1200,
-                height: 630,
-                alt: "O24 Enterprise Platform",
-            },
-        ],
-    },
-};
+    path: "/enterprise",
+    ogTitle: "Enterprise | O24 Platform",
+    ogDescription:
+        "Discuss enterprise API integration, security review, deployment planning and operating responsibilities.",
+    siteName: "O24 by vKnight",
+    locale: "vi_VN",
+    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Enterprise Platform" },
+});
 
 const enterpriseBenefits = [
     {

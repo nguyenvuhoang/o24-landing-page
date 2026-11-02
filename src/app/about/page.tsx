@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Code2, Network, ShieldCheck, Workflow } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "About vKnight | API Architecture & Enterprise Integration",
   description: "Learn how vKnight approaches API management, banking integration, workflow orchestration and practical enterprise architecture with O24.",
-  alternates: { canonical: "/about" },
-  openGraph: { title: "About vKnight | O24", description: "Engineering-led thinking for connected enterprise systems.", url: "/about", type: "website" },
-};
+  path: "/about",
+  ogTitle: "About vKnight | O24",
+  ogDescription: "Engineering-led thinking for connected enterprise systems.",
+});
 const principles = [
   { title: "Design for integration", description: "Make boundaries and service contracts explicit before adding complexity.", icon: Network },
   { title: "Build for maintainability", description: "Use modular workflows and clear responsibilities to support evolving systems.", icon: Workflow },

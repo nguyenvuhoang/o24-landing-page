@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, BookOpen, ClipboardCheck, FileText, Scale, ShieldCheck } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Website Terms Information | O24 by vKnight",
   description: "Important information about public O24 website resources, demonstrations and enterprise agreements.",
-  alternates: { canonical: "/terms" },
-  openGraph: { title: "Website Terms Information | O24 by vKnight", description: "Information about O24 website content and commercial terms.", url: "/terms", type: "website" },
-};
+  path: "/terms",
+  ogDescription: "Information about O24 website content and commercial terms.",
+});
 
 const sections = [
   { icon: BookOpen, title: "Public website resources", body: "Pages, demonstrations, code examples and architectural illustrations are provided to explain O24 concepts. Examples may not represent a deployed integration or every available product capability." },

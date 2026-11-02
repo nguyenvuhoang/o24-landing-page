@@ -6,6 +6,7 @@ import {
   GitBranch, Landmark, LockKeyhole, Network, ShieldCheck, Workflow,
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { createPageMetadata } from "@/lib/seo";
 
 const slug = "core-banking-integration-architecture";
 const path = `/blog/${slug}`;
@@ -14,13 +15,13 @@ const title = "Core Banking Integration Architecture: A Developer’s Guide";
 const description =
   "Explore a resilient core banking integration architecture using API gateways, adapters, CQRS, transaction processing, RabbitMQ, and layered security.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: path },
-  openGraph: { title, description, url: path, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path,
+  type: "article",
+  ogTitle: title,
+});
 
 const sections = [
   { id: "problem", label: "Integration challenges" },

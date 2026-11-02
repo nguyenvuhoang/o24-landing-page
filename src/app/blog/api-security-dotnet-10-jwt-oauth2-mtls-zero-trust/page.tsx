@@ -3,6 +3,7 @@ import type { ReactNode } from "react";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, KeyRound, LockKeyhole, Network, ShieldCheck, ServerCog } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { createPageMetadata } from "@/lib/seo";
 
 const slug = "api-security-dotnet-10-jwt-oauth2-mtls-zero-trust";
 const path = `/blog/${slug}`;
@@ -10,13 +11,13 @@ const url = `https://vknight.io.vn${path}`;
 const title = "API Security in .NET 10: JWT, OAuth 2.0, mTLS & Zero Trust";
 const description = "A practical guide to validating JWT access tokens, enforcing OAuth 2.0 scopes, protecting service-to-service calls with mTLS, and implementing Zero Trust in ASP.NET Core 10.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: path },
-  openGraph: { title, description, url: path, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path,
+  type: "article",
+  ogTitle: title,
+});
 
 const sections = [
   { id: "threat-model", label: "Threat model & boundaries" },

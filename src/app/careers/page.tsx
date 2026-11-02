@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Code2, Network, ShieldCheck, Users } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Careers & Opportunities | vKnight",
   description: "Explore vKnight engineering and integration focus areas, and ask about verified career opportunities.",
-  alternates: { canonical: "/careers" },
-  openGraph: { title: "Careers & Opportunities | vKnight", description: "Learn about vKnight and enquire about current opportunities.", url: "/careers", type: "website" },
-};
+  path: "/careers",
+  ogDescription: "Learn about vKnight and enquire about current opportunities.",
+});
 
 const areas = [
   { icon: Code2, title: "Platform engineering", text: "API design, backend systems and service integration." },

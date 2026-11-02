@@ -1,13 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Database, Eye, FileText, LockKeyhole, Mail, ShieldCheck } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Privacy Information | O24 by vKnight",
   description: "Learn what information the O24 website requests through its inquiry forms and how to contact the team about privacy questions.",
-  alternates: { canonical: "/privacy" },
-  openGraph: { title: "Privacy Information | O24 by vKnight", description: "How O24 website inquiries and analytics are handled.", url: "/privacy", type: "website" },
-};
+  path: "/privacy",
+  ogDescription: "How O24 website inquiries and analytics are handled.",
+});
 
 const topics = [
   { icon: Database, title: "Information you submit", detail: "The technical demo form requests your name, work email, company, role, areas of interest, deployment preference and a description of your requirements. Optional fields may include implementation timeline and other preferences. The enterprise consultation form requests additional project details." },

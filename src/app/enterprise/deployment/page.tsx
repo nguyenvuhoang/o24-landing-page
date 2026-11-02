@@ -2,18 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronRight, ClipboardList, LockKeyhole, Network, ShieldCheck } from "lucide-react";
 import { DeploymentExplorer } from "./DeploymentExplorer";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Enterprise Deployment & Operations | O24 by vKnight",
   description: "Explore conceptual O24 deployment patterns, operational ownership, security review, observability and production-readiness planning for enterprise integrations.",
-  alternates: { canonical: "/enterprise/deployment" },
-  openGraph: {
-    title: "Enterprise Deployment & Operations | O24 by vKnight",
-    description: "Compare on-premises, private cloud and hybrid deployment considerations for enterprise integration.",
-    url: "/enterprise/deployment",
-    type: "website",
-  },
-};
+  path: "/enterprise/deployment",
+  ogDescription: "Compare on-premises, private cloud and hybrid deployment considerations for enterprise integration.",
+});
 
 const phases = [
   { number: "01", title: "Discover", text: "Identify service owners, system boundaries, data classifications and regulatory requirements." },

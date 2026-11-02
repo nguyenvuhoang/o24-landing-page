@@ -1,12 +1,14 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Building2, Code2, Mail, ShieldCheck } from "lucide-react";
-export const metadata: Metadata = {
+import { createPageMetadata } from "@/lib/seo";
+export const metadata: Metadata = createPageMetadata({
   title: "Contact vKnight | O24 Platform",
   description: "Contact the vKnight team to discuss O24 APIs, enterprise integrations, security review or a technical demonstration.",
-  alternates: { canonical: "/contact" },
-  openGraph: { title: "Contact vKnight", description: "Find the right next step for your O24 integration requirements.", url: "/contact", type: "website" },
-};
+  path: "/contact",
+  ogTitle: "Contact vKnight",
+  ogDescription: "Find the right next step for your O24 integration requirements.",
+});
 const paths = [
   { title: "Request a technical demo", desc: "Discuss API and integration requirements with a guided walkthrough.", href: "/demo", label: "Request Demo", icon: Code2 },
   { title: "Enterprise consultation", desc: "Describe a project spanning deployment, architecture, compliance or operations.", href: "/enterprise", label: "Enterprise Inquiry", icon: Building2 },

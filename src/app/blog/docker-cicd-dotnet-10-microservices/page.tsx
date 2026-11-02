@@ -3,6 +3,7 @@ import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, Container, GitBranch, Re
 import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
+import { createPageMetadata } from "@/lib/seo";
 
 const slug = "docker-cicd-dotnet-10-microservices";
 const path = `/blog/${slug}`;
@@ -10,13 +11,13 @@ const url = `https://vknight.io.vn${path}`;
 const title = "Docker CI/CD for .NET 10 Microservices: Build, Promote, and Roll Back Safely";
 const description = "Containerize .NET 10 services, build with GitHub Actions, promote immutable image digests, and implement health-aware deployment and rollback.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: path },
-  openGraph: { title, description, url: path, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path,
+  type: "article",
+  ogTitle: title,
+});
 
 const sections = [
   { id: "goals", label: "Deployment invariants" },

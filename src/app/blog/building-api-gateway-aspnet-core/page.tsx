@@ -5,6 +5,7 @@ import {
   ExternalLink, GitBranch, LockKeyhole, Server, ShieldCheck,
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { createPageMetadata } from "@/lib/seo";
 
 const path = "/blog/building-api-gateway-aspnet-core";
 const url = `https://vknight.io.vn${path}`;
@@ -12,13 +13,13 @@ const title = "Building an API Gateway with ASP.NET Core and YARP";
 const description =
   "Build a practical .NET 10 API gateway with YARP routing, ASP.NET Core rate limiting, local backends, and production security considerations.";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  alternates: { canonical: path },
-  openGraph: { title, description, url: path, type: "article" },
-  twitter: { card: "summary_large_image", title, description },
-};
+  path,
+  type: "article",
+  ogTitle: title,
+});
 
 const setup = `# Requires .NET 10 SDK
 # Create a local backend

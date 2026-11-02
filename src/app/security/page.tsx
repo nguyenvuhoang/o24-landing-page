@@ -5,19 +5,15 @@ import {
   ClipboardCheck, Database, Fingerprint, GitBranch, KeyRound,
   LockKeyhole, Network, Server, ShieldCheck, Workflow,
 } from "lucide-react";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "Security & Trust Center | O24 by vKnight",
   description:
     "Explore security architecture considerations for O24 integrations, including identity, access, sensitive data, deployment boundaries, auditability and enterprise security reviews.",
-  alternates: { canonical: "/security" },
-  openGraph: {
-    title: "Security & Trust Center | O24 by vKnight",
-    description: "Review the security considerations and governance questions for enterprise integration with O24.",
-    url: "/security",
-    type: "website",
-  },
-};
+  path: "/security",
+  ogDescription: "Review the security considerations and governance questions for enterprise integration with O24.",
+});
 
 const pillars = [
   {

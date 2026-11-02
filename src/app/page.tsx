@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 import { Hero } from "@/components/sections/Hero";
 import { Features } from "@/components/sections/Features";
 import { O24InAction } from "@/components/sections/O24InAction";
@@ -12,12 +13,7 @@ import { HolidayNoticeModal } from "@/components/holiday/HolidayNoticeModal";
 
 const title = "O24 Platform by vKnight | API Management & Enterprise Integration";
 const description = "Build, integrate, and scale with O24: API management, workflow orchestration, and enterprise integration capabilities for developers and organizations.";
-export const metadata: Metadata = {
-  title, description,
-  alternates: { canonical: "/" },
-  openGraph: { title, description, url: "/", type: "website" },
-  twitter: { card: "summary_large_image", title, description },
-};
+export const metadata: Metadata = createPageMetadata({ title, description, path: "/" });
 export default function Home() {
   return (
     <main>

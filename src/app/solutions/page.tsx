@@ -3,14 +3,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, ArrowUpRight, Check, ChevronRight, Layers3, Network, ShieldCheck, Workflow } from "lucide-react";
 import { solutions } from "@/data/solutions";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: "O24 Solutions | Banking, Enterprise & Developer Integration",
   description: "Discover O24 integration approaches for banking and fintech, enterprise system modernization, and developer teams. Explore architecture considerations and plan a technical demo.",
-  alternates: { canonical: "/solutions" },
-  openGraph: { title: "O24 Solutions | vKnight", description: "Explore API-led integration solutions for banking, enterprises, and engineering teams.", url: "/solutions", type: "website" },
-  twitter: { card: "summary_large_image" },
-};
+  path: "/solutions",
+  ogTitle: "O24 Solutions | vKnight",
+  ogDescription: "Explore API-led integration solutions for banking, enterprises, and engineering teams.",
+});
 
 const considerations = [
   { icon: Network, title: "Connect", description: "Map legacy applications, digital channels and partner integration boundaries." },

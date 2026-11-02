@@ -2,17 +2,13 @@ import { Suspense } from "react";
 import { RoadmapContent } from "./RoadmapClient";
 import { roadmapData } from "@/data/roadmap";
 import { Metadata } from "next";
+import { createPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-    alternates: { canonical: "/roadmap" },
+export const metadata: Metadata = createPageMetadata({
     title: "Roadmap | Lộ trình phát triển O24 Platform",
     description: "Khám phá lộ trình phát triển và các tính năng đột phá sắp tới của vKnight O24.",
-    openGraph: {
-        title: "Roadmap | Lộ trình phát triển O24 Platform",
-        description: "Khám phá lộ trình phát triển và các tính năng đột phá sắp tới của vKnight O24.",
-        url: "/roadmap",
-    },
-};
+    path: "/roadmap",
+});
 
 export default async function RoadmapPage() {
     // Simulate server-side data fetching latency if desired, or just pass static data
