@@ -88,7 +88,7 @@ export function Header() {
                         <button
                             className="p-2 hover:bg-accent rounded-lg transition-colors"
                             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            aria-label="Toggle menu"
+                            aria-label={isMobileMenuOpen ? "Close navigation menu" : "Open navigation menu"}
                         >
                             {isMobileMenuOpen ? (
                                 <X className="h-5 w-5" />

@@ -14,7 +14,7 @@ export function ThemeToggle() {
         <button
             onClick={toggleTheme}
             className="relative group flex h-9 w-9 items-center justify-center rounded-xl border border-border/50 bg-background/80 backdrop-blur-sm hover:bg-accent hover:border-primary/30 transition-all duration-300"
-            aria-label={resolvedTheme === "dark" ? "Chuyển sang sáng" : "Chuyển sang tối"}
+            aria-label={resolvedTheme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
         >
             {/* Sun icon */}
             <Sun

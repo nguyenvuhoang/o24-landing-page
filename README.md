@@ -1,54 +1,36 @@
-# O24 Step 31 — Final Public Website Refinement (31.1–31.7)
+# Step 31.8 — Browser evidence & UI consistency patch
 
-Built for the existing Next.js 16 + React 19 + Tailwind project. **No admin dashboard, Supabase, leads tables, API routes or existing form handlers are changed.**
+## Verified observations
+Connected browser tab at localhost:3000 showed the revised English navigation and footer, but Vietnamese labels for sign-in/theme toggling, and a Vietnamese Terms page with a last-updated 2023 date. The website's public domain could not be fetched by the web reader, and no visual screenshot/viewport simulation was available in this browser connection. No visual/production PASS is claimed.
 
-## Scope
+## Source concerns requiring manual decisions
+1. `src/app/privacy/page.tsx`: currently says TLS 1.3, AES-256, MFA, regular penetration testing and specific data processing claims. Confirm technical and legal accuracy; do not publish unsupported assertions.
+2. `src/app/terms/page.tsx`: dated 15/10/2023, Vietnamese-only, and contains contractual/legal assertions. Counsel/owner should approve text and effective date; do not auto-rewrite.
+3. `src/app/careers/page.tsx`: publishes three supposedly open positions. Confirm with hiring owner, or remove vacancy cards until confirmed. Current Contact page is not a job application workflow.
+4. Home/developer/product visual consistency, viewport breakpoints and Lighthouse still require actual screenshots/tests.
 
-| Step | Implementation | How to verify |
-|---|---|---|
-| 31.1 Global navigation / footer | English primary navigation; useful 4-column footer, removes placeholder social links, adds Security, Deployment, FAQ, Developer routes | Desktop/mobile menu and Footer |
-| 31.2 Pricing | Rebuilt `/pricing` with existing `src/data/pricing.ts` (no invented prices), compact FAQs and CTAs | Starter, Business, Enterprise paths |
-| 31.3 About | English `/about`, engineering focus, avoids invented client logos/team credentials | SEO + mobile |
-| 31.4 Contact / Demo | `/contact` now links directly to actual `/demo`, `/enterprise`, Security Review and support email; removes misleading inputs with non-submitting Zalo button. **Existing DemoForm and EnterpriseForm retained.** | Submit real test request in staging |
-| 31.5 Mobile / UI | Responsive grids and min-height CTAs in changed pages; remaining site requires browser visual review | 375, 768, 1440 px + dark mode |
-| 31.6 SEO / Performance | Canonical metadata + OpenGraph on changed pages; read-only audit tool; sitemap route checks | Lighthouse + `/sitemap.xml` + `/robots.txt` |
-| 31.7 Production readiness | Audit script, link inventory, verification checklist and recommended release commands | Build, smoke test, deploy |
-
-## Install safely
-
-1. Back up your current work / branch: `git status` then `git switch -c feature/step31-public-site` (only if appropriate to your working tree).
-2. Copy the **contents** of `step31/` into the repository root, preserving paths.
-3. Review diff before commit. This package **replaces** `src/components/layout/Footer.tsx`, `src/data/navigation.ts`, `src/app/pricing/page.tsx`, `src/app/about/page.tsx`, `src/app/contact/page.tsx`.
-4. Does **not** replace Header, DemoForm, EnterpriseForm, Admin, CTA analytics or any other prior Step component.
+## Apply targeted, reversible UI edits
+Copy `scripts/step31-8-fix.mjs` into repository `scripts/`, then:
 
 ```powershell
-cd C:\O24\o24-landing-page
-pnpm exec eslint src/components/layout/Footer.tsx src/data/navigation.ts src/app/pricing/page.tsx src/app/about/page.tsx src/app/contact/page.tsx
+node scripts/step31-8-fix.mjs
+pnpm exec eslint src/components/layout/Header.tsx src/components/layout/ThemeToggle.tsx src/app/solutions/developers/DevelopersClient.tsx
 pnpm exec tsc --noEmit
-pnpm test
 pnpm build
-node scripts/step31-audit.mjs
-node scripts/step31-site-links.mjs
-
 git diff --check
-git diff --stat
+git diff -- src/components/layout/Header.tsx src/components/layout/ThemeToggle.tsx src/app/solutions/developers/DevelopersClient.tsx
 ```
 
-## Manual checks before marking Production PASS
+The script edits only existing exact source text (Sign in, accessible theme/menu labels, old `/#solutions` link). It creates a `.step31-8.bak` sibling for each modified source file (do not commit backups). Run a second time safely; if your local file differs, a REVIEW line is emitted. Avoid committing until you inspect the diff.
 
-- Desktop + mobile navigation (375/768/1440) and overlay closure; pay particular attention to header width at `md` (six links may wrap on smaller tablets).
-- Light/dark mode on about, pricing, contact, security, banking, enterprise, developers, plus real mobile Safari.
-- Browser paths: `/`, `/features`, `/solutions`, `/solutions/bank-fintech`, `/solutions/enterprise`, `/developers`, `/security`, `/enterprise/deployment`, `/enterprise/security-review`, `/pricing`, `/about`, `/contact`, `/demo`.
-- Successful real *staging* demo and enterprise submissions (check lead storage, email notification, error and loading states); do **not** submit sensitive production customer data.
-- Browser Lighthouse in clean/incognito Chrome, mobile + desktop: collect actual Performance, Accessibility, Best Practices and SEO scores (do not assume thresholds).
-- Validate social preview image `/images/og-image.png`, robots/sitemap and canonical tags on deployed domain.
-- Review company contact email and all public legal/commercial statements with website owner.
-- Audit script is deliberately conservative; flags missing routes, but is not a crawler and does not prove successful browser navigation.
+## Browser acceptance matrix
+Test at 375, 768 and 1440 px, in light/dark modes, with keyboard-only navigation. Routes: `/`, `/features`, `/solutions`, `/solutions/bank-fintech`, `/solutions/enterprise`, `/developers`, `/security`, `/enterprise/deployment`, `/enterprise/security-review`, `/pricing`, `/about`, `/contact`, `/demo`, `/privacy`, `/terms`, `/careers`.
 
-## Known boundaries
-
-- Source observed in default GitHub branch may be older than local uncommitted changes. Back up and inspect diffs.
-- Existing main header has a `md` desktop breakpoint; testing at 768–1024 px is necessary; package intentionally does not overwrite its Supabase authentication/session flow.
-- `/contact` intentionally does **not** present fake form inputs: it directs the visitor to real forms already backed by APIs.
-- No external social links are shown unless an authentic destination is known.
-- Do not treat sample snippets, deployment modes, pricing plan names or capabilities as contractual promises.
+- Header and Footer: no overflow, active route, open/close mobile menu, skip tab traps, CTA reachable.
+- Pricing: no unsupported pricing entitlement claims; buttons land on correct route.
+- Contact: no phantom form or false submission; demo CTA is understandable.
+- Security/Enterprise: claims grounded; architecture understandable on mobile.
+- Privacy/Terms: owner-approved policy and correct effective date.
+- Demo: verify validation, pending, error and success with staging backend.
+- Inspect console errors, 404 links, focus indicators, title/canonical, images, layout shifts.
+- Record actual Lighthouse scores rather than assuming a target was met.
