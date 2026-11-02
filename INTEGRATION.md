@@ -1,23 +1,53 @@
-# Step 25.2 integration
+# Step 25.4 — Sales Conversion Funnel & Export Reports
 
-1. Copy `supabase/migrations/202611010005_crm_followup_tasks.sql` to the matching repo path. Run on staging first and perform an RLS/security smoke test, then migrate Production once. Do not rerun 001-004.
-2. Copy the three Next.js files (two API routes and FollowUpWorkspace, plus the page) to their exact paths.
-3. In `src/components/dashboard/DashboardNav.tsx`, add `CalendarClock` to the lucide-react import and add item `{ href: "/dashboard/follow-ups", label: "Follow-ups", icon: CalendarClock }` to the navigation array.
-4. In `src/components/dashboard/LeadDetailView.tsx`, add `import { FollowUpWorkspace } from "./FollowUpWorkspace";` and add `<FollowUpWorkspace initialLeadId={l.id} />` after `<LeadPipeline status={l.lead_status} />` or inside the detail grid as preferred.
-5. Run `pnpm exec tsc --noEmit`, `pnpm exec eslint` on changed TSX/TS files, `pnpm test`, `pnpm build`.
-6. Verify admin creates FOLLOW_UP and DEMO (end required), sees Upcoming/Overdue/Completed, completes a task, and non-admin receives HTTP 403. No email notifications, automatic reminders, or calendar synchronization in this iteration.
+## Prerequisites
+- Steps 23–25.3 and migration 006 already applied.
+- Administrator authenticated through existing `/dashboard` session.
 
-## Database check
-```sql
-select to_regclass('public.crm_followup_tasks'), to_regclass('public.crm_followup_task_events');
-select has_function_privilege('anon', 'public.create_crm_followup_task(uuid,text,text,text,timestamptz,timestamptz,uuid)', 'EXECUTE');
+## Install
+1. Copy the directory structure into `C:\O24\o24-landing-page` (merge; do not delete existing files).
+2. Apply `supabase/migrations/202611020007_crm_conversion_funnel.sql` in **staging first**.
+3. `/dashboard/analytics/funnel?days=30` is the new funnel screen. Link it from Analytics page as below.
+4. Optionally add a "Sales funnel" item in DashboardNav, or keep it nested under Conversion Analytics.
+
+## Add link to Analytics page
+In `src/app/dashboard/(admin)/analytics/page.tsx` add this inside the top `<header>` or just before KPI cards:
+
+```tsx
+<Link className="crm-button crm-button-secondary" href={`/dashboard/analytics/funnel?days=${days}`}>
+  View sales funnel and export reports →
+</Link>
 ```
-Expected: both tables exist, anon_execute false.
 
-## Limitations
-- The global creation form requires an existing lead UUID. Prefer scheduling from a lead detail page.
-- Tasks are created as assigned to the acting admin by default. Assignment to another admin is supported by the RPC but intentionally not in the initial form.
-- The Follow-up schedule is a list, not a drag-and-drop calendar.
-- `next_follow_up_at` from Step 25.1 activities is historical metadata and is NOT automatically migrated into tasks; create a task explicitly to track completion.
-- All times displayed in browser local timezone. Server stores UTC timestamps.
-- No automatic emails or reminders are sent; tasks are visible only to admins within dashboard.
+## Verify
+```powershell
+pnpm exec eslint "src/app/dashboard/(admin)/analytics/funnel/page.tsx" "src/app/api/dashboard/analytics/export/route.ts" "src/lib/leads/analytics-range.ts"
+pnpm exec tsc --noEmit
+pnpm test
+pnpm build
+```
+
+The endpoint `/api/dashboard/analytics/export?days=30&report=funnel` returns CSV. Other report types: `summary`, `daily`. Supported days: 30/90/180/365.
+
+## SQL smoke tests
+```sql
+select to_regprocedure('public.crm_conversion_funnel(timestamptz,timestamptz)') as rpc;
+select has_function_privilege('anon','public.crm_conversion_funnel(timestamptz,timestamptz)','EXECUTE') as anon_execute;
+select has_function_privilege('authenticated','public.crm_conversion_funnel(timestamptz,timestamptz)','EXECUTE') as authenticated_execute;
+```
+Expected: exists, false, true. The RPC **must be invoked in a signed-in admin session**, not SQL editor as superuser, for real RLS test.
+
+## Semantics
+- Includes leads submitted in the selected UTC cohort.
+- Current WON/LOST is still displayed by existing Step 25.3 analytics.
+- Funnel is *ever reached* based on max historical audited non-LOST status and current status. Because the workflow enforces sequential transitions, reaching a later stage implies earlier ones.
+- LOST is a terminal outcome, not a funnel progression step. LOST leads with missing historical changes may have undercounted earlier stages.
+- Scheduling a DEMO task does NOT automatically update lead status.
+- Export contains aggregated data only (no customer PII), server-side authenticated/admin-only.
+
+## Security smoke tests
+- Logged out GET CSV -> HTTP 401.
+- Authenticated non-admin GET CSV -> HTTP 403.
+- Admin GET CSV -> HTTP 200 with content-type text/csv and attachment.
+- `days=9999`, unsupported report -> HTTP 400.
+- Never cache/export to public CDN; headers force private/no-store.
