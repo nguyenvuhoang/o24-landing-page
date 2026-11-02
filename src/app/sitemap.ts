@@ -1,5 +1,5 @@
-import type { MetadataRoute } from "next";
 import { getPublishedArticlePaths } from "@/data/blog";
+import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://vknight.io.vn";
 
@@ -13,6 +13,13 @@ const staticRoutes = [
   "/contact",
   "/demo",
   "/developers",
+  "/developers/getting-started",
+  "/developers/api-explorer",
+  "/developers/guides",
+  "/developers/guides/workflow-orchestration",
+  "/developers/guides/cqrs",
+  "/developers/guides/api-gateway",
+  "/developers/guides/core-banking-integration",
   "/enterprise",
   "/features",
   "/pricing",

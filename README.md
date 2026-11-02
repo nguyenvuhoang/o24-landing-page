@@ -1,43 +1,29 @@
-# Step 26.1D — Responsive, Motion & Accessibility hardening
+# Step 28.2 — Banking & Fintech Enhancement
 
-This drop-in package contains **four sections** based on steps 26.1A, 26.1B.1 and 26.1C. It does not touch `page.tsx`, Supabase, dashboard, APIs, or introduce packages.
+This adds a **client-side conceptual transaction lifecycle** to the existing Banking & Fintech solution page. No server calls, bank accounts or real transactions are involved. Payment responses and codes are explicitly illustrative.
 
-## Integration
+## Installation (safe for customized pages)
 
-Back up any local edits first. **Do not overwrite files blindly if you customized them since the preceding steps.** Compare with `git diff -- src/components/sections/...` and selectively merge changes. Copy the `src/` tree to the project root when ready.
+1. Copy `src/components/solutions/BankingFlowShowcase.tsx` into the same relative path in your project.
+2. In `src/app/solutions/bank-fintech/BankFintechClient.tsx`, add:
 
-## Changes
+```tsx
+import { BankingFlowShowcase } from "@/components/solutions/BankingFlowShowcase";
+```
 
-- Hero: smaller minimum mobile headline, responsive spacing and sensible minimum widths.
-- Product preview: scrollable 44px+ tab targets; roving tab focus and ArrowLeft/ArrowRight/Home/End keyboard behavior; accessible tab panel and minimum-width protection.
-- In Action: narrower mobile gutters, code overflow containment, one concise status live region; suppress repeated verbose screen-reader announcements. Respects `prefers-reduced-motion` by removing visual width animation and fast-forwarding timer stages after the user clicks Run.
-- Architecture: CSS connector is aligned to the icon rail; localized screen-reader announcement on layer change; prevents long JSON lines from widening layout.
+3. Insert `<BankingFlowShowcase />` **after the capabilities section**, before the existing `Common use cases` section. Do not overwrite the existing page or CTA.
 
-All JSON and performance indicators are examples, not live banking activity.
+Optional: use `node scripts/step28-2-integrate.mjs` to insert the import and section into the expected page automatically. The script checks for existing integration and refuses to insert if the expected anchor is missing.
 
-## Local verification
+## Validation
 
 ```powershell
-pnpm exec eslint src/components/sections/Hero.tsx src/components/sections/O24ProductPreview.tsx src/components/sections/O24InAction.tsx src/components/sections/Architecture.tsx
+pnpm exec eslint src/components/solutions/BankingFlowShowcase.tsx src/app/solutions/bank-fintech/BankFintechClient.tsx
 pnpm exec tsc --noEmit
 pnpm test
 pnpm build
-pnpm dev
 ```
 
-### Browser acceptance matrix
+Check `/solutions/bank-fintech#banking-in-action`. Test the Approved, Declined and Unknown outcome examples. Ensure the Unknown state explicitly says reconciliation is required. Test Run, Step, Reset, Copy JSON, keyboard access and mobile widths.
 
-- Widths: 320, 375, 390, 768, 1024, 1440 px; no page-level horizontal scroll. Verify both themes.
-- 200% browser zoom: text and controls remain operable.
-- Keyboard-only: Tab to preview tabs; use Left/Right/Home/End to switch and focus. Tab through Scenario, Run, Pause, Step, Reset, Copy JSON; architecture selectors and Next/Previous.
-- Reduced motion: DevTools -> Rendering -> Emulate CSS media feature `prefers-reduced-motion: reduce`; flow steps advance immediately after Run and width transitions are off.
-- Check that JSON scrolls within its own panel and CTA `/demo` remains reachable.
-- Mobile: inspect spacing at 320px, all buttons visible and clickable; ensure no page-level scrollbars.
-
-### Measure performance against a baseline
-
-Use production build (`pnpm build && pnpm start`) and Chrome DevTools Lighthouse, 3 runs mobile and desktop per condition, same network/device settings. Compare medians of LCP, INP, CLS, transferred JS, layout shifts. Suggested goals: LCP <= 2.5s, INP <= 200ms, CLS <= 0.1 (field Core Web Vitals guidance); lab Lighthouse cannot conclusively measure field INP. No scores are asserted by this package. Check `next build` output and DevTools Performance for long tasks and main-thread work.
-
-### Scope
-
-No changes to navigation, CRM, Supabase, migrations, or production data. This is an optimization pass rather than a redesign or synthetic test result.
+Production note: The site examples are not live O24 API contracts, not performance metrics and not evidence that any specific banking integration is installed.

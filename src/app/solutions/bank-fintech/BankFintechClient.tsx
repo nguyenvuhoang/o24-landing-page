@@ -1,3 +1,4 @@
+import { BankingFlowShowcase } from "@/components/solutions/BankingFlowShowcase";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
@@ -171,6 +172,8 @@ export default function BankFintechClient() {
                     </div>
                 </div>
             </section>
+
+            <BankingFlowShowcase />
 
             <section className="border-y bg-muted/30 py-20 lg:py-28">
                 <div className="container mx-auto px-4">
