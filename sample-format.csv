@@ -1,0 +1,8 @@
+date,event,source,destination,count
+2026-11-02,journey_page_view,awareness,/,10
+2026-11-02,journey_page_view,evaluation,/features,6
+2026-11-02,journey_page_view,trust,/security,3
+2026-11-02,journey_page_view,conversion,/demo,2
+2026-11-02,journey_navigation,/features,/solutions,4
+2026-11-02,solutions_cta_click,homepage,/demo,2
+2026-11-02,demo_request_success,demo_form,/demo,1

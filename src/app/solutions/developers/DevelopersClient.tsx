@@ -62,7 +62,7 @@ export default function DevelopersClient() {
                 <div aria-hidden="true" className="pointer-events-none absolute -right-24 top-0 h-80 w-80 rounded-full bg-primary/10 blur-3xl" />
                 <div className="container relative mx-auto grid items-center gap-14 px-4 lg:grid-cols-[1.05fr_.95fr]">
                     <div>
-                        <Link href="/#solutions" className="mb-7 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary">
+                        <Link href="/solutions" className="mb-7 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary">
                             <ArrowLeft className="h-4 w-4" /> Back to solutions
                         </Link>
                         <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold tracking-wide text-primary">
