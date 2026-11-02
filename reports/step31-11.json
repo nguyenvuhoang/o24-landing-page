@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-11-02T14:08:47.180Z",
+  "root": "C:\\O24\\o24-landing-page",
+  "checkedRoutes": 22,
+  "scannedFiles": 166,
+  "liveBase": null,
+  "counts": {
+    "ERROR": 0,
+    "WARN": 1,
+    "INFO": 0
+  },
+  "findings": [
+    {
+      "severity": "WARN",
+      "id": "MARKETING_CLAIM",
+      "detail": "Review unsupported availability/support statements",
+      "file": "src/app/enterprise/EnterpriseForm.tsx"
+    }
+  ],
+  "limitations": [
+    "Static checks cannot prove WCAG, responsive layout, JavaScript interactions or Lighthouse scores",
+    "Live mode checks public HTTP GET pages only; it never sends forms or reads private content",
+    "Legal and privacy policies require authorized human review",
+    "Successful email API acceptance does not prove inbox delivery"
+  ]
+}

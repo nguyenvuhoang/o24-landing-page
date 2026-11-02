@@ -1,82 +1,38 @@
-import { Button } from "@/components/ui/button";
+import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowRight, MapPin, Clock } from "lucide-react";
-import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
-import { Metadata } from "next";
+import { ArrowRight, Code2, Network, ShieldCheck, Users } from "lucide-react";
 
 export const metadata: Metadata = {
-    alternates: { canonical: "/careers" },
-    title: "Tuyển dụng | Gia nhập đội ngũ vKnight",
-    description: "Cơ hội nghề nghiệp hấp dẫn tại vKnight. Cùng chúng tôi xây dựng tương lai của kết nối tài chính tại Việt Nam.",
-    openGraph: {
-        title: "Tuyển dụng | Gia nhập đội ngũ vKnight",
-        description: "Cơ hội nghề nghiệp hấp dẫn tại vKnight. Cùng chúng tôi xây dựng tương lai của kết nối tài chính tại Việt Nam.",
-        url: "/careers",
-    },
+  title: "Careers & Opportunities | vKnight",
+  description: "Explore vKnight engineering and integration focus areas, and ask about verified career opportunities.",
+  alternates: { canonical: "/careers" },
+  openGraph: { title: "Careers & Opportunities | vKnight", description: "Learn about vKnight and enquire about current opportunities.", url: "/careers", type: "website" },
 };
 
+const areas = [
+  { icon: Code2, title: "Platform engineering", text: "API design, backend systems and service integration." },
+  { icon: Network, title: "Integration architecture", text: "Workflows, messaging patterns and enterprise connectivity." },
+  { icon: ShieldCheck, title: "Reliability & operations", text: "Deployment, observability and secure operations practices." },
+];
+
 export default function CareersPage() {
-    const positions = [
-        {
-            title: "Kỹ sư Backend Senior",
-            department: "Kỹ thuật",
-            location: "TP. Hồ Chí Minh",
-            type: "Toàn thời gian",
-        },
-        {
-            title: "Thiết kế Sản phẩm",
-            department: "Thiết kế",
-            location: "Từ xa / Hybrid",
-            type: "Toàn thời gian",
-        },
-        {
-            title: "Chuyên viên DevOps",
-            department: "Cơ sở hạ tầng",
-            location: "TP. Hồ Chí Minh",
-            type: "Toàn thời gian",
-        }
-    ];
-
-    return (
-        <div className="container mx-auto px-4 py-16 lg:py-24">
-            <div className="max-w-4xl mx-auto space-y-12">
-                <div className="text-center space-y-4">
-                    <h1 className="text-4xl font-bold tracking-tight lg:text-5xl">Gia nhập đội ngũ vKnight</h1>
-                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                        Chúng tôi đang tìm kiếm những cá nhân đam mê để cùng xây dựng tương lai của kết nối tài chính tại Việt Nam.
-                    </p>
-                </div>
-
-                <div className="space-y-6">
-                    <h2 className="text-2xl font-semibold">Vị trí đang tuyển</h2>
-                    {positions.map((job, index) => (
-                        <Card key={index} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 hover:border-primary transition-colors">
-                            <div className="space-y-2 mb-4 sm:mb-0">
-                                <CardTitle>{job.title}</CardTitle>
-                                <div className="flex flex-wrap gap-2 text-sm text-muted-foreground">
-                                    <span className="flex items-center"><Badge variant="outline" className="mr-2">{job.department}</Badge></span>
-                                    <span className="flex items-center"><MapPin className="h-3 w-3 mr-1" /> {job.location}</span>
-                                    <span className="flex items-center"><Clock className="h-3 w-3 mr-1" /> {job.type}</span>
-                                </div>
-                            </div>
-                            <Button asChild>
-                                <Link href="/contact">Ứng tuyển ngay <ArrowRight className="ml-2 h-4 w-4" /></Link>
-                            </Button>
-                        </Card>
-                    ))}
-                </div>
-
-                <div className="bg-muted/50 rounded-lg p-8 text-center space-y-4">
-                    <h3 className="text-xl font-semibold">Không tìm thấy vị trí phù hợp?</h3>
-                    <p className="text-muted-foreground">
-                        Chúng tôi luôn tìm kiếm nhân tài. Hãy gửi CV cho chúng tôi và cho biết lý do bạn muốn gia nhập.
-                    </p>
-                    <Button variant="outline" asChild>
-                        <Link href="/contact">Liên hệ với chúng tôi</Link>
-                    </Button>
-                </div>
-            </div>
-        </div>
-    );
+  return <main className="min-h-screen bg-background text-foreground">
+    <section className="border-b bg-[#0b1527] text-white"><div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+      <p className="text-xs font-bold uppercase tracking-[.18em] text-amber-300">vKnight team</p>
+      <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">Build with people who care about integration.</h1>
+      <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300">Our work covers API management, workflow orchestration and complex integrations for enterprise environments.</p>
+    </div></section>
+    <div className="container mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+      <div className="rounded-2xl border bg-card p-6 sm:p-8"><div className="flex items-start gap-3"><Users className="mt-1 h-6 w-6 shrink-0 text-primary" aria-hidden="true" /><div>
+        <h2 className="text-2xl font-bold">Current openings</h2>
+        <p className="mt-3 text-sm leading-7 text-muted-foreground">No vacancies have been verified for publication on this page. Please contact the team to ask whether there are active opportunities. We do not currently offer a dedicated application form on this website.</p>
+      </div></div></div>
+      <h2 className="mt-12 text-2xl font-bold">Areas of work</h2>
+      <div className="mt-5 grid gap-4 md:grid-cols-3">{areas.map(area => <section key={area.title} className="rounded-2xl border bg-card p-6">
+        <area.icon className="h-7 w-7 text-primary" aria-hidden="true" /><h3 className="mt-4 text-lg font-semibold">{area.title}</h3><p className="mt-2 text-sm leading-7 text-muted-foreground">{area.text}</p>
+      </section>)}</div>
+      <div className="mt-10 flex flex-wrap gap-3"><Link href="/contact" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-primary-foreground hover:opacity-90">Contact the team <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+        <Link href="/about" className="inline-flex min-h-11 items-center rounded-xl border px-5 py-3 text-sm font-semibold hover:bg-accent">About vKnight</Link></div>
+    </div>
+  </main>;
 }

@@ -1,36 +1,50 @@
-# Step 31.8 — Browser evidence & UI consistency patch
+# Step 31.11 — Final Production Release Audit
 
-## Verified observations
-Connected browser tab at localhost:3000 showed the revised English navigation and footer, but Vietnamese labels for sign-in/theme toggling, and a Vietnamese Terms page with a last-updated 2023 date. The website's public domain could not be fetched by the web reader, and no visual screenshot/viewport simulation was available in this browser connection. No visual/production PASS is claimed.
+This package is **read-only** by default and does not change any website source code, databases, forms or environment variables. Copy the `scripts` directory into the project root. The optional test may be run with `node --test tests/step31-11-audit.test.mjs` (run from the project root).
 
-## Source concerns requiring manual decisions
-1. `src/app/privacy/page.tsx`: currently says TLS 1.3, AES-256, MFA, regular penetration testing and specific data processing claims. Confirm technical and legal accuracy; do not publish unsupported assertions.
-2. `src/app/terms/page.tsx`: dated 15/10/2023, Vietnamese-only, and contains contractual/legal assertions. Counsel/owner should approve text and effective date; do not auto-rewrite.
-3. `src/app/careers/page.tsx`: publishes three supposedly open positions. Confirm with hiring owner, or remove vacancy cards until confirmed. Current Contact page is not a job application workflow.
-4. Home/developer/product visual consistency, viewport breakpoints and Lighthouse still require actual screenshots/tests.
-
-## Apply targeted, reversible UI edits
-Copy `scripts/step31-8-fix.mjs` into repository `scripts/`, then:
+## Local checks
 
 ```powershell
-node scripts/step31-8-fix.mjs
-pnpm exec eslint src/components/layout/Header.tsx src/components/layout/ThemeToggle.tsx src/app/solutions/developers/DevelopersClient.tsx
+cd C:\O24\o24-landing-page
+node scripts/step31-11-audit.mjs
+node scripts/step31-11-audit.mjs --output reports/step31-11.json
 pnpm exec tsc --noEmit
+pnpm test
 pnpm build
+pnpm exec eslint .
 git diff --check
-git diff -- src/components/layout/Header.tsx src/components/layout/ThemeToggle.tsx src/app/solutions/developers/DevelopersClient.tsx
 ```
 
-The script edits only existing exact source text (Sign in, accessible theme/menu labels, old `/#solutions` link). It creates a `.step31-8.bak` sibling for each modified source file (do not commit backups). Run a second time safely; if your local file differs, a REVIEW line is emitted. Avoid committing until you inspect the diff.
+## Optional deployed site HTTP audit
 
-## Browser acceptance matrix
-Test at 375, 768 and 1440 px, in light/dark modes, with keyboard-only navigation. Routes: `/`, `/features`, `/solutions`, `/solutions/bank-fintech`, `/solutions/enterprise`, `/developers`, `/security`, `/enterprise/deployment`, `/enterprise/security-review`, `/pricing`, `/about`, `/contact`, `/demo`, `/privacy`, `/terms`, `/careers`.
+```powershell
+node scripts/step31-11-audit.mjs --url https://vknight.io.vn/ --output reports/step31-11-live.json
+```
 
-- Header and Footer: no overflow, active route, open/close mobile menu, skip tab traps, CTA reachable.
-- Pricing: no unsupported pricing entitlement claims; buttons land on correct route.
-- Contact: no phantom form or false submission; demo CTA is understandable.
-- Security/Enterprise: claims grounded; architecture understandable on mobile.
-- Privacy/Terms: owner-approved policy and correct effective date.
-- Demo: verify validation, pending, error and success with staging backend.
-- Inspect console errors, 404 links, focus indicators, title/canonical, images, layout shifts.
-- Record actual Lighthouse scores rather than assuming a target was met.
+Live audit makes GET requests to a fixed allowlist of **public pages only**. It does not submit forms, authenticate, scrape customer data or inspect connected private resources. Run it only against the domain you control. The website must be available to the machine performing the audit.
+
+## Exit codes
+
+- `0`: no ERROR findings (warnings may still exist)
+- `1`: warnings exist with `--strict`
+- `2`: ERROR findings exist
+
+`ERROR` and `WARN` describe **indicators found by the audit**, not a verified exploit. Resolve findings and confirm whether they apply to your deployed architecture before release.
+
+## Mandatory manual release gate
+
+1. Desktop 1440px, tablet 768px, mobile 375px: Header, Footer, dropdowns, overflow, light/dark mode, focus states and contrast.
+2. Navigate Home → Features → Solutions → Enterprise → Security → Demo, test back/forward, active navigation and keyboard tab order.
+3. Confirm `/demo` and `/enterprise` forms with authorized test data on staging; verify both successful delivery and controlled failure states. Do not use live customer records.
+4. Confirm Privacy and Terms were reviewed and approved by the owner/legal counsel; confirm Careers listings and recruitment email are valid.
+5. Confirm TLS/HTTPS, environment variables, Vercel deployment logs, no credentials committed, configured sender domain and recipient, and secure email delivery. Rate limiting/abuse protection remain separate release decisions.
+6. Run Lighthouse on staging/production for Performance, Accessibility, Best Practices and SEO; capture actual results for mobile and desktop. No scores are asserted by this package.
+7. Verify indexation/robots/sitemap, OG image, redirects, broken links and 404 handling in production.
+8. Record deployment SHA, validation date, reviewer, unresolved issues and explicit GO/NO-GO decision.
+
+## Scope limits
+
+- Source may differ from GitHub main; checks operate on local files in the current working directory.
+- Static href scanning only catches literal paths; cannot verify runtime dynamic links.
+- HTML GET checks cannot prove that React hydration or interactive forms work.
+- This package does not automatically promote/deploy code.

@@ -117,6 +117,7 @@ export function EnterpriseForm() {
     const [showOptional, setShowOptional] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isSuccess, setIsSuccess] = useState(false);
+    const [submitError, setSubmitError] = useState("");
 
     const validateForm = (): boolean => {
         const newErrors: FormErrors = {};
@@ -142,6 +143,7 @@ export function EnterpriseForm() {
         e.preventDefault();
         if (!validateForm()) return;
 
+        setSubmitError("");
         setIsSubmitting(true);
         try {
             const response = await fetch("/api/enterprise", {
@@ -149,11 +151,14 @@ export function EnterpriseForm() {
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
             });
-            if (response.ok) {
+            const result: { success?: boolean } = await response.json().catch(() => ({}));
+            if (response.ok && result.success === true) {
                 setIsSuccess(true);
+            } else {
+                setSubmitError("We could not submit your request. Please try again.");
             }
         } catch {
-            // Handle error silently
+            setSubmitError("A network error occurred. Please try again.");
         } finally {
             setIsSubmitting(false);
         }
@@ -191,6 +196,7 @@ export function EnterpriseForm() {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-6">
+            {submitError && <p role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">{submitError}</p>}
             {/* Contact Info */}
             <div className="grid sm:grid-cols-2 gap-4">
                 <div className="space-y-2">

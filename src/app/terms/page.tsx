@@ -1,85 +1,37 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import Link from "next/link";
+import { ArrowRight, BookOpen, ClipboardCheck, FileText, Scale, ShieldCheck } from "lucide-react";
 
 export const metadata: Metadata = {
-    alternates: { canonical: "/terms" },
-    title: "Điều khoản dịch vụ | vKnight O24",
-    description: "Quy định và điều khoản sử dụng nền tảng OpenAPI & Open Banking vKnight O24.",
-    openGraph: {
-        title: "Điều khoản dịch vụ | vKnight O24",
-        description: "Quy định và điều khoản sử dụng nền tảng OpenAPI & Open Banking vKnight O24.",
-        url: "/terms",
-    },
+  title: "Website Terms Information | O24 by vKnight",
+  description: "Important information about public O24 website resources, demonstrations and enterprise agreements.",
+  alternates: { canonical: "/terms" },
+  openGraph: { title: "Website Terms Information | O24 by vKnight", description: "Information about O24 website content and commercial terms.", url: "/terms", type: "website" },
 };
 
+const sections = [
+  { icon: BookOpen, title: "Public website resources", body: "Pages, demonstrations, code examples and architectural illustrations are provided to explain O24 concepts. Examples may not represent a deployed integration or every available product capability." },
+  { icon: ClipboardCheck, title: "Product scope and service arrangements", body: "Availability, licensing, service scope, onboarding, support responsibilities, deployment requirements and pricing are discussed with the team and should be documented in an applicable written agreement before reliance." },
+  { icon: ShieldCheck, title: "Technical and security review", body: "Public technical content is informational. Security obligations, operational responsibilities and applicable controls must be assessed for the specific system and deployment environment." },
+  { icon: Scale, title: "Legal terms requiring confirmation", body: "The organization must separately review and approve any legally binding terms covering account use, intellectual property, payment, warranties, limitations of liability, termination, dispute resolution and governing law. Those terms are not established by this informational summary." },
+];
+
 export default function TermsPage() {
-    return (
-        <div className="container mx-auto px-4 py-16 lg:py-24">
-            <div className="max-w-4xl mx-auto space-y-8">
-                <div>
-                    <h1 className="text-4xl font-bold tracking-tight mb-2">Điều khoản Dịch vụ</h1>
-                    <p className="text-sm text-muted-foreground">Cập nhật lần cuối: 15/10/2023</p>
-                </div>
-
-                <div className="prose prose-gray dark:prose-invert max-w-none">
-                    <p>
-                        Chào mừng bạn đến với <strong>vKnight</strong>. Bằng việc truy cập hoặc sử dụng trang web, API, hoặc bất kỳ dịch vụ nào của chúng tôi, bạn đồng ý tuân thủ các Điều khoản Dịch vụ này.
-                    </p>
-
-                    <h3>1. Tài khoản và Đăng ký</h3>
-                    <p>
-                        Để sử dụng dịch vụ, bạn cần đăng ký một tài khoản vKnight. Bạn cam kết rằng:
-                    </p>
-                    <ul>
-                        <li>Thông tin cung cấp là chính xác, đầy đủ và cập nhật.</li>
-                        <li>Bạn chịu trách nhiệm bảo mật thông tin đăng nhập (API Key, mật khẩu) của mình.</li>
-                        <li>Thông báo ngay cho chúng tôi nếu phát hiện bất kỳ hành vi truy cập trái phép nào.</li>
-                    </ul>
-
-                    <h3>2. Quy định sử dụng API</h3>
-                    <p>
-                        Việc sử dụng API của vKnight phải tuân thủ các nguyên tắc sau:
-                    </p>
-                    <ul>
-                        <li><strong>Giới hạn truy cập (Rate Limiting):</strong> Bạn phải tuân thủ các giới hạn số lượng yêu cầu (request) theo gói dịch vụ đã đăng ký.</li>
-                        <li><strong>Mục đích hợp pháp:</strong> Không sử dụng dịch vụ cho bất kỳ hoạt động phi pháp, lừa đảo hoặc gây hại nào.</li>
-                        <li><strong>Bảo mật:</strong> Không tìm cách đảo ngược (reverse engineer), tấn công hoặc làm gián đoạn hệ thống của chúng tôi.</li>
-                    </ul>
-
-                    <h3>3. Thanh toán và Chi phí</h3>
-                    <ul>
-                        <li>Dịch vụ được tính phí theo gói bạn đã chọn (Tháng/Năm) hoặc theo mức sử dụng thực tế (Pay-as-you-go).</li>
-                        <li>Phí dịch vụ không bao gồm các khoản thuế hiện hành trừ khi có quy định khác.</li>
-                        <li>Chúng tôi có quyền điều chỉnh bảng giá với thông báo trước ít nhất 30 ngày.</li>
-                    </ul>
-
-                    <h3>4. Sở hữu trí tuệ</h3>
-                    <p>
-                        Nền tảng vKnight, bao gồm mã nguồn, tài liệu, giao diện và thương hiệu, là tài sản trí tuệ độc quyền của chúng tôi. Bạn được cấp quyền sử dụng không độc quyền, có thể thu hồi để truy cập dịch vụ theo các điều khoản này.
-                    </p>
-
-                    <h3>5. Giới hạn trách nhiệm</h3>
-                    <p>
-                        Trong giới hạn tối đa cho phép của pháp luật, vKnight sẽ không chịu trách nhiệm cho bất kỳ thiệt hại gián tiếp (mất lợi nhuận, dữ liệu, hoặc gián đoạn kinh doanh) phát sinh từ việc sử dụng dịch vụ của chúng tôi. Trách nhiệm đền bù tối đa của chúng tôi sẽ không vượt quá số tiền bạn đã trả cho dịch vụ trong 12 tháng gần nhất (nếu có).
-                    </p>
-
-                    <h3>6. Chấm dứt dịch vụ</h3>
-                    <p>
-                        Chúng tôi có quyền tạm ngưng hoặc chấm dứt tài khoản của bạn nếu phát hiện vi phạm nghiêm trọng các điều khoản này (ví dụ: tấn công DDoS, sử dụng thẻ tín dụng đánh cắp). Bạn cũng có thể hủy dịch vụ bất cứ lúc nào thông qua trang quản trị.
-                    </p>
-
-                    <h3>7. Luật áp dụng</h3>
-                    <p>
-                        Các điều khoản này được điều chỉnh và giải thích theo pháp luật của Cộng hòa Xã hội Chủ nghĩa Việt Nam. Mọi tranh chấp sẽ được giải quyết tại tòa án có thẩm quyền tại TP. Hồ Chí Minh.
-                    </p>
-
-                    <h3>8. Liên hệ</h3>
-                    <p>
-                        Mọi thắc mắc về Điều khoản Dịch vụ, vui lòng liên hệ:<br />
-                        Email: <a href="mailto:legal@vknight.io.vn">legal@vknight.io.vn</a><br />
-                        Địa chỉ: Khu nhà cao cấp C13/19 thuộc Cư xá Phú Lâm B, Quận 6, TP.HCM
-                    </p>
-                </div>
-            </div>
-        </div>
-    );
+  return <main className="min-h-screen bg-background text-foreground">
+    <section className="border-b bg-[#0b1527] text-white"><div className="container mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:py-24">
+      <p className="text-xs font-bold uppercase tracking-[.18em] text-amber-300">Website information</p>
+      <h1 className="mt-4 text-4xl font-extrabold tracking-tight sm:text-5xl">Terms &amp; usage information</h1>
+      <p className="mt-5 max-w-3xl text-base leading-8 text-slate-300">Understand the distinction between public website resources and the terms that govern a specific commercial engagement.</p>
+    </div></section>
+    <div className="container mx-auto max-w-6xl px-4 py-12 sm:px-6 lg:py-16">
+      <div className="mb-8 flex items-start gap-3 rounded-2xl border border-amber-500/25 bg-amber-500/5 p-5 text-sm leading-7"><FileText className="mt-1 h-5 w-5 shrink-0 text-amber-600" aria-hidden="true" /><p><strong>Legal review required:</strong> This page is a non-contractual information summary, not a finalized Terms of Service or a replacement for a legal agreement. Do not publish it as approved contractual terms without legal review.</p></div>
+      <div className="grid gap-4 md:grid-cols-2">{sections.map(section => <section className="rounded-2xl border bg-card p-6 shadow-sm" key={section.title}>
+        <section.icon className="h-7 w-7 text-primary" aria-hidden="true" /><h2 className="mt-4 text-xl font-bold">{section.title}</h2><p className="mt-3 text-sm leading-7 text-muted-foreground">{section.body}</p>
+      </section>)}</div>
+      <div className="mt-10 flex flex-wrap gap-3">
+        <Link href="/contact" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-bold text-primary-foreground hover:opacity-90">Ask about terms <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
+        <Link href="/security" className="inline-flex min-h-11 items-center rounded-xl border px-5 py-3 text-sm font-semibold hover:bg-accent">Security &amp; Trust</Link>
+      </div>
+    </div>
+  </main>;
 }
