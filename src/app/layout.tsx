@@ -128,7 +128,7 @@ export default function RootLayout({
                     {children}
                     <Footer />
                     {/* <ChatBox /> */}
-                    <Analytics />
+                    {process.env.VERCEL === "1" && <Analytics />}
                     {process.env.NODE_ENV === "development" && <Agentation />}
                     {/* <TetHolidayPopup /> */}
                 </ThemeProvider>
