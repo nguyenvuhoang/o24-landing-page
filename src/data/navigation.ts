@@ -1,9 +1,9 @@
-
+/** Public-site primary navigation. All destinations are local routes. */
 export const navItems = [
-    { label: "Sản phẩm", href: "/features" },
-    { label: "Giải pháp", href: "/solutions" },
-    { label: "Developer Hub", href: "/developers" },
-    { label: "Lộ trình", href: "/roadmap" },
-    { label: "Báo giá", href: "/pricing" },
-    { label: "Liên hệ", href: "/contact" },
-];
+  { label: "Product", href: "/features" },
+  { label: "Solutions", href: "/solutions" },
+  { label: "Developer Hub", href: "/developers" },
+  { label: "Roadmap", href: "/roadmap" },
+  { label: "Pricing", href: "/pricing" },
+  { label: "Contact", href: "/contact" },
+] as const;

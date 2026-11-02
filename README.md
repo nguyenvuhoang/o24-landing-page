@@ -1,28 +1,54 @@
-# Step 30.1 — Conversion Tracking Foundation
+# O24 Step 31 — Final Public Website Refinement (31.1–31.7)
+
+Built for the existing Next.js 16 + React 19 + Tailwind project. **No admin dashboard, Supabase, leads tables, API routes or existing form handlers are changed.**
 
 ## Scope
-Aggregate marketing journey events through existing `@vercel/analytics`; no database changes. Does not change DemoForm, EnterpriseForm, API endpoints, CRM, existing `ConversionLink`, or `TrackedLink`.
 
-Events:
-- `journey_page_view`: fixed `page`, `stage` properties when arriving at a known marketing route.
-- `journey_navigation`: fixed `from`, `to`, `from_stage`, `to_stage` when clicking a link between known marketing routes.
+| Step | Implementation | How to verify |
+|---|---|---|
+| 31.1 Global navigation / footer | English primary navigation; useful 4-column footer, removes placeholder social links, adds Security, Deployment, FAQ, Developer routes | Desktop/mobile menu and Footer |
+| 31.2 Pricing | Rebuilt `/pricing` with existing `src/data/pricing.ts` (no invented prices), compact FAQs and CTAs | Starter, Business, Enterprise paths |
+| 31.3 About | English `/about`, engineering focus, avoids invented client logos/team credentials | SEO + mobile |
+| 31.4 Contact / Demo | `/contact` now links directly to actual `/demo`, `/enterprise`, Security Review and support email; removes misleading inputs with non-submitting Zalo button. **Existing DemoForm and EnterpriseForm retained.** | Submit real test request in staging |
+| 31.5 Mobile / UI | Responsive grids and min-height CTAs in changed pages; remaining site requires browser visual review | 375, 768, 1440 px + dark mode |
+| 31.6 SEO / Performance | Canonical metadata + OpenGraph on changed pages; read-only audit tool; sitemap route checks | Lighthouse + `/sitemap.xml` + `/robots.txt` |
+| 31.7 Production readiness | Audit script, link inventory, verification checklist and recommended release commands | Build, smoke test, deploy |
 
-Events represent anonymous aggregate traffic and click intent, not an individual lead's origin. The existing `demo_request_success` event remains the only observed client-side successful demo form signal, and is subject to delivery and analytics sampling/blocking. No PII is sent by the new component.
+## Install safely
 
-## Install
-1. Unzip at `C:\O24\o24-landing-page` preserving folder structure.
-2. Run `node scripts/step30-1-integrate.mjs` (idempotent).
-3. Run `pnpm exec eslint src/components/analytics/JourneyAnalytics.tsx src/lib/analytics/journey.ts src/app/layout.tsx`.
-4. Run `pnpm exec tsc --noEmit`, `pnpm test`, `pnpm build`.
-5. Check the source/target pairs in Vercel Analytics, e.g. `features → solutions`, `security → demo`.
+1. Back up your current work / branch: `git status` then `git switch -c feature/step31-public-site` (only if appropriate to your working tree).
+2. Copy the **contents** of `step31/` into the repository root, preserving paths.
+3. Review diff before commit. This package **replaces** `src/components/layout/Footer.tsx`, `src/data/navigation.ts`, `src/app/pricing/page.tsx`, `src/app/about/page.tsx`, `src/app/contact/page.tsx`.
+4. Does **not** replace Header, DemoForm, EnterpriseForm, Admin, CTA analytics or any other prior Step component.
 
-## Limitations
-- Does not persist visitor session identity or map click events to CRM leads.
-- A blocked analytics client or ad blocker may suppress events; do not assume 100% coverage.
-- `journey_page_view` is custom instrumentation in addition to Vercel's automatic page views; don't sum them together.
-- Only browser navigation through clicked `<a>` links is tracked by `journey_navigation`.
-- Check analytics consent/privacy requirements before production roll-out.
-- Dashboard, auth, API URLs and other unknown paths intentionally excluded.
+```powershell
+cd C:\O24\o24-landing-page
+pnpm exec eslint src/components/layout/Footer.tsx src/data/navigation.ts src/app/pricing/page.tsx src/app/about/page.tsx src/app/contact/page.tsx
+pnpm exec tsc --noEmit
+pnpm test
+pnpm build
+node scripts/step31-audit.mjs
+node scripts/step31-site-links.mjs
 
-## Rollback
-Delete `<JourneyAnalytics />` and its import from `src/app/layout.tsx`. No migrations or user data to revert.
+git diff --check
+git diff --stat
+```
+
+## Manual checks before marking Production PASS
+
+- Desktop + mobile navigation (375/768/1440) and overlay closure; pay particular attention to header width at `md` (six links may wrap on smaller tablets).
+- Light/dark mode on about, pricing, contact, security, banking, enterprise, developers, plus real mobile Safari.
+- Browser paths: `/`, `/features`, `/solutions`, `/solutions/bank-fintech`, `/solutions/enterprise`, `/developers`, `/security`, `/enterprise/deployment`, `/enterprise/security-review`, `/pricing`, `/about`, `/contact`, `/demo`.
+- Successful real *staging* demo and enterprise submissions (check lead storage, email notification, error and loading states); do **not** submit sensitive production customer data.
+- Browser Lighthouse in clean/incognito Chrome, mobile + desktop: collect actual Performance, Accessibility, Best Practices and SEO scores (do not assume thresholds).
+- Validate social preview image `/images/og-image.png`, robots/sitemap and canonical tags on deployed domain.
+- Review company contact email and all public legal/commercial statements with website owner.
+- Audit script is deliberately conservative; flags missing routes, but is not a crawler and does not prove successful browser navigation.
+
+## Known boundaries
+
+- Source observed in default GitHub branch may be older than local uncommitted changes. Back up and inspect diffs.
+- Existing main header has a `md` desktop breakpoint; testing at 768–1024 px is necessary; package intentionally does not overwrite its Supabase authentication/session flow.
+- `/contact` intentionally does **not** present fake form inputs: it directs the visitor to real forms already backed by APIs.
+- No external social links are shown unless an authentic destination is known.
+- Do not treat sample snippets, deployment modes, pricing plan names or capabilities as contractual promises.
