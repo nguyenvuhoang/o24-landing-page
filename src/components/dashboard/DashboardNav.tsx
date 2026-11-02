@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, UsersRound, ChevronRight, CalendarClock } from "lucide-react";
+import { LayoutDashboard, UsersRound, ChevronRight, CalendarClock, ChartNoAxesCombined } from "lucide-react";
 export function DashboardNav() {
   const path = usePathname();
   return (
@@ -17,6 +17,11 @@ export function DashboardNav() {
           href: "/dashboard/follow-ups",
           label: "Follow-ups",
           icon: CalendarClock,
+        },
+        {
+          href: "/dashboard/analytics",
+          label: "Conversion analytics",
+          icon: ChartNoAxesCombined,
         },
       ].map((item) => {
         const active =
