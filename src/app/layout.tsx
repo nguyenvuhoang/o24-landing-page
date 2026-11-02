@@ -1,5 +1,4 @@
 import { Agentation } from "@/components/agentation/Agentation";
-import ChatBox from "@/components/chat/ChatBox";
 import { AnnouncementBar } from "@/components/layout/AnnouncementBar";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
@@ -128,7 +127,7 @@ export default function RootLayout({
                     <Header />
                     {children}
                     <Footer />
-                    <ChatBox />
+                    {/* <ChatBox /> */}
                     <Analytics />
                     {process.env.NODE_ENV === "development" && <Agentation />}
                     {/* <TetHolidayPopup /> */}
