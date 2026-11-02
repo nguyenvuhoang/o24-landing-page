@@ -102,7 +102,7 @@ export default function BankFintechClient() {
                 <div className="container relative mx-auto px-4 py-20 sm:py-24 lg:py-28">
                     <div className="grid items-center gap-12 lg:grid-cols-[1.08fr_0.92fr]">
                         <div>
-                            <Link href="/#solutions" className="mb-7 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
+                            <Link href="/solutions" className="mb-7 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary">
                                 <ArrowRight className="h-4 w-4 rotate-180" aria-hidden="true" />
                                 All solutions
                             </Link>

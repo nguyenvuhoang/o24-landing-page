@@ -1,3 +1,4 @@
+import { ConversionLink } from "@/components/analytics/ConversionLink";
 import Link from "next/link";
 import { ArrowRight, Building2, Code2, Sparkles } from "lucide-react";
 
@@ -37,10 +38,9 @@ export function CTA() {
                             <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/20 text-orange-300"><Building2 className="h-5 w-5" /></span>
                             <h3 className="mt-5 text-xl font-bold">For Enterprises</h3>
                             <p className="mt-2 flex-1 text-sm leading-relaxed text-slate-300">Discuss API modernization, banking integrations and deployment requirements with the vKnight team.</p>
-                            <Link href="/demo" className="gradient-primary mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                            <ConversionLink href="/demo" source="homepage" placement="bottom_cta" className="gradient-primary mt-6 inline-flex min-h-11 items-center justify-center gap-2 rounded-xl px-5 py-3 text-sm font-bold text-white transition-opacity hover:opacity-90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                                 Book a Demo <ArrowRight className="h-4 w-4" />
-                            </Link>
-                        </div>
+                            </ConversionLink>                        </div>
                     </div>
                 </div>
             </div>

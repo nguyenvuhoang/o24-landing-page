@@ -6,7 +6,7 @@ import { FileText, Map } from "lucide-react";
 export const metadata: Metadata = {
     alternates: { canonical: "/demo" },
     title: "Request a Technical Demo | O24 Platform",
-    description: "Schedule a live walkthrough of O24 Platform tailored to your API management and integration use case. No slides, real configuration examples.",
+    description: "Request an O24 technical walkthrough focused on your API management and integration requirements. Session content and environment access are confirmed with the team.",
     openGraph: {
         title: "Request a Technical Demo | O24 Platform",
         description: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
@@ -66,7 +66,7 @@ export default function DemoPage() {
                     </h1>
                     <p className="text-lg md:text-xl text-muted-foreground leading-relaxed">
                         See O24 in action with a live walkthrough tailored to your use case.
-                        No slides, no pitch deck — just the platform, your questions, and real configuration examples.
+                        Discuss platform architecture, integration requirements, and an appropriate walkthrough scope with our team.
                     </p>
                 </div>
 
@@ -124,7 +124,7 @@ export default function DemoPage() {
                         <div className="p-6 rounded-2xl border border-primary/20 bg-primary/5">
                             <h3 className="font-semibold mb-2">Open-source ready</h3>
                             <p className="text-sm text-muted-foreground">
-                                O24 supports self-hosted deployment with full feature parity.
+                                Discuss self-hosted deployment options and feature availability for your environment.
                                 The demo can include deployment architecture review and on-prem configuration guidance.
                             </p>
                         </div>

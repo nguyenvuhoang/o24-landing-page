@@ -1,3 +1,4 @@
+import { EnterpriseIntegrationShowcase } from "@/components/solutions/EnterpriseIntegrationShowcase";
 import Link from "next/link";
 import { EnterpriseForm } from "@/app/enterprise/EnterpriseForm";
 import {
@@ -67,7 +68,7 @@ export default function EnterpriseSolutionClient() {
             <section className="relative isolate overflow-hidden border-b border-border/60 bg-gradient-to-b from-orange-50/70 via-background to-background pb-20 pt-20 dark:from-orange-950/10 dark:via-background lg:pb-28 lg:pt-28">
                 <div aria-hidden="true" className="pointer-events-none absolute -right-36 -top-48 h-[34rem] w-[34rem] rounded-full bg-primary/10 blur-3xl" />
                 <div className="container relative mx-auto px-4">
-                    <Link href="/#solutions" className="mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary">
+                    <Link href="/solutions" className="mb-10 inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-primary">
                         <ChevronRight className="h-4 w-4 rotate-180" aria-hidden="true" /> Back to solutions
                     </Link>
                     <div className="grid items-center gap-12 lg:grid-cols-[1.07fr_0.93fr] lg:gap-16">
@@ -148,6 +149,8 @@ export default function EnterpriseSolutionClient() {
                     </div>
                 </div>
             </section>
+
+                        <EnterpriseIntegrationShowcase />
 
             <section className="py-20 lg:py-28" aria-labelledby="enterprise-deployment">
                 <div className="container mx-auto px-4">

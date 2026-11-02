@@ -28,6 +28,7 @@ const staticRoutes = [
   "/privacy",
   "/roadmap",
   "/security",
+  "/solutions",
   "/solutions/bank-fintech",
   "/solutions/developers",
   "/solutions/enterprise",

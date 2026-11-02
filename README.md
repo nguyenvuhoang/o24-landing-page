@@ -1,29 +1,20 @@
-# Step 28.2 — Banking & Fintech Enhancement
+# Step 29.1 — Security & Trust Center
 
-This adds a **client-side conceptual transaction lifecycle** to the existing Banking & Fintech solution page. No server calls, bank accounts or real transactions are involved. Payment responses and codes are explicitly illustrative.
+## Install
+Copy `src/app/security/page.tsx` into the same location in your Next.js project, replacing the old page. No dependencies or database changes required.
 
-## Installation (safe for customized pages)
-
-1. Copy `src/components/solutions/BankingFlowShowcase.tsx` into the same relative path in your project.
-2. In `src/app/solutions/bank-fintech/BankFintechClient.tsx`, add:
-
-```tsx
-import { BankingFlowShowcase } from "@/components/solutions/BankingFlowShowcase";
-```
-
-3. Insert `<BankingFlowShowcase />` **after the capabilities section**, before the existing `Common use cases` section. Do not overwrite the existing page or CTA.
-
-Optional: use `node scripts/step28-2-integrate.mjs` to insert the import and section into the expected page automatically. The script checks for existing integration and refuses to insert if the expected anchor is missing.
-
-## Validation
-
+## Verification
 ```powershell
-pnpm exec eslint src/components/solutions/BankingFlowShowcase.tsx src/app/solutions/bank-fintech/BankFintechClient.tsx
+pnpm exec eslint src/app/security/page.tsx
 pnpm exec tsc --noEmit
-pnpm test
 pnpm build
 ```
+Open `/security` and verify dark/light mode, mobile behavior, CTAs and canonical metadata.
 
-Check `/solutions/bank-fintech#banking-in-action`. Test the Approved, Declined and Unknown outcome examples. Ensure the Unknown state explicitly says reconciliation is required. Test Run, Step, Reset, Copy JSON, keyboard access and mobile widths.
+## Source-review findings (not automatically fixed)
+- The prior `/security` page claimed AES-256, TLS 1.3, industry compliance, regular penetration tests, and 24/7 monitoring without supporting evidence. New content states areas for project-specific review instead of certifying specific controls.
+- `/enterprise` remains an older Vietnamese landing page with 99.99% uptime, 24/7 support, <1h response, unlimited traffic, and open-source availability claims. Verify with product/legal owners or revise separately.
+- Do not present a security certification or SLA until documented, approved evidence exists.
 
-Production note: The site examples are not live O24 API contracts, not performance metrics and not evidence that any specific banking integration is installed.
+## Scope
+Only `/security` changes. No admin, Supabase, CRM, demo form, developer portal or payment integrations touched.
