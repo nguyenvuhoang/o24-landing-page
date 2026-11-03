@@ -16,24 +16,6 @@ function readPngDimensions(path: string): { width: number; height: number } {
   return { width: buf.readUInt32BE(16), height: buf.readUInt32BE(20) };
 }
 
-/** Minimal JPEG SOF-marker dimension reader; enough to assert against fabricated/stale metadata. */
-function readJpegDimensions(path: string): { width: number; height: number } {
-  const buf = readFileSync(path);
-  assert.equal(buf.readUInt16BE(0), 0xffd8, `${path} is not a JPEG file`);
-  let offset = 2;
-  while (offset < buf.length) {
-    assert.equal(buf[offset], 0xff, "expected JPEG marker");
-    const marker = buf[offset + 1];
-    const isSof = marker >= 0xc0 && marker <= 0xcf && marker !== 0xc4 && marker !== 0xc8 && marker !== 0xcc;
-    if (isSof) {
-      return { height: buf.readUInt16BE(offset + 5), width: buf.readUInt16BE(offset + 7) };
-    }
-    const segmentLength = buf.readUInt16BE(offset + 2);
-    offset += 2 + segmentLength;
-  }
-  throw new Error(`no SOF marker found in ${path}`);
-}
-
 function listPageFiles(dir: string, acc: string[] = []): string[] {
   for (const entry of readdirSync(dir, { withFileTypes: true })) {
     if (entry.name.startsWith(".")) continue;
@@ -79,21 +61,52 @@ test("no remaining reference anywhere in src/ to the broken /apple-touch-icon.pn
 });
 
 // --- OG image honesty ----------------------------------------------------
-// public/images/og-image.png is actually a 1024x1024 JPEG despite its .png
-// extension (pre-existing asset, not something this step may re-encode or
-// redesign). The declared width/height must match the real file rather than
-// a stale, fabricated 1200x630 claim.
+// public/images/og-image.png was previously JPEG-encoded data wearing a
+// .png extension at the wrong (1024x1024) declared dimensions. Step 32.7.2
+// replaced it with a properly encoded 1200x630 PNG built from the existing
+// O24 brand artwork (center-cropped, not stretched/distorted). These tests
+// assert the asset is real PNG bytes at the declared size, and that no
+// metadata declaration has drifted from it.
 
-test("DEFAULT_OG_IMAGE width/height match the real on-disk asset dimensions", () => {
-  const { width, height } = readJpegDimensions(join(PUBLIC_DIR, "images", "og-image.png"));
+test("og-image.png is real PNG byte data (not JPEG data wearing a .png extension)", () => {
+  const buf = readFileSync(join(PUBLIC_DIR, "images", "og-image.png"));
+  assert.deepEqual(
+    [...buf.subarray(0, 8)],
+    [0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a],
+    "public/images/og-image.png must be a genuine PNG file",
+  );
+});
+
+test("DEFAULT_OG_IMAGE width/height match the real on-disk PNG asset dimensions (1200x630)", () => {
+  const { width, height } = readPngDimensions(join(PUBLIC_DIR, "images", "og-image.png"));
   assert.equal(DEFAULT_OG_IMAGE.width, width);
   assert.equal(DEFAULT_OG_IMAGE.height, height);
+  assert.equal(width, 1200);
+  assert.equal(height, 630);
 });
 
 test("root layout's openGraph.images dimensions match DEFAULT_OG_IMAGE (no drift between the two declarations)", () => {
   const layout = readFileSync(join(APP_DIR, "layout.tsx"), "utf8");
   assert.match(layout, new RegExp(`width:\\s*${DEFAULT_OG_IMAGE.width}\\b`));
   assert.match(layout, new RegExp(`height:\\s*${DEFAULT_OG_IMAGE.height}\\b`));
+});
+
+test("pages with their own og-image override (demo, enterprise) already declare dimensions matching the real asset", () => {
+  for (const file of [join(APP_DIR, "demo", "page.tsx"), join(APP_DIR, "enterprise", "page.tsx")]) {
+    const source = readFileSync(file, "utf8");
+    assert.match(source, new RegExp(`width:\\s*${DEFAULT_OG_IMAGE.width}\\b`), `${file} og-image width should match the real asset`);
+    assert.match(source, new RegExp(`height:\\s*${DEFAULT_OG_IMAGE.height}\\b`), `${file} og-image height should match the real asset`);
+  }
+});
+
+test("DEFAULT_OG_IMAGE and every og-image override declare type: \"image/png\" so og:image:type is emitted", () => {
+  assert.equal(DEFAULT_OG_IMAGE.type, "image/png");
+  const layout = readFileSync(join(APP_DIR, "layout.tsx"), "utf8");
+  assert.match(layout, /type:\s*"image\/png"/);
+  for (const file of [join(APP_DIR, "demo", "page.tsx"), join(APP_DIR, "enterprise", "page.tsx")]) {
+    const source = readFileSync(file, "utf8");
+    assert.match(source, /type:\s*"image\/png"/, `${file} og-image override should declare type: "image/png"`);
+  }
 });
 
 // --- Language attributes --------------------------------------------------

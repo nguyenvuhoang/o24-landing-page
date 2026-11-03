@@ -5,7 +5,7 @@ export const SITE_URL = "https://vknight.io.vn";
 /**
  * Stable Schema.org node identifiers. The nodes themselves are defined once
  * in src/app/layout.tsx (Organization, WebSite) and src/app/page.tsx
- * (SoftwareApplication) — every other page references them by @id instead
+ * (WebApplication) — every other page references them by @id instead
  * of duplicating the full object.
  */
 export const ORGANIZATION_ID = `${SITE_URL}/#organization`;

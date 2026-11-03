@@ -9,7 +9,7 @@ export const metadata: Metadata = createPageMetadata({
     description: "Request an O24 technical walkthrough focused on your API management and integration requirements. Session content and environment access are confirmed with the team.",
     path: "/demo",
     ogDescription: "Schedule a live walkthrough of O24 Platform tailored to your use case.",
-    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Platform Demo" },
+    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Platform Demo", type: "image/png" },
 });
 
 const demoScopes = [

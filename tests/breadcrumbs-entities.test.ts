@@ -133,11 +133,32 @@ test("no fabricated identity/credential properties on Organization, WebSite or S
 
 // --- Preservation of existing structured data ------------------------------
 
-test("homepage SoftwareApplication schema is preserved and now carries a stable @id + Organization reference", () => {
+test("homepage software entity schema is preserved and now carries a stable @id + Organization reference", () => {
   const source = readSrc("page.tsx");
-  assert.match(source, /"@type":\s*"SoftwareApplication"/);
+  assert.match(source, /"@type":\s*"WebApplication"/);
   assert.match(source, /SOFTWARE_APPLICATION_ID/);
   assert.match(source, /publisher:\s*\{\s*"@id":\s*ORGANIZATION_ID\s*\}/);
+});
+
+// --- Software entity: Google Rich Results eligibility -----------------------
+// Google's Rich Results Test flags SoftwareApplication/WebApplication nodes
+// unless at least 2 of {offers, aggregateRating, applicationCategory,
+// operatingSystem} are present. We may not fabricate offers or ratings, so
+// applicationCategory + operatingSystem (verified: O24 is operated through a
+// web browser, per its own dashboard/API-console UI) are the two legitimate
+// properties to carry.
+
+test("software entity satisfies Google's 'at least 2 of offers/aggregateRating/applicationCategory/operatingSystem' rich-result requirement without fabricating data", () => {
+  const source = readSrc("page.tsx");
+  const eligibleProperties = ["offers", "aggregateRating", "applicationCategory", "operatingSystem"];
+  const presentCount = eligibleProperties.filter((key) => new RegExp(`\\b${key}:`).test(source)).length;
+  assert.ok(presentCount >= 2, `expected at least 2 of ${eligibleProperties.join(", ")}; found ${presentCount}`);
+
+  // The two satisfying properties must be the verifiable ones, not fabricated offers/ratings.
+  assert.match(source, /applicationCategory:\s*"BusinessApplication"/);
+  assert.match(source, /operatingSystem:\s*"Web browser"/);
+  assert.equal(source.includes("offers:"), false, "must not fabricate offers");
+  assert.equal(source.includes("aggregateRating:"), false, "must not fabricate aggregateRating");
 });
 
 test("homepage does not emit a BreadcrumbList (no meaningful hierarchy for the root page)", () => {

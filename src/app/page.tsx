@@ -20,9 +20,10 @@ export default function Home() {
     <main>
       <HolidayNoticeModal />
       <JsonLd data={{
-        "@context": "https://schema.org", "@type": "SoftwareApplication",
+        "@context": "https://schema.org", "@type": "WebApplication",
         "@id": SOFTWARE_APPLICATION_ID,
         name: "O24 Platform", applicationCategory: "BusinessApplication",
+        operatingSystem: "Web browser",
         description, url: "https://vknight.io.vn/",
         publisher: { "@id": ORGANIZATION_ID },
       }} />

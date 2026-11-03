@@ -5,15 +5,14 @@ const SITE_NAME = "vKnight";
 
 /**
  * Single source of truth for the sitewide social preview image.
- * The file at public/images/og-image.png is actually a 1024x1024 JPEG
- * (despite its .png extension); width/height below match the real
- * asset rather than the originally intended 1200x630 PNG.
+ * public/images/og-image.png is a properly encoded 1200x630 PNG.
  */
 export const DEFAULT_OG_IMAGE: SeoImageInput = {
     url: "/images/og-image.png",
-    width: 1024,
-    height: 1024,
+    width: 1200,
+    height: 630,
     alt: "vKnight O24 Platform",
+    type: "image/png",
 };
 
 export type SeoImageInput = {
@@ -22,6 +21,8 @@ export type SeoImageInput = {
     width?: number;
     height?: number;
     alt?: string;
+    /** MIME type, emitted as og:image:type when set. */
+    type?: string;
 };
 
 export type SeoOptions = {
@@ -90,6 +91,7 @@ export function createPageMetadata({
         width: image.width,
         height: image.height,
         alt: image.alt ?? title,
+        ...(image.type ? { type: image.type } : {}),
     };
 
     return {

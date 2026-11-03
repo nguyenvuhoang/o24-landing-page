@@ -26,7 +26,7 @@ export const metadata: Metadata = createPageMetadata({
         "Discuss enterprise API integration, security review, deployment planning and operating responsibilities.",
     siteName: "O24 by vKnight",
     locale: "vi_VN",
-    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Enterprise Platform" },
+    image: { url: "/images/og-image.png", width: 1200, height: 630, alt: "O24 Enterprise Platform", type: "image/png" },
 });
 
 const enterpriseBenefits = [
