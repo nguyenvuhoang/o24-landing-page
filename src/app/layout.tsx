@@ -48,8 +48,8 @@ export const metadata: Metadata = {
         images: [
             {
                 url: "/images/og-image.png",
-                width: 1200,
-                height: 630,
+                width: 1024,
+                height: 1024,
                 alt: "vKnight O24 Platform",
             },
         ],
@@ -63,10 +63,6 @@ export const metadata: Metadata = {
     robots: {
         index: true,
         follow: true,
-    },
-    icons: {
-        icon: "/favicon.ico",
-        apple: "/apple-touch-icon.png",
     },
 };
 

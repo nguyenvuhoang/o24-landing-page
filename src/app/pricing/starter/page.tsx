@@ -60,7 +60,7 @@ const steps = [
 
 export default function StarterPage() {
     return (
-        <main className="min-h-screen pt-24 pb-20 overflow-hidden">
+        <main lang="vi" className="min-h-screen pt-24 pb-20 overflow-hidden">
             <JsonLd data={breadcrumbData} />
             {/* Background elements */}
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,rgba(2,68,48,0.05)_0%,transparent_100%)]" />

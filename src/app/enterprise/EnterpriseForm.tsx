@@ -173,7 +173,7 @@ export function EnterpriseForm() {
 
     if (isSuccess) {
         return (
-            <div className="p-8 rounded-2xl border border-primary/20 bg-primary/5 text-center">
+            <div lang="vi" className="p-8 rounded-2xl border border-primary/20 bg-primary/5 text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-green-100 dark:bg-green-900/30 text-green-600 dark:text-green-400 mb-6">
                     <CheckCircle2 className="w-8 h-8" />
                 </div>
@@ -195,7 +195,7 @@ export function EnterpriseForm() {
     }
 
     return (
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form lang="vi" onSubmit={handleSubmit} className="space-y-6">
             {submitError && <p role="alert" className="rounded-lg border border-destructive/30 bg-destructive/5 p-3 text-sm text-destructive">{submitError}</p>}
             {/* Contact Info */}
             <div className="grid sm:grid-cols-2 gap-4">

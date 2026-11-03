@@ -55,7 +55,7 @@ const businessFeatures = [
 
 export default function BusinessPage() {
     return (
-        <main className="min-h-screen pt-24 pb-20">
+        <main lang="vi" className="min-h-screen pt-24 pb-20">
             <JsonLd data={breadcrumbData} />
             <div className="container mx-auto px-4">
                 {/* Hero section */}

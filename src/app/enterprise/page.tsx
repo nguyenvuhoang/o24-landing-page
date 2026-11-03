@@ -75,7 +75,7 @@ const breadcrumbData = buildBreadcrumbJsonLd([
 
 export default function EnterprisePage() {
     return (
-        <main className="min-h-screen pt-24 pb-20">
+        <main lang="vi" className="min-h-screen pt-24 pb-20">
             <JsonLd data={breadcrumbData} />
             <div className="container mx-auto px-4">
                 {/* Page Header */}

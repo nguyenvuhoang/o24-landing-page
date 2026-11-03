@@ -69,7 +69,7 @@ export function Header() {
                     <div className="hidden md:flex items-center gap-3">
                         <ThemeToggle />
                         {!user ? (
-                            <Button variant="ghost" size="sm" onClick={() => setIsLoginModalOpen(true)}>
+                            <Button variant="ghost" size="sm" lang="vi" onClick={() => setIsLoginModalOpen(true)}>
                                 Đăng nhập
                             </Button>
                         ) : (
@@ -118,6 +118,7 @@ export function Header() {
                                 <Button
                                     variant="outline"
                                     className="w-full"
+                                    lang="vi"
                                     onClick={() => {
                                         setIsLoginModalOpen(true);
                                         setIsMobileMenuOpen(false);

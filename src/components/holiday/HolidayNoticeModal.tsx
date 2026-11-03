@@ -124,6 +124,7 @@ export function HolidayNoticeModal() {
                 />
 
                 <DialogPrimitive.Content
+                    lang="vi"
                     onPointerDownOutside={(e) =>
                         e.preventDefault()
                     }

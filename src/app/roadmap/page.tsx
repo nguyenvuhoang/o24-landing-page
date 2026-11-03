@@ -18,7 +18,7 @@ export default async function RoadmapPage() {
         <main className="min-h-screen pt-24 pb-20">
             <div className="container mx-auto px-4">
                 {/* Page Header */}
-                <div className="max-w-3xl mb-16">
+                <div lang="vi" className="max-w-3xl mb-16">
                     <h1 className="text-4xl md:text-6xl font-black tracking-tight mb-6">
                         Roadmap{" "}
                         <span className="bg-gradient-to-r from-amber-500 to-primary bg-clip-text text-transparent">
@@ -31,7 +31,7 @@ export default async function RoadmapPage() {
                     </p>
                 </div>
 
-                <Suspense fallback={<div className="h-[600px] flex items-center justify-center">Đang tải roadmap...</div>}>
+                <Suspense fallback={<div lang="vi" className="h-[600px] flex items-center justify-center">Đang tải roadmap...</div>}>
                     <RoadmapContent items={roadmapData} />
                 </Suspense>
             </div>

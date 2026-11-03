@@ -56,7 +56,7 @@ const ChangeTypeBadge = ({ type }: { type: ChangeType }) => {
 
 export default function ChangelogPage() {
     return (
-        <div className="min-h-screen pt-20 pb-16">
+        <div lang="vi" className="min-h-screen pt-20 pb-16">
             {/* Hero Section */}
             <section className="relative py-20 overflow-hidden">
                 <div className="absolute inset-0 gradient-hero z-0 pointer-events-none" />

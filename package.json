@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint .",
     "ping-google": "node scripts/ping-google.mjs",
+    "audit-seo": "node scripts/audit-seo.mjs",
     "test": "node --conditions=react-server --import tsx --test tests/*.test.ts"
   },
   "dependencies": {

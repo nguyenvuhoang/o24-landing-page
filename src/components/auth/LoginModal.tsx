@@ -49,7 +49,7 @@ export function LoginModal({ isOpen, onClose }: LoginModalProps) {
 
     return (
         <Dialog open={isOpen} onOpenChange={onClose}>
-            <DialogContent className="sm:max-w-[400px] p-0 overflow-hidden border-none bg-background/80 backdrop-blur-xl">
+            <DialogContent lang="vi" className="sm:max-w-[400px] p-0 overflow-hidden border-none bg-background/80 backdrop-blur-xl">
                 <div className="relative p-6 space-y-6">
                     {/* Header */}
                     <DialogHeader className="space-y-2 text-center">

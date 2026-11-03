@@ -5,12 +5,14 @@ const SITE_NAME = "vKnight";
 
 /**
  * Single source of truth for the sitewide social preview image.
- * Verified to exist at public/images/og-image.png (1200x630).
+ * The file at public/images/og-image.png is actually a 1024x1024 JPEG
+ * (despite its .png extension); width/height below match the real
+ * asset rather than the originally intended 1200x630 PNG.
  */
 export const DEFAULT_OG_IMAGE: SeoImageInput = {
     url: "/images/og-image.png",
-    width: 1200,
-    height: 630,
+    width: 1024,
+    height: 1024,
     alt: "vKnight O24 Platform",
 };
 
