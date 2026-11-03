@@ -2,16 +2,25 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, ArrowRight, Layers3 } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
+const slug = "api-gateway-vs-reverse-proxy";
+const path = `/blog/${slug}`;
+const url = `https://vknight.io.vn${path}`;
 const title = "API Gateway vs. Reverse Proxy: What Changes in an Enterprise Architecture?";
 const description = "A practical comparison of reverse proxies and API gateways: traffic routing, identity, policies, observability, and choosing the right architecture.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
   description,
-  path: "/blog/api-gateway-vs-reverse-proxy",
+  path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const comparison = [
@@ -25,6 +34,10 @@ const comparison = [
 export default function ArticlePage() {
   return (
     <main className="min-h-screen bg-background">
+      <JsonLd data={buildArticleJsonLd({
+        slug, title, description, url,
+        keywords: ["API Gateway", "Reverse Proxy", "Enterprise Architecture"],
+      })} />
       <article>
         <header className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-16 dark:from-primary/10 dark:via-background lg:py-24">
           <div className="container mx-auto max-w-4xl px-4">

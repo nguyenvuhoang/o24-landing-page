@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "core-banking-integration-architecture";
 const path = `/blog/${slug}`;
@@ -14,6 +16,7 @@ const url = `https://vknight.io.vn${path}`;
 const title = "Core Banking Integration Architecture: A Developer’s Guide";
 const description =
   "Explore a resilient core banking integration architecture using API gateways, adapters, CQRS, transaction processing, RabbitMQ, and layered security.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -21,6 +24,8 @@ export const metadata: Metadata = createPageMetadata({
   path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const sections = [
@@ -127,19 +132,11 @@ function Callout({ children }: { children: ReactNode }) {
 export default function CoreBankingIntegrationArticle() {
   return (
     <main className="min-h-screen bg-background">
-      <JsonLd data={{
-        "@context": "https://schema.org",
-        "@type": "TechArticle",
-        headline: title,
-        description,
-        url,
-        mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        author: { "@type": "Organization", name: "vKnight" },
-        publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-        inLanguage: "en",
+      <JsonLd data={buildArticleJsonLd({
+        slug, title, description, url,
         proficiencyLevel: "Advanced",
         keywords: ["Core Banking", "API Gateway", "CQRS", "RabbitMQ", "Banking Integration", "Security"],
-      }} />
+      })} />
       <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background dark:from-primary/10 dark:via-background">
         <div className="container mx-auto max-w-6xl px-4 py-14 lg:py-20">
           <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

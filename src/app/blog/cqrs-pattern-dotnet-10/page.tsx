@@ -3,11 +3,15 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, Code2, Database, ShieldCheck } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
-const slug = "/blog/cqrs-pattern-dotnet-10";
+const articleSlug = "cqrs-pattern-dotnet-10";
+const slug = `/blog/${articleSlug}`;
 const url = `https://vknight.io.vn${slug}`;
 const title = "CQRS Pattern in .NET 10: A Practical Guide";
 const description = "Learn CQRS with an ASP.NET Core .NET 10 Minimal API example, separate command and query handlers, dependency injection, and production trade-offs.";
+const article = getPublishedArticle(articleSlug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -15,6 +19,8 @@ export const metadata: Metadata = createPageMetadata({
   path: slug,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 // This is an illustrative, fully local example—not an O24 SDK or banking integration.
@@ -109,17 +115,7 @@ const takeaways = [
 ];
 
 export default function CqrsGuidePage() {
-  const articleSchema = {
-    "@context": "https://schema.org",
-    "@type": "TechArticle",
-    headline: title,
-    description,
-    url,
-    inLanguage: "en",
-    author: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    mainEntityOfPage: { "@type": "WebPage", "@id": url },
-  };
+  const articleSchema = buildArticleJsonLd({ slug: articleSlug, title, description, url });
 
   return (
     <main className="min-h-screen bg-background">

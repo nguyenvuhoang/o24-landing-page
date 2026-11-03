@@ -43,6 +43,10 @@ export type SeoOptions = {
     image?: SeoImageInput;
     /** Twitter card type. Defaults to "summary_large_image". */
     twitterCard?: "summary" | "summary_large_image";
+    /** ISO 8601 date-time. Only applied when type is "article" and a verified publish date exists. */
+    publishedTime?: string;
+    /** ISO 8601 date-time. Only applied when type is "article" and a verified update date exists. */
+    modifiedTime?: string;
 };
 
 function absoluteUrl(path: string): string {
@@ -69,6 +73,8 @@ export function createPageMetadata({
     locale,
     image = DEFAULT_OG_IMAGE,
     twitterCard = "summary_large_image",
+    publishedTime,
+    modifiedTime,
 }: SeoOptions): Metadata {
     const normalizedPath =
         path === "/" ? "/" : `/${path.replace(/^\/+|\/+$/g, "")}`;
@@ -96,6 +102,8 @@ export function createPageMetadata({
             locale,
             type,
             images: [resolvedImage],
+            ...(type === "article" && publishedTime ? { publishedTime } : {}),
+            ...(type === "article" && modifiedTime ? { modifiedTime } : {}),
         } as Metadata["openGraph"],
         twitter: {
             card: twitterCard,

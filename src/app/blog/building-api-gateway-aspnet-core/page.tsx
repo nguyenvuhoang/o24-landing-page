@@ -6,12 +6,16 @@ import {
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
-const path = "/blog/building-api-gateway-aspnet-core";
+const slug = "building-api-gateway-aspnet-core";
+const path = `/blog/${slug}`;
 const url = `https://vknight.io.vn${path}`;
 const title = "Building an API Gateway with ASP.NET Core and YARP";
 const description =
   "Build a practical .NET 10 API gateway with YARP routing, ASP.NET Core rate limiting, local backends, and production security considerations.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -19,6 +23,8 @@ export const metadata: Metadata = createPageMetadata({
   path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const setup = `# Requires .NET 10 SDK
@@ -117,15 +123,11 @@ function SectionTitle({ id, children }: { id: string; children: React.ReactNode 
 export default function ApiGatewayArticlePage() {
   return (
     <main className="min-h-screen bg-background">
-      <JsonLd data={{
-        "@context": "https://schema.org", "@type": "TechArticle",
-        headline: title, description, url,
-        mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        author: { "@type": "Organization", name: "vKnight" },
-        publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-        inLanguage: "en", proficiencyLevel: "Intermediate",
+      <JsonLd data={buildArticleJsonLd({
+        slug, title, description, url,
+        proficiencyLevel: "Intermediate",
         keywords: ["ASP.NET Core", "YARP", ".NET 10", "API Gateway", "Rate Limiting"],
-      }} />
+      })} />
       <div className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background dark:from-primary/10 dark:via-background">
         <div className="container mx-auto max-w-6xl px-4 py-16 lg:py-20">
           <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

@@ -7,6 +7,8 @@ import {
 } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "rabbitmq-event-driven-transactions-dotnet-10";
 const path = `/blog/${slug}`;
@@ -14,6 +16,7 @@ const url = `https://vknight.io.vn${path}`;
 const title = "RabbitMQ & Event-Driven Transaction Processing in .NET 10";
 const description =
   "A practical guide to transactional outbox, retries, RabbitMQ dead-letter queues, idempotent consumers, and financial transaction reconciliation in .NET 10.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -21,6 +24,8 @@ export const metadata: Metadata = createPageMetadata({
   path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const sections = [
@@ -176,15 +181,11 @@ function Callout({ children }: { children: ReactNode }) {
 export default function RabbitMqTransactionsGuide() {
   return (
     <main className="min-h-screen bg-background">
-      <JsonLd data={{
-        "@context": "https://schema.org", "@type": "TechArticle",
-        headline: title, description, url,
-        mainEntityOfPage: { "@type": "WebPage", "@id": url },
-        author: { "@type": "Organization", name: "vKnight" },
-        publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-        inLanguage: "en", proficiencyLevel: "Advanced",
+      <JsonLd data={buildArticleJsonLd({
+        slug, title, description, url,
+        proficiencyLevel: "Advanced",
         keywords: ["RabbitMQ", "Event-Driven Architecture", ".NET 10", "Transactional Outbox", "Idempotency", "Dead Letter Queue", "Reconciliation"],
-      }} />
+      })} />
       <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background dark:from-primary/10 dark:via-background">
         <div className="container mx-auto max-w-6xl px-4 py-14 lg:py-20">
           <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

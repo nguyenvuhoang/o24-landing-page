@@ -1,4 +1,4 @@
-import { getPublishedArticlePaths } from "@/data/blog";
+import { getArticleLastModified, getPublishedArticles } from "@/data/blog";
 import type { MetadataRoute } from "next";
 
 const BASE_URL = "https://vknight.io.vn";
@@ -37,11 +37,40 @@ const staticRoutes = [
   "/terms",
 ] as const;
 
-export default function sitemap(): MetadataRoute.Sitemap {
-  const routes = [...staticRoutes, ...getPublishedArticlePaths()];
-  return [...new Set(routes)].map((route) => ({
+type SitemapEntry = MetadataRoute.Sitemap[number];
+
+// Static pages have no verified content-modification date source yet, so
+// they intentionally carry no lastModified (see Step 32.5 date provenance
+// report — do not substitute a build or deploy timestamp here).
+function staticEntry(route: string): SitemapEntry {
+  return {
     url: new URL(route, BASE_URL).toString(),
     changeFrequency: route === "/" ? "weekly" : "monthly",
-    priority: route === "/" ? 1 : route.startsWith("/blog/") ? 0.7 : 0.6,
-  }));
+    priority: route === "/" ? 1 : 0.6,
+  };
+}
+
+function articleEntry(route: string, lastModified: string | undefined): SitemapEntry {
+  return {
+    url: new URL(route, BASE_URL).toString(),
+    changeFrequency: "monthly",
+    priority: 0.7,
+    ...(lastModified ? { lastModified } : {}),
+  };
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const entries = new Map<string, SitemapEntry>();
+
+  for (const route of staticRoutes) {
+    const entry = staticEntry(route);
+    entries.set(entry.url, entry);
+  }
+
+  for (const article of getPublishedArticles()) {
+    const entry = articleEntry(`/blog/${article.slug}`, getArticleLastModified(article));
+    entries.set(entry.url, entry);
+  }
+
+  return [...entries.values()];
 }

@@ -20,9 +20,39 @@ export type BlogArticle = {
   readTimeMinutes: number;
   icon: BlogIcon;
   status: "published" | "draft";
-  /** ISO 8601 date, only if the actual publication date is known. */
+  /** ISO 8601 date (or date-time), only if the actual publication date is known. */
   publishedAt?: string;
+  /** ISO 8601 date (or date-time), only if the actual last-updated date is known. Must be >= publishedAt. */
+  updatedAt?: string;
 };
+
+export function assertValidArticleDates(article: BlogArticle): void {
+  const { slug, publishedAt, updatedAt } = article;
+  if (publishedAt !== undefined && Number.isNaN(Date.parse(publishedAt))) {
+    throw new Error(`Invalid publishedAt for "${slug}": ${publishedAt}`);
+  }
+  if (updatedAt !== undefined && Number.isNaN(Date.parse(updatedAt))) {
+    throw new Error(`Invalid updatedAt for "${slug}": ${updatedAt}`);
+  }
+  if (
+    publishedAt !== undefined &&
+    updatedAt !== undefined &&
+    Date.parse(updatedAt) < Date.parse(publishedAt)
+  ) {
+    throw new Error(`updatedAt is before publishedAt for "${slug}"`);
+  }
+}
+
+/**
+ * The single canonical freshness date for an article: used by the sitemap's
+ * lastModified and by the Article JSON-LD's dateModified. Absent when no
+ * verified date exists yet.
+ */
+export function getArticleLastModified(
+  article: Pick<BlogArticle, "publishedAt" | "updatedAt">,
+): string | undefined {
+  return article.updatedAt ?? article.publishedAt;
+}
 
 export const blogArticles: readonly BlogArticle[] = [
   {
@@ -96,6 +126,8 @@ export const blogArticles: readonly BlogArticle[] = [
     status: "published",
   },
 ];
+
+blogArticles.forEach(assertValidArticleDates);
 
 export function getPublishedArticles(): BlogArticle[] {
   return blogArticles.filter((article) => article.status === "published");

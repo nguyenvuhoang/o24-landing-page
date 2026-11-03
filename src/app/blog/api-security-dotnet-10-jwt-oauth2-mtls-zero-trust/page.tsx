@@ -4,12 +4,15 @@ import Link from "next/link";
 import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, KeyRound, LockKeyhole, Network, ShieldCheck, ServerCog } from "lucide-react";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "api-security-dotnet-10-jwt-oauth2-mtls-zero-trust";
 const path = `/blog/${slug}`;
 const url = `https://vknight.io.vn${path}`;
 const title = "API Security in .NET 10: JWT, OAuth 2.0, mTLS & Zero Trust";
 const description = "A practical guide to validating JWT access tokens, enforcing OAuth 2.0 scopes, protecting service-to-service calls with mTLS, and implementing Zero Trust in ASP.NET Core 10.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -17,6 +20,8 @@ export const metadata: Metadata = createPageMetadata({
   path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const sections = [
@@ -171,14 +176,11 @@ const checks = [
 ];
 
 export default function ApiSecurityGuidePage() {
-  const structuredData = {
-    "@context": "https://schema.org", "@type": "TechArticle",
-    headline: title, description, mainEntityOfPage: url, url,
-    author: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    inLanguage: "en", isAccessibleForFree: true,
+  const structuredData = buildArticleJsonLd({
+    slug, title, description, url,
+    isAccessibleForFree: true,
     keywords: "ASP.NET Core 10, JWT bearer, OAuth 2.0, PKCE, mTLS, Zero Trust, banking API security",
-  };
+  });
   return <main className="min-h-screen bg-background">
     <JsonLd data={structuredData}/>
     <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-14 dark:from-primary/10 dark:via-background lg:py-20">

@@ -4,12 +4,15 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { createPageMetadata } from "@/lib/seo";
+import { buildArticleJsonLd } from "@/lib/structuredData";
+import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "docker-cicd-dotnet-10-microservices";
 const path = `/blog/${slug}`;
 const url = `https://vknight.io.vn${path}`;
 const title = "Docker CI/CD for .NET 10 Microservices: Build, Promote, and Roll Back Safely";
 const description = "Containerize .NET 10 services, build with GitHub Actions, promote immutable image digests, and implement health-aware deployment and rollback.";
+const article = getPublishedArticle(slug);
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -17,6 +20,8 @@ export const metadata: Metadata = createPageMetadata({
   path,
   type: "article",
   ogTitle: title,
+  publishedTime: article?.publishedAt,
+  modifiedTime: article ? getArticleLastModified(article) : undefined,
 });
 
 const sections = [
@@ -157,14 +162,11 @@ function Callout({ children }: { children: ReactNode }) {
 }
 
 export default function DockerCicdArticlePage() {
-  const structuredData = {
-    "@context": "https://schema.org", "@type": "TechArticle",
-    headline: title, description, mainEntityOfPage: url, url,
-    author: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    publisher: { "@type": "Organization", name: "vKnight", url: "https://vknight.io.vn" },
-    inLanguage: "en", isAccessibleForFree: true,
+  const structuredData = buildArticleJsonLd({
+    slug, title, description, url,
+    isAccessibleForFree: true,
     keywords: "Docker, .NET 10, GitHub Actions, CI/CD, microservices, immutable digest, rollback",
-  };
+  });
   return <main className="min-h-screen bg-background">
     <JsonLd data={structuredData} />
     <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-14 dark:from-primary/10 dark:via-background lg:py-20">
