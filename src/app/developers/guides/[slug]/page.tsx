@@ -5,6 +5,8 @@ import { ArrowRight, BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { CodeExample } from "@/components/developers/CodeExample";
 import { getGuide, guides } from "@/lib/developer-guides/content";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 type Props = { params: Promise<{ slug: string }> };
 export function generateStaticParams() { return guides.map(guide => ({ slug: guide.slug })); }
@@ -22,7 +24,14 @@ export default async function GuidePage({ params }: Props) {
   const { slug } = await params; const guide = getGuide(slug); if (!guide) notFound();
   const index = guides.findIndex(g => g.slug === guide.slug);
   const next = guides[(index + 1) % guides.length];
+  const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Developer Hub", path: "/developers" },
+    { name: "Guides", path: "/developers/guides" },
+    { name: guide.title, path: `/developers/guides/${guide.slug}` },
+  ]);
   return <main className="min-h-screen bg-background">
+    <JsonLd data={breadcrumbData} />
     <div className="border-b bg-muted/25"><div className="container mx-auto flex max-w-7xl items-center gap-2 px-4 py-4 text-xs text-muted-foreground"><Link href="/developers" className="hover:text-primary">Developer Hub</Link><ChevronRight size={13} /><Link href="/developers/guides" className="hover:text-primary">Guides</Link><ChevronRight size={13} /><span className="truncate font-semibold text-foreground">{guide.title}</span></div></div>
     <div className="container mx-auto grid max-w-7xl items-start gap-9 px-4 py-10 lg:grid-cols-[225px_minmax(0,1fr)_190px] lg:gap-10 lg:py-14">
       <aside className="lg:sticky lg:top-24"><div className="rounded-2xl border bg-card p-4"><p className="mb-4 text-[11px] font-bold uppercase tracking-[.16em] text-muted-foreground">Architecture guides</p><nav aria-label="Engineering guides" className="space-y-1">{guides.map(g => <Link key={g.slug} href={`/developers/guides/${g.slug}`} aria-current={g.slug === guide.slug ? "page" : undefined} className={`block rounded-lg px-3 py-2.5 text-sm font-semibold transition-colors ${g.slug === guide.slug ? "bg-primary/10 text-primary" : "text-muted-foreground hover:bg-muted hover:text-foreground"}`}>{g.title}</Link>)}</nav><div className="mt-4 border-t pt-4"><Link href="/developers/api-explorer" className="inline-flex items-center gap-1 text-xs font-semibold text-primary hover:underline">Try API Explorer <ExternalLink size={13} /></Link></div></div></aside>

@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { getPublishedArticles } from "@/data/blog";
 import DeveloperHubClient from "./DeveloperHubClient";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Developer Hub | .NET, API Security & Banking Architecture | vKnight",
@@ -32,9 +34,14 @@ export default function DeveloperHubPage() {
       })),
     },
   };
+  const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Developer Hub", path: "/developers" },
+  ]);
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, "\\u003c") }} />
+      <JsonLd data={schema} />
+      <JsonLd data={breadcrumbData} />
       <DeveloperHubClient articles={articles} />
     </>
   );

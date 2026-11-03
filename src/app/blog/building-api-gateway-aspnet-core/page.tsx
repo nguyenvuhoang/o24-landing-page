@@ -7,6 +7,7 @@ import {
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "building-api-gateway-aspnet-core";
@@ -16,6 +17,7 @@ const title = "Building an API Gateway with ASP.NET Core and YARP";
 const description =
   "Build a practical .NET 10 API gateway with YARP routing, ASP.NET Core rate limiting, local backends, and production security considerations.";
 const article = getPublishedArticle(slug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -124,10 +126,15 @@ export default function ApiGatewayArticlePage() {
   return (
     <main className="min-h-screen bg-background">
       <JsonLd data={buildArticleJsonLd({
-        slug, title, description, url,
+        slug, title, description, url, breadcrumbId,
         proficiencyLevel: "Intermediate",
         keywords: ["ASP.NET Core", "YARP", ".NET 10", "API Gateway", "Rate Limiting"],
       })} />
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Engineering Blog", path: "/blog" },
+        { name: title, path },
+      ], { id: breadcrumbId })} />
       <div className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background dark:from-primary/10 dark:via-background">
         <div className="container mx-auto max-w-6xl px-4 py-16 lg:py-20">
           <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

@@ -8,6 +8,7 @@ import {
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "rabbitmq-event-driven-transactions-dotnet-10";
@@ -17,6 +18,7 @@ const title = "RabbitMQ & Event-Driven Transaction Processing in .NET 10";
 const description =
   "A practical guide to transactional outbox, retries, RabbitMQ dead-letter queues, idempotent consumers, and financial transaction reconciliation in .NET 10.";
 const article = getPublishedArticle(slug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -182,10 +184,15 @@ export default function RabbitMqTransactionsGuide() {
   return (
     <main className="min-h-screen bg-background">
       <JsonLd data={buildArticleJsonLd({
-        slug, title, description, url,
+        slug, title, description, url, breadcrumbId,
         proficiencyLevel: "Advanced",
         keywords: ["RabbitMQ", "Event-Driven Architecture", ".NET 10", "Transactional Outbox", "Idempotency", "Dead Letter Queue", "Reconciliation"],
       })} />
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Engineering Blog", path: "/blog" },
+        { name: title, path },
+      ], { id: breadcrumbId })} />
       <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background dark:from-primary/10 dark:via-background">
         <div className="container mx-auto max-w-6xl px-4 py-14 lg:py-20">
           <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

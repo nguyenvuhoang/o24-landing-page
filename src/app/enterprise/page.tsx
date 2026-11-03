@@ -13,6 +13,8 @@ import {
     Check,
 } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "Enterprise Consultation | O24 by vKnight",
@@ -66,9 +68,15 @@ const trustedBy = [
     "Doanh nghiệp lớn & Tập đoàn",
 ];
 
+const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Enterprise", path: "/enterprise" },
+]);
+
 export default function EnterprisePage() {
     return (
         <main className="min-h-screen pt-24 pb-20">
+            <JsonLd data={breadcrumbData} />
             <div className="container mx-auto px-4">
                 {/* Page Header */}
                 <div className="max-w-3xl mb-16">

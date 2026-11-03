@@ -6,6 +6,8 @@ import {
   LockKeyhole, Network, Server, ShieldCheck, Workflow,
 } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Security & Trust Center | O24 by vKnight",
@@ -14,6 +16,12 @@ export const metadata: Metadata = createPageMetadata({
   path: "/security",
   ogDescription: "Review the security considerations and governance questions for enterprise integration with O24.",
 });
+
+// Mirrors this page's own visible breadcrumb (Home > Security & Trust).
+const breadcrumbData = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Security & Trust", path: "/security" },
+]);
 
 const pillars = [
   {
@@ -56,6 +64,7 @@ const review = [
 export default function SecurityPage() {
   return (
     <main className="min-h-screen overflow-x-clip bg-background text-foreground">
+      <JsonLd data={breadcrumbData} />
       <section className="relative overflow-hidden border-b bg-[#0b1527] text-white">
         <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-28 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
         <div className="container relative mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:py-24">

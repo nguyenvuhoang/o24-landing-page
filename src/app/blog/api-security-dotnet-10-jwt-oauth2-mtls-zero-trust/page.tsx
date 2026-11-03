@@ -5,6 +5,7 @@ import { ArrowLeft, ArrowRight, BookOpen, CheckCircle2, KeyRound, LockKeyhole, N
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "api-security-dotnet-10-jwt-oauth2-mtls-zero-trust";
@@ -13,6 +14,7 @@ const url = `https://vknight.io.vn${path}`;
 const title = "API Security in .NET 10: JWT, OAuth 2.0, mTLS & Zero Trust";
 const description = "A practical guide to validating JWT access tokens, enforcing OAuth 2.0 scopes, protecting service-to-service calls with mTLS, and implementing Zero Trust in ASP.NET Core 10.";
 const article = getPublishedArticle(slug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -177,12 +179,18 @@ const checks = [
 
 export default function ApiSecurityGuidePage() {
   const structuredData = buildArticleJsonLd({
-    slug, title, description, url,
+    slug, title, description, url, breadcrumbId,
     isAccessibleForFree: true,
     keywords: "ASP.NET Core 10, JWT bearer, OAuth 2.0, PKCE, mTLS, Zero Trust, banking API security",
   });
+  const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Engineering Blog", path: "/blog" },
+    { name: title, path },
+  ], { id: breadcrumbId });
   return <main className="min-h-screen bg-background">
     <JsonLd data={structuredData}/>
+    <JsonLd data={breadcrumbData}/>
     <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-14 dark:from-primary/10 dark:via-background lg:py-20">
       <div className="container mx-auto max-w-6xl px-4">
         <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4"/> Back to Engineering</Link>

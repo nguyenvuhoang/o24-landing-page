@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, Layers3 } from "lucide-react";
 import { createPageMetadata } from "@/lib/seo";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "api-gateway-vs-reverse-proxy";
@@ -12,6 +13,7 @@ const url = `https://vknight.io.vn${path}`;
 const title = "API Gateway vs. Reverse Proxy: What Changes in an Enterprise Architecture?";
 const description = "A practical comparison of reverse proxies and API gateways: traffic routing, identity, policies, observability, and choosing the right architecture.";
 const article = getPublishedArticle(slug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -35,9 +37,14 @@ export default function ArticlePage() {
   return (
     <main className="min-h-screen bg-background">
       <JsonLd data={buildArticleJsonLd({
-        slug, title, description, url,
+        slug, title, description, url, breadcrumbId,
         keywords: ["API Gateway", "Reverse Proxy", "Enterprise Architecture"],
       })} />
+      <JsonLd data={buildBreadcrumbJsonLd([
+        { name: "Home", path: "/" },
+        { name: "Engineering Blog", path: "/blog" },
+        { name: title, path },
+      ], { id: breadcrumbId })} />
       <article>
         <header className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-16 dark:from-primary/10 dark:via-background lg:py-24">
           <div className="container mx-auto max-w-4xl px-4">

@@ -8,9 +8,9 @@ import { Analytics } from "@vercel/analytics/next";
 import { JourneyAnalytics } from "@/components/analytics/JourneyAnalytics";
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
+import { SITE_URL as siteUrl, ORGANIZATION_ID, WEBSITE_ID } from "@/lib/entities";
 import "./globals.css";
 
-const siteUrl = "https://vknight.io.vn";
 const siteDescription =
     "Explore O24 API management, workflow orchestration, and integration architecture for developers and enterprise teams.";
 
@@ -106,7 +106,7 @@ export default function RootLayout({
                     data={{
                         "@context": "https://schema.org",
                         "@type": "Organization",
-                        "@id": `${siteUrl}/#organization`,
+                        "@id": ORGANIZATION_ID,
                         name: "vKnight",
                         url: siteUrl,
                         logo: `${siteUrl}/images/Logo.png`,
@@ -116,10 +116,10 @@ export default function RootLayout({
                     data={{
                         "@context": "https://schema.org",
                         "@type": "WebSite",
-                        "@id": `${siteUrl}/#website`,
+                        "@id": WEBSITE_ID,
                         name: "vKnight",
                         url: siteUrl,
-                        publisher: { "@id": `${siteUrl}/#organization` },
+                        publisher: { "@id": ORGANIZATION_ID },
                         inLanguage: "en",
                     }}
                 />

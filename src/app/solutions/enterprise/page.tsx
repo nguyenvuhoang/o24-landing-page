@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import EnterpriseSolutionClient from "./EnterpriseSolutionClient";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "Enterprise API Integration Solutions | O24 by vKnight",
@@ -11,6 +13,17 @@ export const metadata: Metadata = createPageMetadata({
         "Plan API modernization and enterprise integrations with O24. Explore solutions and discuss your requirements with vKnight.",
 });
 
+const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Solutions", path: "/solutions" },
+    { name: "Enterprise Integration", path: "/solutions/enterprise" },
+]);
+
 export default function EnterpriseSolutionPage() {
-    return <EnterpriseSolutionClient />;
+    return (
+        <>
+            <JsonLd data={breadcrumbData} />
+            <EnterpriseSolutionClient />
+        </>
+    );
 }

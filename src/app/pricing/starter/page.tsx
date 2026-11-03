@@ -5,12 +5,20 @@ import { Check, Github, BookOpen, Terminal, Rocket, Globe, Shield } from "lucide
 import Link from "next/link";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "Bắt đầu với O24 Starter | Miễn phí cho Developers",
     description: "Khám phá sức mạnh của O24 Community Edition. Open-source, dễ dàng triển khai, và hoàn toàn miễn phí.",
     path: "/pricing/starter",
 });
+
+const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Starter", path: "/pricing/starter" },
+]);
 
 const features = [
     {
@@ -53,6 +61,7 @@ const steps = [
 export default function StarterPage() {
     return (
         <main className="min-h-screen pt-24 pb-20 overflow-hidden">
+            <JsonLd data={breadcrumbData} />
             {/* Background elements */}
             <div className="absolute inset-0 -z-10 bg-[radial-gradient(45%_45%_at_50%_50%,rgba(2,68,48,0.05)_0%,transparent_100%)]" />
 

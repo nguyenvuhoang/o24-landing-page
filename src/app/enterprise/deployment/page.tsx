@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, CheckCircle2, ChevronRight, ClipboardList, LockKeyhole, Network, ShieldCheck } from "lucide-react";
 import { DeploymentExplorer } from "./DeploymentExplorer";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Enterprise Deployment & Operations | O24 by vKnight",
@@ -10,6 +12,16 @@ export const metadata: Metadata = createPageMetadata({
   path: "/enterprise/deployment",
   ogDescription: "Compare on-premises, private cloud and hybrid deployment considerations for enterprise integration.",
 });
+
+// Mirrors this page's own visible breadcrumb, which nests it under
+// Solutions > Enterprise Integration (not /enterprise) — Home is prepended
+// for BreadcrumbList eligibility/consistency without changing the visible trail.
+const breadcrumbData = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Solutions", path: "/solutions" },
+  { name: "Enterprise Integration", path: "/solutions/enterprise" },
+  { name: "Deployment & Operations", path: "/enterprise/deployment" },
+]);
 
 const phases = [
   { number: "01", title: "Discover", text: "Identify service owners, system boundaries, data classifications and regulatory requirements." },
@@ -28,6 +40,7 @@ const reviewAreas = [
 export default function EnterpriseDeploymentPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
+      <JsonLd data={breadcrumbData} />
       <section className="relative overflow-hidden border-b border-white/10 bg-[#0b1527] text-white">
         <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-40 h-[32rem] w-[32rem] rounded-full bg-amber-500/10 blur-3xl" />
         <div className="container relative mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:py-24">

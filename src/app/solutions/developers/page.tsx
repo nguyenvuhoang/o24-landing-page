@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import DevelopersClient from "./DevelopersClient";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "O24 Developer Hub | API Architecture & Integration | vKnight",
@@ -12,6 +14,19 @@ export const metadata: Metadata = createPageMetadata({
         "Explore API architecture, service orchestration, and integration concepts with O24 by vKnight.",
 });
 
+// Labeled "Developer Experience" (matching src/data/solutions.ts) rather than
+// "Developer Hub" to avoid colliding with the distinct /developers route.
+const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Solutions", path: "/solutions" },
+    { name: "Developer Experience", path: "/solutions/developers" },
+]);
+
 export default function DevelopersPage() {
-    return <DevelopersClient />;
+    return (
+        <>
+            <JsonLd data={breadcrumbData} />
+            <DevelopersClient />
+        </>
+    );
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { createPageMetadata } from "@/lib/seo";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const slug = "docker-cicd-dotnet-10-microservices";
@@ -13,6 +14,7 @@ const url = `https://vknight.io.vn${path}`;
 const title = "Docker CI/CD for .NET 10 Microservices: Build, Promote, and Roll Back Safely";
 const description = "Containerize .NET 10 services, build with GitHub Actions, promote immutable image digests, and implement health-aware deployment and rollback.";
 const article = getPublishedArticle(slug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -163,12 +165,18 @@ function Callout({ children }: { children: ReactNode }) {
 
 export default function DockerCicdArticlePage() {
   const structuredData = buildArticleJsonLd({
-    slug, title, description, url,
+    slug, title, description, url, breadcrumbId,
     isAccessibleForFree: true,
     keywords: "Docker, .NET 10, GitHub Actions, CI/CD, microservices, immutable digest, rollback",
   });
+  const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Engineering Blog", path: "/blog" },
+    { name: title, path },
+  ], { id: breadcrumbId });
   return <main className="min-h-screen bg-background">
     <JsonLd data={structuredData} />
+    <JsonLd data={breadcrumbData} />
     <section className="border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-14 dark:from-primary/10 dark:via-background lg:py-20">
       <div className="container mx-auto max-w-6xl px-4">
         <Link href="/blog" className="mb-8 inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary"><ArrowLeft className="h-4 w-4" /> Back to Engineering</Link>

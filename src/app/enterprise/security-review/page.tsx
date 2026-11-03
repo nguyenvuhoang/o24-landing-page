@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, ChevronRight, ClipboardCheck, ShieldCheck } from "lucide-react";
 import SecurityReviewClient from "./SecurityReviewClient";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Enterprise Security Review & FAQ | O24 by vKnight",
@@ -11,8 +13,16 @@ export const metadata: Metadata = createPageMetadata({
   ogDescription: "Security review questions, evidence checklist, and enterprise integration FAQs for O24 evaluation.",
 });
 
+// Mirrors this page's own visible breadcrumb (Home > Enterprise > Security Review).
+const breadcrumbData = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Enterprise", path: "/enterprise" },
+  { name: "Security Review", path: "/enterprise/security-review" },
+]);
+
 export default function EnterpriseSecurityReviewPage() {
   return <main className="min-h-screen overflow-x-clip bg-background text-foreground">
+    <JsonLd data={breadcrumbData} />
     <section className="relative overflow-hidden border-b bg-[#0b1527] text-white">
       <div aria-hidden="true" className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-amber-500/10 blur-3xl" />
       <div className="container relative mx-auto max-w-[1320px] px-4 py-16 sm:px-6 lg:py-24">

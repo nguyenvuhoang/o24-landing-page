@@ -5,12 +5,20 @@ import { Check, Shield, Zap, Headphones, BarChart, Server, Users, ArrowRight } f
 import Link from "next/link";
 import { EnterpriseForm } from "../../enterprise/EnterpriseForm";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
     title: "O24 Business | Giải pháp cho Teams chuyên nghiệp",
     description: "Nắm quyền kiểm soát hạ tầng API với gói O24 Business. Advanced monitoring, priority support và 99.9% SLA.",
     path: "/pricing/business",
 });
+
+const breadcrumbData = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Pricing", path: "/pricing" },
+    { name: "Business", path: "/pricing/business" },
+]);
 
 const valueProps = [
     {
@@ -48,6 +56,7 @@ const businessFeatures = [
 export default function BusinessPage() {
     return (
         <main className="min-h-screen pt-24 pb-20">
+            <JsonLd data={breadcrumbData} />
             <div className="container mx-auto px-4">
                 {/* Hero section */}
                 <div className="max-w-4xl mx-auto text-center mb-16">

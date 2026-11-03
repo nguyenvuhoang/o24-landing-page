@@ -3,6 +3,8 @@ import Link from "next/link";
 import { ArrowRight, BookOpen, Braces, GitBranch, Landmark, ShieldCheck } from "lucide-react";
 import { guides } from "@/lib/developer-guides/content";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Engineering Guides | O24 Developer Hub",
@@ -10,8 +12,14 @@ export const metadata: Metadata = createPageMetadata({
   path: "/developers/guides",
 });
 const icons = [GitBranch, Braces, ShieldCheck, Landmark];
+const breadcrumbData = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Developer Hub", path: "/developers" },
+  { name: "Guides", path: "/developers/guides" },
+]);
 export default function GuidesIndex() {
   return <main className="min-h-screen bg-background">
+    <JsonLd data={breadcrumbData} />
     <section className="border-b bg-[#0b1628] py-14 text-white sm:py-20"><div className="container mx-auto max-w-6xl px-4">
       <Link href="/developers" className="text-sm text-slate-300 hover:text-amber-400">← Developer Hub</Link>
       <p className="mt-8 text-xs font-bold uppercase tracking-[.2em] text-amber-400">O24 / Developer documentation</p>

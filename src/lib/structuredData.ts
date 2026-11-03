@@ -1,12 +1,6 @@
 import { getArticleLastModified, getPublishedArticle, type BlogArticle } from "@/data/blog";
 import type { JsonValue } from "@/components/seo/JsonLd";
-
-const SITE_URL = "https://vknight.io.vn";
-const VKNIGHT_ORGANIZATION: JsonValue = {
-  "@type": "Organization",
-  name: "vKnight",
-  url: SITE_URL,
-};
+import { organizationRef } from "@/lib/entities";
 
 export type ArticleJsonLdContent = {
   title: string;
@@ -15,6 +9,8 @@ export type ArticleJsonLdContent = {
   keywords?: string | string[];
   proficiencyLevel?: "Beginner" | "Intermediate" | "Advanced";
   isAccessibleForFree?: boolean;
+  /** @id of this page's BreadcrumbList node, when one exists, so WebPage.breadcrumb can reference it. */
+  breadcrumbId?: string;
 };
 
 export type ArticleJsonLdInput = ArticleJsonLdContent & {
@@ -40,9 +36,13 @@ export function buildArticleJsonLdFromDates(
     headline: content.title,
     description: content.description,
     url: content.url,
-    mainEntityOfPage: { "@type": "WebPage", "@id": content.url },
-    author: VKNIGHT_ORGANIZATION,
-    publisher: VKNIGHT_ORGANIZATION,
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": content.url,
+      ...(content.breadcrumbId ? { breadcrumb: { "@id": content.breadcrumbId } } : {}),
+    },
+    author: organizationRef,
+    publisher: organizationRef,
     inLanguage: "en",
     ...(content.isAccessibleForFree !== undefined
       ? { isAccessibleForFree: content.isAccessibleForFree }

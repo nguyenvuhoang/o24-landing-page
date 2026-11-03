@@ -4,6 +4,7 @@ import { ArrowLeft, ArrowRight, BookOpen, Code2, Database, ShieldCheck } from "l
 import { JsonLd } from "@/components/seo/JsonLd";
 import { createPageMetadata } from "@/lib/seo";
 import { buildArticleJsonLd } from "@/lib/structuredData";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 import { getArticleLastModified, getPublishedArticle } from "@/data/blog";
 
 const articleSlug = "cqrs-pattern-dotnet-10";
@@ -12,6 +13,7 @@ const url = `https://vknight.io.vn${slug}`;
 const title = "CQRS Pattern in .NET 10: A Practical Guide";
 const description = "Learn CQRS with an ASP.NET Core .NET 10 Minimal API example, separate command and query handlers, dependency injection, and production trade-offs.";
 const article = getPublishedArticle(articleSlug);
+const breadcrumbId = `${url}#breadcrumb`;
 
 export const metadata: Metadata = createPageMetadata({
   title: `${title} | vKnight Engineering`,
@@ -115,11 +117,17 @@ const takeaways = [
 ];
 
 export default function CqrsGuidePage() {
-  const articleSchema = buildArticleJsonLd({ slug: articleSlug, title, description, url });
+  const articleSchema = buildArticleJsonLd({ slug: articleSlug, title, description, url, breadcrumbId });
+  const breadcrumbSchema = buildBreadcrumbJsonLd([
+    { name: "Home", path: "/" },
+    { name: "Engineering Blog", path: "/blog" },
+    { name: title, path: slug },
+  ], { id: breadcrumbId });
 
   return (
     <main className="min-h-screen bg-background">
       <JsonLd data={articleSchema} />
+      <JsonLd data={breadcrumbSchema} />
       <article>
         <header className="border-b bg-gradient-to-br from-orange-50/80 via-background to-background py-16 dark:from-primary/10 dark:via-background lg:py-24">
           <div className="container mx-auto max-w-4xl px-4">

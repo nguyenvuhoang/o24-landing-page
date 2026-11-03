@@ -4,6 +4,8 @@ import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { ArrowRight, BookOpen, Code2, Landmark, Layers3, ShieldCheck, Server } from "lucide-react";
 import { getPublishedArticles, type BlogIcon } from "@/data/blog";
 import { createPageMetadata } from "@/lib/seo";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { buildBreadcrumbJsonLd } from "@/lib/breadcrumbs";
 
 export const metadata: Metadata = createPageMetadata({
   title: "Engineering Blog | API Architecture & Banking Integration | vKnight",
@@ -30,9 +32,15 @@ const topics = [
   { title: "Security by Design", description: "Access control and integration risk considerations", icon: ShieldCheck, href: "/security" },
 ];
 
+const breadcrumbData = buildBreadcrumbJsonLd([
+  { name: "Home", path: "/" },
+  { name: "Engineering Blog", path: "/blog" },
+]);
+
 export default function BlogPage() {
   return (
     <main className="min-h-screen bg-background">
+      <JsonLd data={breadcrumbData} />
       <section className="relative overflow-hidden border-b bg-gradient-to-br from-orange-50/70 via-background to-background py-20 dark:from-primary/10 dark:via-background lg:py-28">
         <div className="container relative mx-auto px-4">
           <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/20 bg-primary/10 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-primary">
