@@ -1,34 +1,33 @@
-# IPS Dashboard V1.1 — Executive UI Refinement
+# IPS Go-Live Readiness Dashboard V1.2 — Final Executive Polish
 
-## Install (safe, no database)
+## Scope
+Only replace the presentational component:
+`src/components/projects/ips/IPSReadinessDashboard.tsx`
 
-1. Extract this ZIP. Copy **only** `src/components/projects/ips/IPSReadinessDashboard.tsx` into your Next.js project at `C:\O24\o24-landing-page`, replacing the V1 component. The current `src/data/projects/ips-status.ts` and route `src/app/projects/ips/page.tsx` are preserved.
-2. Run:
+Preserves the Next.js route `/projects/ips`, underlying `src/data/projects/ips-status.ts`, existing UAT state model, print option, and all integrations. No API, database, package installation or migration needed.
+
+## What's changed
+- Typography: 15px+ core body copy, improved line height, larger workstream titles and legible helper text.
+- Layout: max-width 1480px, wider desktop padding and more breathing room in the header/cards. Mobile stack unchanged.
+- Reporting: a dedicated **UAT report priority** section above workstreams, populated from the existing `ipsProject.testTeams` values. Counter and labels update when a report changes to `received`. This is a receipt status, **not** a UAT sign-off.
+- The 30 Nov 2026 go-live date remains a target pending Production, migration, UAT acceptance and Go/No-Go approval.
+
+## Install (Windows PowerShell)
+1. Extract this ZIP.
+2. Copy `src/components/projects/ips/IPSReadinessDashboard.tsx` to the same path in `C:\O24\o24-landing-page` (overwrite V1.1 component only).
+3. Run:
 
 ```powershell
+cd C:\O24\o24-landing-page
 pnpm exec eslint src/components/projects/ips/IPSReadinessDashboard.tsx
 pnpm exec tsc --noEmit
 pnpm build
 ```
 
-3. Open `http://localhost:3000/projects/ips` and test both **Tổng quan** and **Go-Live checklist** views at mobile and desktop widths.
+Open `http://localhost:3000/projects/ips` and inspect at 375px, 768px and 1440px. Also test the two tabs, expandable workstream checklists, dark/light modes and Print/PDF.
 
-## Changes
+## Update UAT reports
+Update **only** `src/data/projects/ips-status.ts` when approved source information is available. For each team, change `report: "awaiting"` to `report: "received"` and update the team note. Receipt doesn't mean UAT pass; update decision gates only when formally approved.
 
-- Main layout widened to `max-w-[1360px]`, larger KPI and reading text.
-- Executive banner clearly states Go-Live is not yet approved.
-- Dedicated two-column UAT team reporting, each with report state, next action, and note.
-- Milestones in four responsive cards.
-- More explicit Go/No-Go status, and fix for TS2367 workstream comparison.
-- Go-live date is drawn from `ipsProject.targetGoLiveLabel` instead of hard-coded hero content.
-- Existing UI behaviors, route, data schema, and forms remain intact.
-
-## Updating UAT
-
-Modify your **existing** `src/data/projects/ips-status.ts` testTeams list. Change `report` from `awaiting` to `received` only when the formal UAT report has actually arrived. Update the corresponding note. Receiving a report does not mean UAT has passed or is signed off.
-
-The included `ips-status.example.ts` is a **reference only**, not meant to overwrite your live project state.
-
-## Safety & scope
-
-No new dependencies, API, database, authentication, migration or analytics. This dashboard is public; never include credentials, customer records, server IPs, or confidential defects in its notes. All screenshots and reviews should use the actual deployed app for signoff.
+## Verification
+The package is checked for ZIP integrity, TSX syntax using the TypeScript compiler parser, and V1.1 contract import continuity. Full Next.js build and visual verification require your local app environment.
