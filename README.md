@@ -1,50 +1,52 @@
-# Step 31.11 — Final Production Release Audit
+# IPS Go-Live Readiness Dashboard — v1
 
-This package is **read-only** by default and does not change any website source code, databases, forms or environment variables. Copy the `scripts` directory into the project root. The optional test may be run with `node --test tests/step31-11-audit.test.mjs` (run from the project root).
+Public reporting page for vKnight O24 Landing Page (Next.js App Router).
 
-## Local checks
+## Install
+
+Copy the **contents** of this ZIP folder (`ips-golive-v1/`) to the root of `C:\O24\o24-landing-page`, preserving relative paths. This package only adds files; it does not overwrite Header, Footer, DemoForm, CRM or existing routes.
 
 ```powershell
 cd C:\O24\o24-landing-page
-node scripts/step31-11-audit.mjs
-node scripts/step31-11-audit.mjs --output reports/step31-11.json
+node scripts/ips-public-status-audit.mjs
+pnpm exec eslint src/app/projects/ips/page.tsx src/components/projects/ips/IPSReadinessDashboard.tsx src/data/projects/ips-status.ts
 pnpm exec tsc --noEmit
 pnpm test
 pnpm build
-pnpm exec eslint .
-git diff --check
+pnpm dev
 ```
 
-## Optional deployed site HTTP audit
+Open: `http://localhost:3000/projects/ips`.
 
-```powershell
-node scripts/step31-11-audit.mjs --url https://vknight.io.vn/ --output reports/step31-11-live.json
-```
+After deployment: `https://vknight.io.vn/projects/ips`.
 
-Live audit makes GET requests to a fixed allowlist of **public pages only**. It does not submit forms, authenticate, scrape customer data or inspect connected private resources. Run it only against the domain you control. The website must be available to the machine performing the audit.
+## How to update the report
 
-## Exit codes
+Edit **only** `src/data/projects/ips-status.ts` for everyday updates:
 
-- `0`: no ERROR findings (warnings may still exist)
-- `1`: warnings exist with `--strict`
-- `2`: ERROR findings exist
+- `updatedAt`: last reviewed date (`YYYY-MM-DD`).
+- `phase`, `overview`: the current verified phase and executive summary.
+- `workstreams`: each task's status (`in_progress`, `awaiting`, `not_complete`, `complete`), owner and next action.
+- `testTeams`: change `report` to `received` **only after the actual report arrives**; update `note`. The UI will show "Đã nhận" and update the aggregate count.
+- `decisionGates`: change `status` to `ready`, `pending`, or `blocked` as appropriate. UI displays the corresponding status and pending count. Set `ready` only after evidence and owner approval.
+- `risks`, `milestones`: public-safe descriptions only.
 
-`ERROR` and `WARN` describe **indicators found by the audit**, not a verified exploit. Resolve findings and confirm whether they apply to your deployed architecture before release.
+**Important:** The release decision remains pending until an authorized sign-off, even if all readiness checks are marked ready. The current three workstreams remain open and both team reports are pending based on the supplied facts.
 
-## Mandatory manual release gate
+No fictitious percentages, milestone completion dates, issue counts, or specific owner assignments are published.
 
-1. Desktop 1440px, tablet 768px, mobile 375px: Header, Footer, dropdowns, overflow, light/dark mode, focus states and contrast.
-2. Navigate Home → Features → Solutions → Enterprise → Security → Demo, test back/forward, active navigation and keyboard tab order.
-3. Confirm `/demo` and `/enterprise` forms with authorized test data on staging; verify both successful delivery and controlled failure states. Do not use live customer records.
-4. Confirm Privacy and Terms were reviewed and approved by the owner/legal counsel; confirm Careers listings and recruitment email are valid.
-5. Confirm TLS/HTTPS, environment variables, Vercel deployment logs, no credentials committed, configured sender domain and recipient, and secure email delivery. Rate limiting/abuse protection remain separate release decisions.
-6. Run Lighthouse on staging/production for Performance, Accessibility, Best Practices and SEO; capture actual results for mobile and desktop. No scores are asserted by this package.
-7. Verify indexation/robots/sitemap, OG image, redirects, broken links and 404 handling in production.
-8. Record deployment SHA, validation date, reviewer, unresolved issues and explicit GO/NO-GO decision.
+## Access and SEO
 
-## Scope limits
+- Route is publicly accessible, **no login**.
+- Metadata contains `robots: { index: false, follow: false }` to prevent intentional search indexing of the operational update. `noindex` does **not** restrict public access.
+- No main navigation/footer insertion or sitemap entry, to avoid mixing project status with marketing content.
+- If intentional indexing is desired, remove the robots field and explicitly add the route to sitemap.
 
-- Source may differ from GitHub main; checks operate on local files in the current working directory.
-- Static href scanning only catches literal paths; cannot verify runtime dynamic links.
-- HTML GET checks cannot prove that React hydration or interactive forms work.
-- This package does not automatically promote/deploy code.
+## Safety and release notes
+
+- Do not place credentials, private hostnames, customer information, database details, actual backup artifacts or sensitive defect reports in the public data file.
+- Go-live on 30/11/2026 is a **target**, not a guaranteed launch date. Go/No-Go is pending until authorized sign-off.
+- Browser print / Save as PDF uses the browser native print dialog.
+- Countdown uses the user's device clock (may be inaccurate if that clock is wrong).
+- No API, database, authentication, or third-party tracking dependency introduced.
+- Run browser checks at 375, 768, 1440 px and in light/dark themes after deploying.
