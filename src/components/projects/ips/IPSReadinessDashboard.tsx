@@ -10,6 +10,7 @@ import {
   TriangleAlert, UsersRound,
 } from "lucide-react";
 import { ipsProject, type IPSWorkstream, type WorkStatus } from "@/data/projects/ips-status";
+import { IPSProductionOverview } from "@/components/projects/ips/IPSProductionOverview";
 
 const STATUS: Record<WorkStatus, { label: string; className: string }> = {
   in_progress: { label: "Đang thực hiện", className: "border-sky-400/25 bg-sky-400/10 text-sky-700 dark:text-sky-300" },
@@ -183,6 +184,7 @@ export function IPSReadinessDashboard() {
               </div>
             </div>
           </section>
+          <IPSProductionOverview />
           <section className="pt-10" aria-labelledby="workstreams-heading">
             <SectionTitle eyebrow="01 / DELIVERY READINESS" title="Ba công việc trọng tâm trước Go-Live" description="Trạng thái phản ánh thông tin đã xác nhận. Không suy diễn phần trăm hoàn thành từ các công việc đang mở." />
             <div className="grid gap-5 lg:grid-cols-3">{ipsProject.workstreams.map((w, i) => <WorkstreamCard key={w.id} item={w} index={i} />)}</div>

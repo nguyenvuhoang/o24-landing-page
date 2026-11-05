@@ -21,20 +21,20 @@ export const ipsProject = {
   title: "IPS — Project Go-Live Readiness",
   subtitle: "Báo cáo tiến độ UAT và mức độ sẵn sàng triển khai chính thức",
   phase: "UAT Testing",
-  updatedAt: "2026-11-04",
+  updatedAt: "2026-11-05",
   targetGoLive: "2026-11-30T00:00:00+07:00",
   targetGoLiveLabel: "30/11/2026",
   targetNote: "Mốc kế hoạch, phụ thuộc kết quả UAT và quyết định Go / No-Go.",
   overview:
-    "Dự án IPS đang trong giai đoạn UAT Testing. Các công việc cần hoàn tất trước Go-Live gồm chuẩn bị Production, backup và migration dữ liệu hệ thống cũ, và xử lý các hạng mục UAT sau khi nhận báo cáo từ hai đội kiểm thử.",
+    "Dự án IPS đang trong giai đoạn UAT Testing. Các công việc cần hoàn tất trước Go-Live gồm xác minh Production readiness sau khi đã cài đặt, backup và migration dữ liệu hệ thống cũ, và xử lý các hạng mục UAT sau khi nhận báo cáo từ hai đội kiểm thử.",
   workstreams: [
     {
       id: "production",
       title: "Môi trường LIVE / Production",
-      summary: "Cài đặt và kiểm tra môi trường vận hành chính thức.",
-      status: "not_complete",
-      owner: "Đang xác nhận",
-      nextAction: "Hoàn tất triển khai và xác nhận checklist Production readiness.",
+      summary: "Hạ tầng LIVE và các dịch vụ đã được cài đặt; chờ smoke test và xác nhận vận hành.",
+      status: "complete",
+      owner: "VKNIGHT",
+      nextAction: "Xác nhận smoke test, kết nối API và quy trình vận hành trước khi phê duyệt Production readiness.",
       details: [
         "Cấu hình môi trường Production và các dịch vụ phụ thuộc",
         "Kiểm tra kết nối, quyền truy cập và cấu hình vận hành",
@@ -80,11 +80,11 @@ export const ipsProject = {
   ],
   risks: [
     { title: "Chậm báo cáo UAT", impact: "Có thể làm chậm việc phân loại lỗi và hoàn tất kiểm thử.", response: "Theo dõi việc tiếp nhận báo cáo của hai đội." },
-    { title: "Production và migration chưa sẵn sàng", impact: "Có thể ảnh hưởng khả năng triển khai đúng mốc kế hoạch.", response: "Chốt checklist, kiểm tra backup/rollback và đối soát dữ liệu." },
+    { title: "Production readiness và migration chưa được nghiệm thu", impact: "Có thể ảnh hưởng khả năng triển khai đúng mốc kế hoạch.", response: "Chốt checklist, kiểm tra backup/rollback và đối soát dữ liệu." },
   ],
   milestones: [
     { label: "UAT Testing", detail: "Đang thực hiện", state: "current" as const },
-    { label: "Production & migration readiness", detail: "Chưa hoàn tất", state: "upcoming" as const },
+    { label: "Production & migration readiness", detail: "Đã cài đặt LIVE; chờ kiểm tra readiness và migration", state: "upcoming" as const },
     { label: "UAT sign-off / Go-No-Go", detail: "Chờ xác nhận", state: "upcoming" as const },
     { label: "Go-Live mục tiêu", detail: "30/11/2026", state: "target" as const },
   ],

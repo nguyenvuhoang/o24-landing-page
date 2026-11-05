@@ -1,33 +1,24 @@
-# IPS Go-Live Readiness Dashboard V1.2 — Final Executive Polish
+# IPS Dashboard V1.3 — Production Infrastructure Readiness
 
-## Scope
-Only replace the presentational component:
-`src/components/projects/ips/IPSReadinessDashboard.tsx`
+Works with IPS V1.2 and your existing `ips-status.ts`. No database, authentication or API changes.
 
-Preserves the Next.js route `/projects/ips`, underlying `src/data/projects/ips-status.ts`, existing UAT state model, print option, and all integrations. No API, database, package installation or migration needed.
+## Install
 
-## What's changed
-- Typography: 15px+ core body copy, improved line height, larger workstream titles and legible helper text.
-- Layout: max-width 1480px, wider desktop padding and more breathing room in the header/cards. Mobile stack unchanged.
-- Reporting: a dedicated **UAT report priority** section above workstreams, populated from the existing `ipsProject.testTeams` values. Counter and labels update when a report changes to `received`. This is a receipt status, **not** a UAT sign-off.
-- The 30 Nov 2026 go-live date remains a target pending Production, migration, UAT acceptance and Go/No-Go approval.
-
-## Install (Windows PowerShell)
-1. Extract this ZIP.
-2. Copy `src/components/projects/ips/IPSReadinessDashboard.tsx` to the same path in `C:\O24\o24-landing-page` (overwrite V1.1 component only).
-3. Run:
+Extract the contents of `ips-live-v1-3` into `C:\O24\o24-landing-page` and run:
 
 ```powershell
-cd C:\O24\o24-landing-page
-pnpm exec eslint src/components/projects/ips/IPSReadinessDashboard.tsx
+node scripts/ips-v1-3-integrate.mjs
+pnpm exec eslint src/components/projects/ips/IPSReadinessDashboard.tsx src/components/projects/ips/IPSProductionOverview.tsx src/data/projects/ips-production.ts src/data/projects/ips-status.ts
 pnpm exec tsc --noEmit
 pnpm build
 ```
 
-Open `http://localhost:3000/projects/ips` and inspect at 375px, 768px and 1440px. Also test the two tabs, expandable workstream checklists, dark/light modes and Print/PDF.
+Open `http://localhost:3000/projects/ips` and verify overview and Go / No-Go tabs.
 
-## Update UAT reports
-Update **only** `src/data/projects/ips-status.ts` when approved source information is available. For each team, change `report: "awaiting"` to `report: "received"` and update the team note. Receipt doesn't mean UAT pass; update decision gates only when formally approved.
+**Production status semantics:** installation of services is `complete`, but the independent Go-Live Production readiness decision gate remains `pending` until smoke tests, monitoring, backup/restore and stakeholder sign-off. Open workstreams now expected to be 2 (Migration and UAT) after the patch.
 
-## Verification
-The package is checked for ZIP integrity, TSX syntax using the TypeScript compiler parser, and V1.1 contract import continuity. Full Next.js build and visual verification require your local app environment.
+**Public data:** high-level snapshot only (OS, 8 vCPU, 31 GiB RAM, aggregate disks, 19/19 running containers, PostgreSQL and observability). Does not expose internal image names, service URLs, Docker daemon, administration endpoints, IPs or secrets. Public numbers are manually captured on 05/11/2026, not realtime health data.
+
+**Unconfirmed:** Production API endpoint (BO URL supplied for both BO and API), DB size, restore verification, application endpoint health, functional smoke tests and UAT reports. No ungrounded claims in UI.
+
+The integration script makes `.ips-v13.bak` backups. Delete or ignore these backup files before committing.
